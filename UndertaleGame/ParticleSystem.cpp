@@ -25,29 +25,29 @@ void ParticleSystem::Draw()
 	}
 }
 
-void ParticleSystem::Update(float deltaT)
+void ParticleSystem::Update(float deltaTime)
 {
-	for (size_t i{ 0 }; i < m_pParticleList.size(); ++i)
+	for (size_t index{ 0 }; index < m_pParticleList.size(); ++index)
 	{
-		Particle* particle{ m_pParticleList[i] };
+		Particle* particle{ m_pParticleList[index] };
 
 		if (particle->shouldMove == false) continue;
 
-		m_pParticleList[i]->remainingLifetime -= deltaT;
-		particle->position += particle->velocity * deltaT;
+		m_pParticleList[index]->remainingLifetime -= deltaTime;
+		particle->position += particle->velocity * deltaTime;
 
 		particle->color.a = utils::Lerp(0, 1, particle->remainingLifetime / m_DissolveParticleLifetime);
 
 		if (particle->remainingLifetime <= 0.f)
 		{
 			delete particle;
-			m_pParticleList.erase(m_pParticleList.begin() + static_cast<long long>(i));
+			m_pParticleList.erase(m_pParticleList.begin() + static_cast<long long>(index));
 		}
 	}
 
 	if (!m_DissolveStarted) return;
 
-	for (int i{ 0 }; i < m_DissolveParticlesPerSecond; ++i)
+	for (int index{ 0 }; index < m_DissolveParticlesPerSecond; ++index)
 	{
 		m_CurrentDissolveParticles[m_CurrentDissolveIndex]->shouldMove = true;
 		++m_CurrentDissolveIndex;

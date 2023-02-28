@@ -5,15 +5,8 @@
 #include "Vector2f.h"
 
 class Texture;
+class ParticleSystem;
 
-struct Particle
-{
-	bool shouldMove{ false };
-	Vector2f position{ };
-	Vector2f velocity{ };
-	float remainingLifetime{ };
-	Color4f color{ };
-};
 
 class Game : public BaseGame
 {
@@ -37,23 +30,11 @@ public:
 	void ProcessMouseUpEvent(const SDL_MouseButtonEvent& e) override;
 
 private:
-	std::vector<Particle*> m_ParticleList{ };
 
-	bool m_DrawFrog{ true };
-	Texture* m_pFroggitTest;
-	Vector2f m_FroggitPos{ };
-
-	const float m_DissolveParticleLifetime{ .6f };
-	const int m_DissolveParticlesPerSecond{ 20 };
-
-	int m_FroggitAlphaDataSize;
-	float* m_pFroggitAlphaData;
-
-	bool m_DissolveStarted{ false };
-
-	size_t m_CurrentDissolveIndex{ 0 };
-
-	std::vector<Particle*> m_CurrentDissolveParticles{ };
+	ParticleSystem* m_pParticleSystem{};
+	Texture* m_pTexture{};
+	Vector2f m_EnemyPos{};
+	bool m_IsDead{};
 
 		// FUNCTIONS
 	void Initialize();

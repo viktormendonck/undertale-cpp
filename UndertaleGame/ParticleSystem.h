@@ -10,7 +10,7 @@ public:
 	~ParticleSystem();
 
 	void Draw();
-	void Update(float deltaT);
+	void Update(float deltaTime);
 	void StartDissolve(Vector2f spritePos, Texture* pTexture);
 	
 	
