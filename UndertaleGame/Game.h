@@ -30,9 +30,17 @@ public:
 	void ProcessMouseUpEvent(const SDL_MouseButtonEvent& e) override;
 
 private:
+	enum class GameState
+	{
+		startScreen,
+		infoScreen,
+		game,
+	};
+	GameState m_GameState{ GameState::game };
 
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pTexture{};
+	Texture* m_pInfoScreenTexture{};
 	Vector2f m_EnemyPos{};
 	bool m_IsDead{};
 
