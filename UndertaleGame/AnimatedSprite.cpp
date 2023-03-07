@@ -2,14 +2,18 @@
 #include "AnimatedSprite.h"
 
 
-AnimatedSprite::AnimatedSprite(Texture* pTexture, std::map<std::string, AnimationData> animationData, int width, int height, std::string startAnim)
+AnimatedSprite::AnimatedSprite(Texture* pTexture, std::map<std::string, AnimationData> animationData, int width, int height, std::string startAnim, float timeBetweenFrames)
 	: m_pTexture{ pTexture },
 	m_AnimationData{ animationData },
 	m_width{ width },
 	m_height{ height },
-	m_CurrentAnimation{ startAnim }
+	m_CurrentAnimation{ startAnim },
+	m_TimeBetweenFrames{timeBetweenFrames}
 {
+	m_TimeUntilNextFrame = m_TimeBetweenFrames;
 }
+
+
 
 AnimatedSprite::~AnimatedSprite()
 {
@@ -48,6 +52,8 @@ void AnimatedSprite::SetAnimation(const std::string& animationName)
 		return;
 	}
 	m_CurrentAnimation = animationName;
+	m_CurrentFrame = 0;
+	m_TimeUntilNextFrame = m_TimeBetweenFrames;
 }
 
 std::string AnimatedSprite::GetCurrentAnimation()

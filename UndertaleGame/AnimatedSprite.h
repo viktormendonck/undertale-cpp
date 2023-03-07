@@ -10,13 +10,14 @@ struct AnimationData
 
 	int rowIndex{};
 	int spriteCount{};
+	float timeBetweenFrames{};
 
 };
 
 class AnimatedSprite
 {
 public:
-	AnimatedSprite(Texture* pTexture, std::map<std::string,AnimationData> animationData,int width, int height, std::string startAnim);
+	AnimatedSprite(Texture* pTexture, std::map<std::string,AnimationData> animationData,int width, int height, std::string startAnim,float timeBetweenFrames);
 	~AnimatedSprite();
 
 	void Draw();
@@ -35,7 +36,7 @@ private:
 	int m_height;
 	std::string m_CurrentAnimation{};
 	int m_CurrentFrame{};
-	const float m_TimeBetweenFrames{.2f};
-	float m_TimeUntilNextFrame{.2f};
+	const float m_TimeBetweenFrames{};
+	float m_TimeUntilNextFrame{};
 };
 

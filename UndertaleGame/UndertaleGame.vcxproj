@@ -147,6 +147,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chara.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -155,11 +156,15 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="SpriteManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Chara.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="SpriteManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UndertaleGame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,6 +15,9 @@
     <Filter Include="Source\classes\sprites">
       <UniqueIdentifier>{e33e8a9c-fd96-4cb4-af21-1369c4e88cab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\player">
+      <UniqueIdentifier>{3935f41c-1f0b-46e8-a664-5a960b77e98e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -35,6 +38,9 @@
     <ClCompile Include="SpriteManager.cpp">
       <Filter>Source\classes\sprites</Filter>
     </ClCompile>
+    <ClCompile Include="Chara.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -52,5 +58,13 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>Source\classes\sprites</Filter>
     </ClInclude>
+    <ClInclude Include="Chara.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UndertaleGame.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
