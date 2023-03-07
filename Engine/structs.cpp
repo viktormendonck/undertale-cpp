@@ -40,6 +40,14 @@ Rectf::Rectf( float left, float bottom, float width, float height )
 {
 }
 
+Rectf::Rectf(Point2f bottomLeft, float width, float height)
+	:left{ bottomLeft.x }
+	, bottom{ bottomLeft.y }
+	, width{ width }
+	, height{ height }
+{
+}
+
 //-----------------------------------------------------------------
 // Color4f Constructors
 //-----------------------------------------------------------------

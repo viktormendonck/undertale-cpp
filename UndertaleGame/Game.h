@@ -6,7 +6,8 @@
 
 class Texture;
 class ParticleSystem;
-
+class AnimatedSprite;
+class SpriteManager;
 
 class Game : public BaseGame
 {
@@ -43,6 +44,8 @@ private:
 	Texture* m_pInfoScreenTexture{};
 	Vector2f m_EnemyPos{};
 	bool m_IsDead{};
+	SpriteManager* m_pSpriteManager{};
+
 
 		// FUNCTIONS
 	void Initialize();

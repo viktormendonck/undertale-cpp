@@ -9,6 +9,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source\classes">
+      <UniqueIdentifier>{a02cfd22-e5c6-4047-8652-38642c31dfb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\sprites">
+      <UniqueIdentifier>{e33e8a9c-fd96-4cb4-af21-1369c4e88cab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -21,7 +27,13 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\classes</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Source\classes\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteManager.cpp">
+      <Filter>Source\classes\sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,7 +44,13 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Source</Filter>
+      <Filter>Source\classes</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.h">
+      <Filter>Source\classes\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteManager.h">
+      <Filter>Source\classes\sprites</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
