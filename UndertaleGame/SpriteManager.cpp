@@ -23,7 +23,10 @@ SpriteManager::SpriteManager()
 
 SpriteManager::~SpriteManager()
 {
-
+	for (int index{}; index > m_pAnimatedSprites.size(); index++)
+	{
+		
+	}
 }
 
 void SpriteManager::Draw()
