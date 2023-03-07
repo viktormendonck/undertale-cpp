@@ -10,10 +10,12 @@
 #include "AnimatedSprite.h"
 #include <map>
 
+#include "SpriteManager.h"
+
 Game::Game(const Window& window)
 	: BaseGame{ window }
 	, m_pParticleSystem{new ParticleSystem{ 20, 0.6f}}
-	, m_pTexture{ new Texture{"Sprites/chara.png"}}
+	, m_pTexture{ new Texture{"Sprites/test4.png"}}
 {
 	Initialize();
 }
@@ -25,19 +27,8 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	std::map<std::string, AnimationData> animData{
-		{ "down",AnimationData{1,4} },
-		{"downIdle",AnimationData{1,1} },
-		{"left",AnimationData{2,2}},
-		{"leftIdle",AnimationData{2,1}},
-		{"right",AnimationData{3,2}},
-		{"rightIdle",AnimationData{3,1}},
-		{"up",AnimationData{4,4}},
-		{"upIdle",AnimationData{4,1}}
-	};
-	m_pSprite = new AnimatedSprite{ m_pTexture,animData,19,29,"down"};
-	m_pSprite->SetAnimation("down");
-	m_pSprite->m_pos = Vector2f{ 100,100 };
+	m_pSpriteManager = new SpriteManager{};
+
 }
 
 void Game::Cleanup()
@@ -49,7 +40,9 @@ void Game::Cleanup()
 void Game::Update(float deltaTime)
 {
 	m_pParticleSystem->Update(deltaTime);
-	m_pSprite->Update(deltaTime);
+	m_pSpriteManager->Update(deltaTime);
+	std::string currentCharaDirection = m_pSpriteManager->m_pAnimatedSprites[0]->GetCurrentAnimation();
+	
 }
 
 void Game::Draw() const
@@ -57,7 +50,7 @@ void Game::Draw() const
  	ClearBackground();
 	glPushMatrix();
 	glScalef(2, 2, 0);
-	m_pSprite->Draw();
+	m_pSpriteManager->Draw();
 
 	glPopMatrix();
 	if (m_IsDead) {
@@ -71,7 +64,21 @@ void Game::Draw() const
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
-	//std::cout << "KEYDOWN event: " << e.keysym.sym << std::endl;
+	switch(e.keysym.sym)
+	{
+	case SDLK_w:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("up");
+		break;
+	case SDLK_a:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("left");
+		break;
+	case SDLK_s:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("down");
+		break;
+	case SDLK_d:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("right");
+		break;
+	}
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
@@ -83,29 +90,17 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 		m_IsDead = !m_IsDead;
 		m_pParticleSystem->StartDissolve(m_EnemyPos, m_pTexture);
 		break;
-	case SDLK_0:
-		m_pSprite->SetAnimation("down");
+	case SDLK_w:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("upIdle");
 		break;
-	case SDLK_1:
-		m_pSprite->SetAnimation("downIdle");
+	case SDLK_a:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("leftIdle");
 		break;
-	case SDLK_2:
-		m_pSprite->SetAnimation("left");
+	case SDLK_s:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("downIdle");
 		break;
-	case SDLK_3:
-		m_pSprite->SetAnimation("leftIdle");
-		break;
-	case SDLK_4:
-		m_pSprite->SetAnimation("right");
-		break;
-	case SDLK_5:
-		m_pSprite->SetAnimation("rightIdle");
-		break;
-	case SDLK_6:
-		m_pSprite->SetAnimation("up");
-		break;
-	case SDLK_7:
-		m_pSprite->SetAnimation("upIdle");
+	case SDLK_d:
+		m_pSpriteManager->m_pAnimatedSprites[0]->SetAnimation("rightIdle");
 		break;
 	}
 }

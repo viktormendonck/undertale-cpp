@@ -22,6 +22,7 @@ public:
 	void Draw();
 	void Update(float deltaTime);
 	void SetAnimation(const std::string& animationName);
+	std::string GetCurrentAnimation();
 
 	Vector2f m_pos{};
 

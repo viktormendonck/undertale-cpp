@@ -49,3 +49,8 @@ void AnimatedSprite::SetAnimation(const std::string& animationName)
 	}
 	m_CurrentAnimation = animationName;
 }
+
+std::string AnimatedSprite::GetCurrentAnimation()
+{
+	return m_CurrentAnimation;
+}
