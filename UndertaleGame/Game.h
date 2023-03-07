@@ -6,6 +6,7 @@
 
 class Texture;
 class ParticleSystem;
+class AnimatedSprite;
 
 
 class Game : public BaseGame
@@ -35,6 +36,7 @@ private:
 	Texture* m_pTexture{};
 	Vector2f m_EnemyPos{};
 	bool m_IsDead{};
+	AnimatedSprite* m_pSprite{};
 
 		// FUNCTIONS
 	void Initialize();

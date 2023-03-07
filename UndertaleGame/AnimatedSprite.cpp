@@ -1,0 +1,51 @@
+#include "pch.h"
+#include "AnimatedSprite.h"
+
+
+AnimatedSprite::AnimatedSprite(Texture* pTexture, std::map<std::string, AnimationData> animationData, int width, int height, std::string startAnim)
+	: m_pTexture{ pTexture },
+	m_AnimationData{ animationData },
+	m_width{ width },
+	m_height{ height },
+	m_CurrentAnimation{ startAnim }
+{
+}
+
+AnimatedSprite::~AnimatedSprite()
+{
+	delete m_pTexture;
+}
+
+void AnimatedSprite::Draw()
+{
+	Rectf srcRect
+	{
+		static_cast<float>(m_CurrentFrame * m_width),
+		static_cast<float>(m_AnimationData[m_CurrentAnimation].rowIndex * m_height),
+		static_cast<float>(m_width),static_cast<float>(m_height)
+	};
+	m_pTexture->Draw(m_pos.ToPoint2f(),srcRect);
+
+}
+
+
+void AnimatedSprite::Update(float deltaTime)
+{
+	if ( m_TimeUntilNextFrame <= 0)
+	{
+		m_TimeUntilNextFrame = m_TimeBetweenFrames;
+		m_CurrentFrame = (m_CurrentFrame + 1) % m_AnimationData[m_CurrentAnimation].spriteCount;
+	} else
+	{
+		m_TimeUntilNextFrame -= deltaTime;
+	}
+}
+
+void AnimatedSprite::SetAnimation(const std::string& animationName)
+{
+	if (m_AnimationData.find(animationName) == m_AnimationData.end())
+	{
+		return;
+	}
+	m_CurrentAnimation = animationName;
+}
