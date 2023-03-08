@@ -85,12 +85,12 @@ void Game::Draw() const
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
-	m_pChara->PlayerInputManager(e);
+	m_pChara->PlayerButtonDownManager(e);
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
-	
+	m_pChara->PlayerButtonUpManager(e);
 	std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
 	switch (e.keysym.sym)
 	{

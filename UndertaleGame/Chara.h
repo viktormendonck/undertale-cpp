@@ -10,7 +10,8 @@ public:
 	~Chara();
 
 	void Update(float deltaTime);
-	void PlayerInputManager(const SDL_KeyboardEvent& e);
+	void PlayerButtonDownManager(const SDL_KeyboardEvent& e);
+	void PlayerButtonUpManager(const SDL_KeyboardEvent& e);
 
 	Vector2f GetPlayerPos() const;
 private:
