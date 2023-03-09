@@ -91,7 +91,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
 	m_pChara->PlayerButtonUpManager(e);
-	std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
+	//std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
 	switch (e.keysym.sym)
 	{
 	case SDLK_i:
