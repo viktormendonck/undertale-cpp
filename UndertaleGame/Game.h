@@ -9,6 +9,7 @@ class ParticleSystem;
 class AnimatedSprite;
 class SpriteManager;
 class Chara;
+class FightChara;
 
 class Game : public BaseGame
 {
@@ -36,9 +37,10 @@ private:
 	{
 		startScreen,
 		infoScreen,
-		game,
+		adventure,
+		fight
 	};
-	GameState m_GameState{ GameState::game };
+	GameState m_GameState{ GameState::adventure };
 
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pTexture{};
@@ -46,10 +48,11 @@ private:
 	Vector2f m_EnemyPos{};
 	SpriteManager* m_pSpriteManager{};
 	Chara* m_pChara{};
+	FightChara* m_pFightChara{};
 
 
 		// FUNCTIONS
-	void Initialize();
+	void Initialize(const Window& window);
 	void Cleanup();
 	void ClearBackground() const;
 };

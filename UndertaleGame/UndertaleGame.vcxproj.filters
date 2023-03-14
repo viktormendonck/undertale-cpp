@@ -18,6 +18,15 @@
     <Filter Include="Source\classes\player">
       <UniqueIdentifier>{3935f41c-1f0b-46e8-a664-5a960b77e98e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\Fight">
+      <UniqueIdentifier>{09eefc88-d9fc-4666-9c52-ae9cb9310ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Enemies">
+      <UniqueIdentifier>{80a690b0-afe2-4baf-ab56-ae29b6263afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\functionality">
+      <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -29,9 +38,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Source\classes</Filter>
-    </ClCompile>
     <ClCompile Include="AnimatedSprite.cpp">
       <Filter>Source\classes\sprites</Filter>
     </ClCompile>
@@ -39,6 +45,21 @@
       <Filter>Source\classes\sprites</Filter>
     </ClCompile>
     <ClCompile Include="Chara.cpp">
+      <Filter>Source\classes\player</Filter>
+    </ClCompile>
+    <ClCompile Include="Fight.cpp">
+      <Filter>Source\classes\Fight</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source\classes\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="FightChara.cpp">
+      <Filter>Source\classes\player</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source\classes\functionality</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -49,9 +70,6 @@
     <ClInclude Include="pch.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleSystem.h">
-      <Filter>Source\classes</Filter>
-    </ClInclude>
     <ClInclude Include="AnimatedSprite.h">
       <Filter>Source\classes\sprites</Filter>
     </ClInclude>
@@ -59,6 +77,21 @@
       <Filter>Source\classes\sprites</Filter>
     </ClInclude>
     <ClInclude Include="Chara.h">
+      <Filter>Source\classes\player</Filter>
+    </ClInclude>
+    <ClInclude Include="Fight.h">
+      <Filter>Source\classes\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Source\classes\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="FightChara.h">
+      <Filter>Source\classes\player</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Source\classes\functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

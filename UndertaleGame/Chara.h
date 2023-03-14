@@ -10,6 +10,7 @@ public:
 	~Chara();
 
 	void Update(float deltaTime);
+	void Draw();
 	void PlayerButtonDownManager(const SDL_KeyboardEvent& e);
 	void PlayerButtonUpManager(const SDL_KeyboardEvent& e);
 
@@ -22,6 +23,7 @@ private:
 
 	float m_RunStopDelay{};
 	float m_CurrentRunStopDelay{};
+	Vector2f m_Pos;
 };
 
 

@@ -10,7 +10,6 @@ struct AnimationData
 
 	int rowIndex{};
 	int spriteCount{};
-	float timeBetweenFrames{};
 
 };
 
@@ -20,12 +19,11 @@ public:
 	AnimatedSprite(Texture* pTexture, std::map<std::string,AnimationData> animationData,int width, int height, std::string startAnim,float timeBetweenFrames);
 	~AnimatedSprite();
 
-	void Draw();
+	void Draw(Vector2f pos);
 	void Update(float deltaTime);
 	void SetAnimation(const std::string& animationName);
 	std::string GetCurrentAnimation();
 
-	Vector2f m_pos{};
 
 private:
 
