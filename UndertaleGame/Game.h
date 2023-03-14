@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-
 #include "BaseGame.h"
 #include "Vector2f.h"
 
@@ -10,6 +8,7 @@ class AnimatedSprite;
 class SpriteManager;
 class Chara;
 class FightChara;
+class Fight;
 
 class Game : public BaseGame
 {
@@ -40,7 +39,7 @@ private:
 		adventure,
 		fight
 	};
-	GameState m_GameState{ GameState::adventure };
+	GameState m_GameState{ GameState::fight };
 
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pTexture{};
@@ -49,10 +48,12 @@ private:
 	SpriteManager* m_pSpriteManager{};
 	Chara* m_pChara{};
 	FightChara* m_pFightChara{};
+	Fight* m_pFight{};
+	Rectf m_Window{};
 
 
 		// FUNCTIONS
-	void Initialize(const Window& window);
+	void Initialize();
 	void Cleanup();
 	void ClearBackground() const;
 };

@@ -12,6 +12,7 @@
 
 #include "SpriteManager.h"
 #include "Chara.h"
+#include "Fight.h"
 #include "FightChara.h"
 
 Game::Game(const Window& window)
@@ -19,8 +20,10 @@ Game::Game(const Window& window)
 	, m_pParticleSystem{new ParticleSystem{ 20, 0.6f}}
 	, m_pTexture{ new Texture{"Sprites/test2.png"}}
 	, m_pInfoScreenTexture{ new Texture{"Static_Screens/Controls.png"}}
+	, m_Window{ GetViewPort() }
 {
-	Initialize(window);
+	
+	Initialize();
 }
 
 Game::~Game()
@@ -28,11 +31,13 @@ Game::~Game()
 	Cleanup();
 }
 
-void Game::Initialize(const Window& window)
+void Game::Initialize()
 {
 	m_pSpriteManager = new SpriteManager{};
 	m_pChara = new Chara{ m_pSpriteManager->m_pAnimatedSprites[0],40 };
-	m_pFightChara = new FightChara( m_pSpriteManager->m_pStaticTextures[0],m_pSpriteManager->m_pAnimatedSprites[1],5,20, Vector2f{window.width/2,window.height/2});
+	m_pFightChara = new FightChara(m_pSpriteManager->m_pStaticTextures[0], m_pSpriteManager->m_pAnimatedSprites[1], 100,
+	                               20, Vector2f{GetViewPort().width / 2, GetViewPort().height / 2});
+	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_pStaticTextures[1]);
 
 }
 
@@ -54,7 +59,7 @@ void Game::Update(float deltaTime)
 		m_pChara->Update(deltaTime);
 		break;
 	case GameState::fight:
-
+		m_pFight->Update(deltaTime);
 		break;
 	case GameState::infoScreen:
 		
@@ -77,7 +82,10 @@ void Game::Draw() const
 		m_pChara->Draw();
 		glPopMatrix();
 		break;
-
+	case GameState::fight:
+		m_pFight->Draw();
+		
+		break;
 	case GameState::infoScreen:
 		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });
 		break;
@@ -91,13 +99,43 @@ void Game::Draw() const
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
-	m_pChara->PlayerButtonDownManager(e);
+	switch (m_GameState)
+	{
+	case GameState::adventure:
+		m_pChara->PlayerButtonDownManager(e);
+		break;
+	case GameState::fight:
+		m_pFight->ButtonDownManager(e);
+		break;
+	case GameState::infoScreen:
+
+		break;
+	case GameState::startScreen:
+
+		break;
+
+	}
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
-	m_pChara->PlayerButtonUpManager(e);
-	//std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
+	switch (m_GameState)
+	{
+	case GameState::adventure:
+		m_pChara->PlayerButtonUpManager(e);
+		break;
+	case GameState::fight:
+		m_pFight->ButtonUpManager(e);
+		break;
+	case GameState::infoScreen:
+
+		break;
+	case GameState::startScreen:
+
+		break;
+
+	}
+	
 	switch (e.keysym.sym)
 	{
 	case SDLK_i:

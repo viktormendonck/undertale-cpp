@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "FightChara.h"
-
+#include "Fight.h"
 #include "AnimatedSprite.h"
 #include "Texture.h"
+#include "utils.h"
 
 FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth, Vector2f pos)
 	:
@@ -12,6 +13,13 @@ FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float 
 	m_Speed{ speed },
 	m_pos{ pos }
 {
+}
+
+FightChara::~FightChara()
+{
+	delete m_pHeartAnims;
+	delete m_pHeartTexture;
+
 }
 
 void FightChara::Draw()
@@ -33,9 +41,22 @@ void FightChara::Draw()
 	}
 }
 
-void FightChara::Update(float deltaTime)
+void FightChara::Update(float deltaTime,Fight* fight)
 {
+	Vector2f nextPlayerPos = m_pos + (m_Velocity * deltaTime);
+	Rectf player{ nextPlayerPos.ToPoint2f(),m_pHeartTexture->GetWidth(),m_pHeartTexture->GetHeight()};
 
+	Rectf boundaryBox = fight->GetFightBoundaryBox();
+
+	if (!(
+		utils::IsOverlapping(Point2f(boundaryBox.left, boundaryBox.bottom), Point2f(boundaryBox.left+boundaryBox.width, boundaryBox.bottom), player) ||
+		utils::IsOverlapping(Point2f(boundaryBox.left, boundaryBox.bottom), Point2f(boundaryBox.left, boundaryBox.bottom+boundaryBox.height), player) ||
+		utils::IsOverlapping(Point2f(boundaryBox.left + boundaryBox.width, boundaryBox.bottom), Point2f(boundaryBox.left + boundaryBox.width, boundaryBox.bottom + boundaryBox.height), player) ||
+		utils::IsOverlapping(Point2f(boundaryBox.left, boundaryBox.bottom + boundaryBox.height), Point2f(boundaryBox.left + boundaryBox.width, boundaryBox.bottom + boundaryBox.height), player)
+		)) 
+	{
+		m_pos = nextPlayerPos;
+	}
 }
 
 void FightChara::DamageChara(int damage)
@@ -46,11 +67,6 @@ void FightChara::DamageChara(int damage)
 void FightChara::SetFightCharaState(FightCharaState state)
 {
 	m_State = state;
-}
-
-void FightChara::StartFight(Fight* pFight)
-{
-	m_pFight = pFight;
 }
 
 void FightChara::ButtonDownManager(const SDL_KeyboardEvent& e)

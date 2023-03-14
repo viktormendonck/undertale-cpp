@@ -35,19 +35,20 @@ SpriteManager::SpriteManager()
 
 SpriteManager::~SpriteManager()
 {
-	for (int index{}; index < m_pAnimatedSprites.size(); index++)
+	for (AnimatedSprite* pAnimatedSprite : m_pAnimatedSprites)
 	{
-		delete m_pAnimatedSprites[index];
+		delete pAnimatedSprite;
 	}
+	for (Texture* pTexture : m_pStaticTextures)
+	{
+		delete pTexture;
+	}
+	delete m_pCharaTexture;
+	delete m_pPlayerHeartTexture;
+	delete m_pPlayerHeartAnimTexture;
+	delete m_pFightBackGrounds;
 }
 
-void SpriteManager::Draw()
-{
-	//for (AnimatedSprite* data :m_pAnimatedSprites)
-	//{
-		//data->Draw();
-	//}
-}
 
 void SpriteManager::Update(float deltaTime)
 {

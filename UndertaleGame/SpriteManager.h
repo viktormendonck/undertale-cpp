@@ -11,7 +11,7 @@ public:
 	SpriteManager();
 	~SpriteManager();
 
-	void Draw();
+
 	void Update(float deltaTime);
 
 	std::vector<AnimatedSprite*> m_pAnimatedSprites{};
@@ -21,10 +21,6 @@ private:
 	Texture* m_pPlayerHeartTexture{};
 	Texture* m_pPlayerHeartAnimTexture{};
 	Texture* m_pFightBackGrounds{};
-
-
-
-
 
 };
 
