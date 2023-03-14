@@ -48,6 +48,13 @@ Rectf::Rectf(Point2f bottomLeft, float width, float height)
 {
 }
 
+Point2f Rectf::GetMiddle()
+{
+	float x{left+(width/2)};
+	float y{bottom+(height/2)};
+	return Point2f(x, y);
+}
+
 //-----------------------------------------------------------------
 // Color4f Constructors
 //-----------------------------------------------------------------

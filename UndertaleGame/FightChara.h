@@ -15,7 +15,7 @@ enum class FightCharaState
 class FightChara
 {
 public:
-	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth, Vector2f pos);
+	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth);
 	~FightChara();
 
 	void Draw();
@@ -23,9 +23,12 @@ public:
 
 	void DamageChara(int damage);
 	void SetFightCharaState(FightCharaState state);
+	Rectf GetLocationRect();
+	void SetPos(Vector2f pos);
 
 	void ButtonDownManager(const SDL_KeyboardEvent& e);
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
+
 private:
 	FightCharaState m_State{ FightCharaState::base };
 	Texture* m_pHeartTexture;
@@ -36,4 +39,9 @@ private:
 	Vector2f m_pos{};
 	Vector2f m_Velocity{};
 };
+
+inline Rectf FightChara::GetLocationRect()
+{
+	return Rectf(m_pos.ToPoint2f(), m_pHeartTexture->GetWidth(), m_pHeartTexture->GetHeight());
+}
 

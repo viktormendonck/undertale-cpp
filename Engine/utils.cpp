@@ -683,6 +683,16 @@ bool utils::IntersectRectLine(const Rectf& r, const Point2f& p1, const Point2f& 
 	return true;
 }
 
+bool utils::IntersectRectRectBorder(const Rectf& rect, Rectf rectBorder)
+{
+	return (
+		utils::IsOverlapping(Point2f(rectBorder.left, rectBorder.bottom), Point2f(rectBorder.left + rectBorder.width, rectBorder.bottom), rect) ||
+		utils::IsOverlapping(Point2f(rectBorder.left, rectBorder.bottom), Point2f(rectBorder.left, rectBorder.bottom + rectBorder.height), rect) ||
+		utils::IsOverlapping(Point2f(rectBorder.left + rectBorder.width, rectBorder.bottom), Point2f(rectBorder.left + rectBorder.width, rectBorder.bottom + rectBorder.height), rect) ||
+		utils::IsOverlapping(Point2f(rectBorder.left, rectBorder.bottom + rectBorder.height), Point2f(rectBorder.left + rectBorder.width, rectBorder.bottom + rectBorder.height), rect)
+		);
+}
+
 float utils::Lerp(float a, float b, float t)
 {
 	return a + t * (b - a);

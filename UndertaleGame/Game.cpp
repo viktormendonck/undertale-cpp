@@ -36,7 +36,7 @@ void Game::Initialize()
 	m_pSpriteManager = new SpriteManager{};
 	m_pChara = new Chara{ m_pSpriteManager->m_pAnimatedSprites[0],40 };
 	m_pFightChara = new FightChara(m_pSpriteManager->m_pStaticTextures[0], m_pSpriteManager->m_pAnimatedSprites[1], 100,
-	                               20, Vector2f{GetViewPort().width / 2, GetViewPort().height / 2});
+	                               20);
 	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_pStaticTextures[1]);
 
 }

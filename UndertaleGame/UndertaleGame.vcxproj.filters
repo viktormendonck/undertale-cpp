@@ -27,6 +27,9 @@
     <Filter Include="Source\classes\functionality">
       <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\Enemies\enemyTypes">
+      <UniqueIdentifier>{a7a0f3a9-9da9-47fe-ad25-06cf1035ec84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -62,6 +65,9 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Froggit.cpp">
+      <Filter>Source\classes\Enemies\enemyTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -93,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Froggit.h">
+      <Filter>Source\classes\Enemies\enemyTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

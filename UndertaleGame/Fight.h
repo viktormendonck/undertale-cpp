@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Texture.h"
+#include "Vector2f.h"
 
 class EnemyManager;
 class Enemy;
@@ -41,8 +42,11 @@ private:
 	Rectf m_FightBoundary{};
 	Rectf m_TextBox{};
 	float m_FightSquareDimentions{150};
-	float m_TextBoxOffset{10};
+	float m_TextBoxSideOffset{10};
 	float m_BoxLineWidth{ 4 };
+	float m_BoxBottomOffset{ 75 };
+
+	Vector2f m_MiddleLocation{};
 
 	FightState m_FightState{ FightState::fight };
 	

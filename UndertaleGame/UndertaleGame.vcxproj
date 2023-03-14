@@ -152,6 +152,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="FightChara.cpp" />
+    <ClCompile Include="Froggit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -165,6 +166,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="FightChara.h" />
+    <ClInclude Include="Froggit.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="pch.h" />

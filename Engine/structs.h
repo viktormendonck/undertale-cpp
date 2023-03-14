@@ -28,6 +28,7 @@ struct Rectf
 	Rectf( );
 	explicit Rectf( float left, float bottom, float width, float height );
 	explicit Rectf(Point2f bottomLeft , float width, float height);
+	Point2f GetMiddle();
 	
 	float left;
 	float bottom;
