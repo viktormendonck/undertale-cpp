@@ -21,6 +21,7 @@ Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture)
 							m_FightSquareDimentions);
 	Vector2f pos{ m_FightBoundary.GetMiddle().x,m_FightBoundary.GetMiddle().y };
 	m_pFightChara->SetPos(pos);
+	m_IsBossFight = false;
 }	
 
 Fight::~Fight()
@@ -48,8 +49,8 @@ void Fight::Draw()
 
 		break;
 	case (FightState::fight):
-		utils::DrawRect(m_FightBoundary, static_cast<float>(m_BoxLineWidth));
 		m_pFightChara->Draw();
+		utils::DrawRect(m_FightBoundary, static_cast<float>(m_BoxLineWidth));
 		break;
 	case (FightState::fightToMenu):
 

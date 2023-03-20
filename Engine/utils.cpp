@@ -56,6 +56,11 @@ void utils::DrawLine( const Point2f& p1, const Point2f& p2, float lineWidth )
 	DrawLine( p1.x, p1.y, p2.x, p2.y, lineWidth );
 }
 
+void utils::DrawLine(const Linef line, float lineWidth)
+{
+	DrawLine(line.point1,line.point2,lineWidth);
+}
+
 void utils::DrawTriangle(const Point2f& p1, const Point2f& p2, const Point2f& p3, float lineWidth)
 {
 	glLineWidth(lineWidth);
@@ -320,6 +325,11 @@ bool utils::IsOverlapping( const Point2f& a, const Point2f& b, const Rectf& r )
 	return Raycast( vertices, 4, a, b, hitInfo );
 }
 
+bool utils::IsOverlapping(const Linef& line, const Rectf& r)
+{
+	return IsOverlapping(line.point1, line.point2, r);
+}
+
 bool utils::IsOverlapping( const Rectf& r1, const Rectf& r2 )
 {
 	// If one rectangle is on left side of the other
@@ -530,6 +540,27 @@ bool utils::IntersectLineSegments( const Point2f& p1, const Point2f& p2, const P
 	return intersecting;
 }
 
+bool utils::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2,
+	float epsilon)
+{
+	float unusedLambda1{};
+	float unusedLambda2{};
+
+	return IntersectLineSegments(p1, p2, q1, q2, unusedLambda1, unusedLambda2);
+}
+
+bool utils::IntersectLineSegments(const Linef& l1, const Linef l2, float& outLambda1, float& outLambda2, float epsilon)
+{
+	return IntersectLineSegments(l1.point1, l1.point2, l2.point1, l1.point2, outLambda1, outLambda2, epsilon);
+}
+
+bool utils::IntersectLineSegments(const Linef& l1, const Linef l2, float epsilon)
+{
+	float unusedLambda1{};
+	float unusedLambda2{};
+	return (IntersectLineSegments(l1, l2, unusedLambda1, unusedLambda2));
+}
+
 bool utils::Raycast( const std::vector<Point2f>& vertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo )
 {
 	return Raycast( vertices.data( ), vertices.size( ), rayP1, rayP2, hitInfo );
@@ -692,6 +723,7 @@ bool utils::IntersectRectRectBorder(const Rectf& rect, Rectf rectBorder)
 		utils::IsOverlapping(Point2f(rectBorder.left, rectBorder.bottom + rectBorder.height), Point2f(rectBorder.left + rectBorder.width, rectBorder.bottom + rectBorder.height), rect)
 		);
 }
+
 
 float utils::Lerp(float a, float b, float t)
 {

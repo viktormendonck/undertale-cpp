@@ -38,6 +38,13 @@ private:
 	bool m_IsGravityMode{false};
 	Vector2f m_pos{};
 	Vector2f m_Velocity{};
+
+	float m_Gravity{ 98.1f };
+	float  m_JumpStrength{};
+
+	Linef m_LineCast{};
+
+	bool m_IsGrounded{};
 };
 
 inline Rectf FightChara::GetLocationRect()

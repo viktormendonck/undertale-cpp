@@ -72,4 +72,15 @@ struct Ellipsef
 };
 
 
+struct Linef
+{
+	Linef();
+	explicit Linef(Point2f point1, Point2f Point2);
+	explicit Linef(float point1x, float point1y, float point2x, float point2y);
+
+	Point2f point1;
+	Point2f point2;
+};
+
+
 

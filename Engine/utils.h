@@ -16,6 +16,7 @@ namespace utils
 
 	void DrawLine( float x1, float y1, float x2, float y2, float lineWidth = 1.0f );
 	void DrawLine( const Point2f& p1, const Point2f& p2, float lineWidth = 1.0f );
+	void DrawLine( const Linef line, float lineWidth = 1.0f );
 
 	void DrawTriangle(const Point2f& p1, const Point2f& p2, const Point2f& p3, float lineWidth = 1);
 	void FillTriangle(const Point2f& p1, const Point2f& p2, const Point2f& p3);
@@ -67,6 +68,7 @@ namespace utils
 
 	bool IsOverlapping( const Point2f& a, const Point2f& b, const Circlef& c );
 	bool IsOverlapping( const Point2f& a, const Point2f& b, const Rectf& r );
+	bool IsOverlapping( const Linef& line, const Rectf& r );
 
 	bool IsOverlapping(const Rectf & r1, const Rectf & r2);
 	bool IsOverlapping( const Rectf& r, const Circlef& c );
@@ -77,6 +79,10 @@ namespace utils
 	bool Raycast( const std::vector<Point2f>& vertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo );
 
 	bool IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2, float& outLambda1, float& outLambda2, float epsilon = 1e-6);
+	bool IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2, float epsilon = 1e-6);
+	bool IntersectLineSegments(const Linef& l1, const Linef l2, float& outLambda1, float& outLambda2, float epsilon = 1e-6);
+	bool IntersectLineSegments(const Linef& l1, const Linef l2, float epsilon = 1e-6);
+
 	float DistPointLineSegment(const Point2f& p, const Point2f& a, const Point2f& b);
 	bool IsPointOnLineSegment(const Point2f& p, const Point2f& a, const Point2f& b);
 	bool IntersectRectLine(const Rectf& r, const Point2f& p1, const Point2f& p2, float& intersectMin, float& intersectMax);
