@@ -62,3 +62,13 @@ std::string AnimatedSprite::GetCurrentAnimation()
 {
 	return m_CurrentAnimation;
 }
+
+float AnimatedSprite::GetWidth()
+{
+	return m_width;
+}
+
+float AnimatedSprite::GetHeight()
+{
+	return m_height;
+}

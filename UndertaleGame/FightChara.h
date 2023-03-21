@@ -39,7 +39,7 @@ private:
 	Vector2f m_pos{};
 	Vector2f m_Velocity{};
 
-	float m_Gravity{ 98.1f };
+	float m_Gravity{ 120 };
 	float  m_JumpStrength{};
 
 	Linef m_LineCast{};

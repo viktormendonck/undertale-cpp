@@ -21,8 +21,11 @@ public:
 
 	void Draw(Vector2f pos);
 	void Update(float deltaTime);
+
 	void SetAnimation(const std::string& animationName);
 	std::string GetCurrentAnimation();
+	float GetWidth();
+	float GetHeight();
 
 
 private:

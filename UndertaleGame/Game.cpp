@@ -43,9 +43,13 @@ void Game::Initialize()
 
 void Game::Cleanup()
 {
-	delete m_pTexture;
 	delete m_pParticleSystem;
+	delete m_pTexture;
 	delete m_pInfoScreenTexture;
+	delete m_pSpriteManager;
+	delete m_pChara;
+	delete m_pFightChara;
+	delete m_pFight;
 }
 
 void Game::Update(float deltaTime)

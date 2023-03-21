@@ -1,15 +1,34 @@
 #include "pch.h"
 #include "Froggit.h"
+
+#include "AnimatedSprite.h"
 #include "Texture.h"
 
-//Froggit::Froggit(Texture* pFroggitHead, int health, int conversationAmount)
-//	: Enemy(health, conversationAmount),
-//	 m_pFroggitHead{pFroggitHead}
-//	  
-//{
-//}
-//
-//Froggit::~Froggit()
-//{
-//	delete m_pFroggitHead;
-//}
+Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount)
+	:
+	Enemy(health, conversationAmount,pBaseTexture,pDeathTexture),
+	m_pFroggitHead{pFroggitHead},
+	m_BaseHeadOffset{Vector2f(pBaseTexture->GetWidth()/2,pBaseTexture->GetHeight())}
+{
+}
+
+Froggit::~Froggit()
+{
+	delete m_pFroggitHead;
+}
+
+void Froggit::Update(float deltaTime)
+{
+	//Enemy::Update(deltaTime);
+	m_HeadMovingIncrementor = m_HeadMovingIncrementor + (deltaTime * m_HeadMovementSpeed);
+	float x = cosf(m_HeadMovingIncrementor);
+	float y = sinf(2 * m_HeadMovingIncrementor) / 2;
+	m_CurrentHeadOffset = m_BaseHeadOffset + Vector2f(x, y);
+}
+
+void Froggit::Draw()
+{
+	//Enemy::draw();
+	Vector2f headPos = (Enemy::GetPos() + m_CurrentHeadOffset);
+	
+}
