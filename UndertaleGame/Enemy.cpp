@@ -4,12 +4,13 @@
 #include "AnimatedSprite.h"
 
 
-Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture)
+Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying)
 	:
 	m_hp{health},
 	m_ConversationAmount{conversationAmount},
 	m_pTexture{baseTexture},
-	m_pEnemyDeathTexture{deathTexture}
+	m_pEnemyDeathTexture{deathTexture},
+	m_IsFlying{isFlying}
 {
 
 }

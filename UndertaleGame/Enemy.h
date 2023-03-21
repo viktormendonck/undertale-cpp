@@ -8,7 +8,7 @@ class Enemy
 {
 public:
 	Enemy() = delete;
-	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture);
+	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying);
 	~Enemy();
 
 	void draw( );
@@ -26,6 +26,8 @@ private:
 	AnimatedSprite* m_pTexture;
 	Texture* m_pEnemyDeathTexture;
 	Vector2f m_Pos{};
+
+	const bool m_IsFlying;
 
 };
 

@@ -7,19 +7,21 @@ class EnemyManager;
 class Enemy;
 class FightChara;
 class SpriteManager;
+class ParticleSystem;
 
 enum class FightState
 {
 	menu,
 	fight,
-	fightToMenu,
+	Transition,
 	menuToFight
 };
 
 class Fight
 {
 public:
-	Fight(FightChara* pChara,Rectf screen,Texture* backGroundTexture);
+	Fight() = delete;
+	Fight(FightChara* pChara,Rectf screen,Texture* backGroundTexture,ParticleSystem* pParticleSystem);
 	~Fight();
 
 	void Draw();
@@ -36,6 +38,8 @@ private:
 	Texture* m_pBackgroundTexture;
 	std::vector<Texture*> m_pButtonTextures;
 
+	ParticleSystem* m_pParticleSystem;
+
 	bool m_IsBossFight{};
 	int m_BackGroundsAmount{2};
 
@@ -45,6 +49,7 @@ private:
 	float m_TextBoxSideOffset{10};
 	float m_BoxLineWidth{ 2 };
 	float m_BoxBottomOffset{ 75 };
+
 
 	Vector2f m_MiddleLocation{};
 

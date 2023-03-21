@@ -3,13 +3,15 @@
 #include "EnemyManager.h"
 #include "FightChara.h"
 #include "Enemy.h"
+#include "ParticleSystem.h"
 #include "utils.h"
 
 
 
-Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture)
+Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, ParticleSystem* pParticleSystem)
 	: m_pFightChara{pChara},
-	  m_pBackgroundTexture{backGroundTexture}
+	  m_pBackgroundTexture{backGroundTexture},
+	  m_pParticleSystem{pParticleSystem}
 {
 	m_FightBoundary = Rectf((screen.width - m_FightSquareDimentions) / 2,
 								 m_BoxBottomOffset,
@@ -28,10 +30,8 @@ Fight::~Fight()
 {
 	delete m_pBackgroundTexture;
 	delete m_pFightChara;
-	for (Enemy* enemy : m_pEnemies)
-	{
-		delete enemy;
-	}
+	delete m_pParticleSystem;
+	
 
 }
 
@@ -52,7 +52,7 @@ void Fight::Draw()
 		m_pFightChara->Draw();
 		utils::DrawRect(m_FightBoundary, static_cast<float>(m_BoxLineWidth));
 		break;
-	case (FightState::fightToMenu):
+	case (FightState::Transition):
 
 		break;
 	}
@@ -65,13 +65,10 @@ void Fight::Update(float deltaTime)
 	case (FightState::menu):
 
 		break;
-	case (FightState::menuToFight):
-
-		break;
 	case (FightState::fight):
 		m_pFightChara->Update(deltaTime,this);
 		break;
-	case (FightState::fightToMenu):
+	case (FightState::Transition):
 
 		break;
 	}
@@ -95,7 +92,7 @@ void Fight::ButtonDownManager(const SDL_KeyboardEvent& e)
 	case (FightState::fight):
 		m_pFightChara->ButtonDownManager(e);
 		break;
-	case (FightState::fightToMenu):
+	case (FightState::Transition):
 
 		break;
 	}
@@ -114,7 +111,7 @@ void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
 	case (FightState::fight):
 		m_pFightChara->ButtonUpManager(e);
 		break;
-	case (FightState::fightToMenu):
+	case (FightState::Transition):
 
 		break;
 	}

@@ -37,7 +37,7 @@ void Game::Initialize()
 	m_pChara = new Chara{ m_pSpriteManager->m_pAnimatedSprites[0],40 };
 	m_pFightChara = new FightChara(m_pSpriteManager->m_pStaticTextures[0], m_pSpriteManager->m_pAnimatedSprites[1], 100,
 	                               20);
-	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_pStaticTextures[1]);
+	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_pStaticTextures[1],m_pParticleSystem);
 
 }
 
