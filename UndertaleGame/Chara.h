@@ -9,6 +9,12 @@ public:
 	Chara(AnimatedSprite* playerSprite, float speed);
 	~Chara();
 
+	Chara(const Chara& other) = delete; // Copy constructor
+	Chara& operator=(const Chara& other) = delete; // Copy assignment operator
+
+	Chara(Chara&& other) = delete; // Move constructor
+	Chara& operator=(Chara&& other) = delete; // Move assignment operator
+
 	void Update(float deltaTime);
 	void Draw();
 	void PlayerButtonDownManager(const SDL_KeyboardEvent& e);

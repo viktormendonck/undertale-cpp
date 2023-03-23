@@ -7,9 +7,15 @@ class AnimatedSprite;
 class Enemy
 {
 public:
-	Enemy() = delete;
-	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying);
-	~Enemy();
+	Enemy() = delete; // default constructor
+	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying); // constructor
+	~Enemy(); // destructor
+
+	Enemy(const Enemy& other) = delete; // Copy constructor
+	Enemy& operator=(const Enemy& other) = delete; // Copy assignment operator
+
+	Enemy(Enemy&& other) = delete; // Move constructor
+	Enemy& operator=(Enemy&& other) = delete; // Move assignment operator
 
 	void draw( );
 	void Update(float deltaTime);

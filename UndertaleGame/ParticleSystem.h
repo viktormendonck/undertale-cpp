@@ -9,6 +9,12 @@ public:
 	ParticleSystem(int dissolveParticlesPerSecond, float dissolveParticleLifetime);
 	~ParticleSystem();
 
+	ParticleSystem(const ParticleSystem& other) = delete; // Copy constructor
+	ParticleSystem& operator=(const ParticleSystem& other) = delete; // Copy assignment operator
+
+	ParticleSystem(ParticleSystem&& other) = delete; // Move constructor
+	ParticleSystem& operator=(ParticleSystem&& other) = delete; // Move assignment operator
+
 	void Draw();
 	void Update(float deltaTime);
 	void StartDissolve(Vector2f spritePos, Texture* pTexture);

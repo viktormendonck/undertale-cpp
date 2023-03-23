@@ -19,6 +19,12 @@ public:
 	AnimatedSprite(Texture* pTexture, std::map<std::string,AnimationData> animationData,int width, int height, std::string startAnim,float timeBetweenFrames);
 	~AnimatedSprite();
 
+	AnimatedSprite(const AnimatedSprite& other) = delete; // Copy constructor
+	AnimatedSprite& operator=(const AnimatedSprite& other) = delete; // Copy assignment operator
+
+	AnimatedSprite(AnimatedSprite&& other) = delete; // Move constructor
+	AnimatedSprite& operator=(AnimatedSprite&& other) = delete; // Move assignment operator
+
 	void Draw(Vector2f pos);
 	void Update(float deltaTime);
 

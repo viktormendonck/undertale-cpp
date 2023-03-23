@@ -18,6 +18,12 @@ public:
 	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth);
 	~FightChara();
 
+	FightChara(const FightChara& other) = delete; // Copy constructor
+	FightChara& operator=(const FightChara& other) = delete; // Copy assignment operator
+
+	FightChara(FightChara&& other) = delete; // Move constructor
+	FightChara& operator=(FightChara&& other) = delete; // Move assignment operator
+
 	void Draw();
 	void Update(float deltaTime, Fight* fight);
 

@@ -24,6 +24,12 @@ public:
 	Fight(FightChara* pChara,Rectf screen,Texture* backGroundTexture,ParticleSystem* pParticleSystem);
 	~Fight();
 
+	Fight(const Fight& other) = delete; // Copy constructor
+	Fight& operator=(const Fight& other) = delete; // Copy assignment operator
+
+	Fight(Fight&& other) = delete; // Move constructor
+	Fight& operator=(Fight&& other) = delete; // Move assignment operator
+
 	void Draw();
 	void Update(float deltaTime);
 

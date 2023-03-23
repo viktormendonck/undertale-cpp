@@ -9,6 +9,12 @@ public:
 	Froggit(Texture* pFroggitHead, AnimatedSprite* pBaseTexture, Texture* pDeathTexture,int health, int conversationAmount, float headMovementSpeed);
 	~Froggit();
 
+	Froggit(const Froggit& other) = delete; // Copy constructor
+	Froggit& operator=(const Froggit& other) = delete; // Copy assignment operator
+
+	Froggit(Froggit&& other) = delete; // Move constructor
+	Froggit& operator=(Froggit&& other) = delete; // Move assignment operator
+
 	void Update(float deltaTime);
 
 	void Draw();
