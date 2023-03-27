@@ -7,6 +7,7 @@
 #include "AnimatedSprite.h"
 #include "Texture.h"
 #include "utils.h"
+#include "CollisionBox.h"
 
 FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth)
 	:
@@ -48,15 +49,15 @@ void FightChara::Draw()
 
 void FightChara::Update(float deltaTime,Fight* fight)
 {
-	m_LineCast = Linef(Point2f(m_pos.x, m_pos.y-0.5f), Point2f(m_pos.x + m_pHeartTexture->GetWidth(), m_pos.y-0.5f));
-	Vector2f nextPlayerPos = m_pos + (m_Velocity * deltaTime);
-	Rectf player{ nextPlayerPos.ToPoint2f(),m_pHeartTexture->GetWidth(),m_pHeartTexture->GetHeight()};
+	m_LineCast = Linef(Point2f(m_pos.x, m_pos.y-1), Point2f(m_pos.x + m_pHeartTexture->GetWidth(), m_pos.y-1));
+	const Vector2f nextPlayerPos = m_pos + (m_Velocity * deltaTime);
+	const Rectf playerRect{ nextPlayerPos.ToPoint2f(),m_pHeartTexture->GetWidth(),m_pHeartTexture->GetHeight()};
 
-	Rectf FightBorder = fight->GetFightBoundaryBox();
+	CollisionBox fightBorder = fight->GetFightBoundaryBox();
 
 
 	if (m_IsGravityMode) {
-		if (utils::IsOverlapping(m_LineCast, FightBorder))
+		if (!(utils::IsOverlapping(fight->GetFightBoundaryBox().GetBottom(), playerRect) || utils::IsOverlapping(fight->GetFightBoundaryBox().GetTop(), playerRect)))
 		{
 			m_IsGrounded = false;
 			m_Velocity.y -= m_Gravity * deltaTime;
@@ -68,9 +69,13 @@ void FightChara::Update(float deltaTime,Fight* fight)
 		}
 	}
 
-	if (!utils::IntersectRectRectBorder(player, FightBorder))
+	if (!(utils::IsOverlapping(fight->GetFightBoundaryBox().GetBottom(),playerRect) || utils::IsOverlapping(fight->GetFightBoundaryBox().GetTop(),playerRect)))
 	{
-		m_pos = nextPlayerPos;
+		m_pos.y = nextPlayerPos.y;
+	}
+	if (!(utils::IsOverlapping(fight->GetFightBoundaryBox().GetLeft(), playerRect) || utils::IsOverlapping(fight->GetFightBoundaryBox().GetRight(), playerRect)))
+	{
+		m_pos.x = nextPlayerPos.x;
 	}
 
 	if (m_Hp<=0)

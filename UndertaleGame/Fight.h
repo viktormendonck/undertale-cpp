@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+
+#include "CollisionBox.h"
 #include "Texture.h"
 #include "Vector2f.h"
 
@@ -33,7 +35,7 @@ public:
 	void Draw();
 	void Update(float deltaTime);
 
-	Rectf GetFightBoundaryBox();
+	CollisionBox GetFightBoundaryBox();
 	void ButtonDownManager(const SDL_KeyboardEvent& e);
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
 
@@ -49,7 +51,7 @@ private:
 	bool m_IsBossFight{};
 	int m_BackGroundsAmount{2};
 
-	Rectf m_FightBoundary{};
+	CollisionBox m_FightBoundary;
 	Rectf m_TextBox{};
 	float m_FightSquareDimentions{150};
 	float m_TextBoxSideOffset{10};

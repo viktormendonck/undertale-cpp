@@ -68,6 +68,9 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Source\classes\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionBox.cpp">
+      <Filter>Source\classes\functionality</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -102,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>Source\classes\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionBox.h">
+      <Filter>Source\classes\functionality</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

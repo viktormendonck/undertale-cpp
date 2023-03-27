@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "ParticleSystem.h"
 #include "utils.h"
+#include "CollisionBox.h"
 
 
 
@@ -13,15 +14,10 @@ Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, Partic
 	  m_pBackgroundTexture{backGroundTexture},
 	  m_pParticleSystem{pParticleSystem}
 {
-	m_FightBoundary = Rectf((screen.width - m_FightSquareDimentions) / 2,
-								 m_BoxBottomOffset,
-							m_FightSquareDimentions, 
-							m_FightSquareDimentions);
-	m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2,
-								 m_BoxBottomOffset,
-							screen.width-m_TextBoxSideOffset*2,
-							m_FightSquareDimentions);
-	Vector2f pos{ m_FightBoundary.GetMiddle().x,m_FightBoundary.GetMiddle().y };
+	m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_BoxBottomOffset,m_FightSquareDimentions, m_FightSquareDimentions));
+
+	m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_BoxBottomOffset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimentions);
+	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
 	m_pFightChara->SetPos(pos);
 	m_IsBossFight = false;
 }	
@@ -50,7 +46,7 @@ void Fight::Draw()
 		break;
 	case (FightState::fight):
 		m_pFightChara->Draw();
-		utils::DrawRect(m_FightBoundary, static_cast<float>(m_BoxLineWidth));
+		utils::DrawRect(m_FightBoundary.GetRect(), static_cast<float>(m_BoxLineWidth));
 		break;
 	case (FightState::Transition):
 
@@ -74,7 +70,7 @@ void Fight::Update(float deltaTime)
 	}
 }
 
-Rectf Fight::GetFightBoundaryBox()
+CollisionBox Fight::GetFightBoundaryBox()
 {
 	return m_FightBoundary;
 }
