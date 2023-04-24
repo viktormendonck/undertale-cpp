@@ -24,11 +24,11 @@
     <Filter Include="Source\classes\Enemies">
       <UniqueIdentifier>{80a690b0-afe2-4baf-ab56-ae29b6263afe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\classes\functionality">
-      <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\classes\Enemies\enemyTypes">
       <UniqueIdentifier>{a7a0f3a9-9da9-47fe-ad25-06cf1035ec84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\player\functionality">
+      <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="AnimatedSprite.cpp">
       <Filter>Source\classes\sprites</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteManager.cpp">
+    <ClCompile Include="ResourceManager.cpp">
       <Filter>Source\classes\sprites</Filter>
     </ClCompile>
     <ClCompile Include="Chara.cpp">
@@ -60,7 +60,7 @@
       <Filter>Source\classes\player</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Source\classes\functionality</Filter>
+      <Filter>Source\classes\player\functionality</Filter>
     </ClCompile>
     <ClCompile Include="Froggit.cpp">
       <Filter>Source\classes\Enemies\enemyTypes</Filter>
@@ -69,7 +69,7 @@
       <Filter>Source\classes\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="CollisionBox.cpp">
-      <Filter>Source\classes\functionality</Filter>
+      <Filter>Source\classes\player\functionality</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +82,7 @@
     <ClInclude Include="AnimatedSprite.h">
       <Filter>Source\classes\sprites</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteManager.h">
+    <ClInclude Include="ResourceManager.h">
       <Filter>Source\classes\sprites</Filter>
     </ClInclude>
     <ClInclude Include="Chara.h">
@@ -98,7 +98,7 @@
       <Filter>Source\classes\player</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Source\classes\functionality</Filter>
+      <Filter>Source\classes\player\functionality</Filter>
     </ClInclude>
     <ClInclude Include="Froggit.h">
       <Filter>Source\classes\Enemies\enemyTypes</Filter>
@@ -107,7 +107,7 @@
       <Filter>Source\classes\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="CollisionBox.h">
-      <Filter>Source\classes\functionality</Filter>
+      <Filter>Source\classes\player\functionality</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

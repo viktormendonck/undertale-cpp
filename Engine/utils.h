@@ -90,4 +90,7 @@ namespace utils
 
 #pragma endregion CollisionFunctionality
 	float Lerp(float a, float b, float t);
+	Point2f Lerp(Point2f a, Point2f b, float t);
+
+	int RandInRange(int min, int max);
 }

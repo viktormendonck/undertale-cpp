@@ -23,8 +23,8 @@ FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float 
 
 FightChara::~FightChara()
 {
-	delete m_pHeartAnims;
-	delete m_pHeartTexture;
+	//delete m_pHeartAnims;
+	//delete m_pHeartTexture;
 
 }
 
@@ -47,35 +47,34 @@ void FightChara::Draw()
 	}
 }
 
-void FightChara::Update(float deltaTime,Fight* fight)
+void FightChara::Update(float deltaTime,Fight* fight, std::vector<CollisionBox> colliders)
 {
+	UpdateMovement(deltaTime);
+
 	m_LineCast = Linef(Point2f(m_pos.x, m_pos.y-1), Point2f(m_pos.x + m_pHeartTexture->GetWidth(), m_pos.y-1));
 	const Vector2f nextPlayerPos = m_pos + (m_Velocity * deltaTime);
 	const Rectf playerRect{ nextPlayerPos.ToPoint2f(),m_pHeartTexture->GetWidth(),m_pHeartTexture->GetHeight()};
+	colliders.push_back(fight->GetFightBoundaryBox());
 
-	CollisionBox fightBorder = fight->GetFightBoundaryBox();
 
-
-	if (m_IsGravityMode) {
-		if (!(utils::IsOverlapping(fight->GetFightBoundaryBox().GetBottom(), playerRect) || utils::IsOverlapping(fight->GetFightBoundaryBox().GetTop(), playerRect)))
+	if (m_IsGravityMode)
+	{
+		m_IsGrounded = utils::IsOverlapping(fight->GetFightBoundaryBox().GetBottom(), playerRect);
+		for (int i{}; i < colliders.size(); ++i)
 		{
-			m_IsGrounded = false;
-			m_Velocity.y -= m_Gravity * deltaTime;
-		}
-		else
-		{
-			m_IsGrounded = true;
-			m_Velocity.y = 0;
+			m_IsGrounded = m_IsGrounded || utils::IsOverlapping(colliders[i].GetBottom(), playerRect);
 		}
 	}
 
-	if (!(utils::IsOverlapping(fight->GetFightBoundaryBox().GetBottom(),playerRect) || utils::IsOverlapping(fight->GetFightBoundaryBox().GetTop(),playerRect)))
+	Vector2f collisionOffset{};
+	bool collided{};
+	std::pair<bool,Vector2f> collisionOutput = CollisionBox::SideCollisions(colliders, playerRect);
+	if (collisionOutput.first)
 	{
-		m_pos.y = nextPlayerPos.y;
-	}
-	if (!(utils::IsOverlapping(fight->GetFightBoundaryBox().GetLeft(), playerRect) || utils::IsOverlapping(fight->GetFightBoundaryBox().GetRight(), playerRect)))
+		m_pos = nextPlayerPos + collisionOutput.second;
+	} else
 	{
-		m_pos.x = nextPlayerPos.x;
+		m_pos = nextPlayerPos;
 	}
 
 	if (m_Hp<=0)
@@ -94,87 +93,49 @@ void FightChara::SetFightCharaState(FightCharaState state)
 	m_State = state;
 }
 
+Rectf FightChara::GetLocationRect() const
+{
+	return Rectf(m_pos.ToPoint2f(), m_pHeartTexture->GetWidth(), m_pHeartTexture->GetHeight());
+}
+
+bool FightChara::IsGravityMode() const
+{
+	return m_IsGravityMode;
+}
+
 void FightChara::SetPos(Vector2f pos)
 {
 	m_pos = pos;
 }
 
-void FightChara::ButtonDownManager(const SDL_KeyboardEvent& e)
+void FightChara::UpdateMovement(float deltaTime)
 {
+	const Uint8* state{ SDL_GetKeyboardState(nullptr) };
+
+	int xInputAxis{};
+	int yInputAxis{};
+	bool inputJump{};
+	if (state[SDL_SCANCODE_W]) yInputAxis = 1;
+	if (state[SDL_SCANCODE_A]) xInputAxis = -1;
+	if (state[SDL_SCANCODE_S]) yInputAxis = -1;
+	if (state[SDL_SCANCODE_D]) xInputAxis = 1;
+	if (state[SDL_SCANCODE_SPACE]) inputJump = true;
+
 	if (!m_IsGravityMode) {
-		switch (e.keysym.sym)
-		{
-		case (SDLK_w):
-			m_Velocity.y = m_Speed;
-			break;
-		case (SDLK_a):
-			m_Velocity.x = -m_Speed;
-			break;
-		case (SDLK_s):
-			m_Velocity.y = -m_Speed;
-			break;
-		case (SDLK_d):
-			m_Velocity.x = m_Speed;
-			break;
-		}
+		m_Velocity = Vector2f(xInputAxis, yInputAxis) * m_Speed;
 	} else
 	{
-		switch (e.keysym.sym)
-		{
-		case (SDLK_a):
-			m_Velocity.x = -m_Speed;
-			break;
-		case (SDLK_d):
-			m_Velocity.x = m_Speed;
-			break;
-		}
+		m_Velocity.y -= m_Gravity * deltaTime;
+		if (m_IsGrounded) m_Velocity.y = 0;
+		if (m_IsGrounded && inputJump) m_Velocity.y = m_JumpStrength;
+		
+		m_Velocity.x = xInputAxis * m_Speed;
+
 	}
 }
-
-void FightChara::ButtonUpManager(const SDL_KeyboardEvent& e)
+void FightChara::OnButtonUp(const SDL_KeyboardEvent& e)
 {
-	if (!m_IsGravityMode) {
-		switch (e.keysym.sym)
-		{
-		case (SDLK_w):
-			m_Velocity.y = 0;
-			break;
-		case (SDLK_a):
-			m_Velocity.x = 0;
-			break;
-		case (SDLK_s):
-			m_Velocity.y = 0;
-			break;
-		case (SDLK_d):
-			m_Velocity.x = 0;
-			break;
-		case(SDLK_DELETE):
-			m_IsGravityMode = !m_IsGravityMode;
-			break;
-		}
-	}
-	else
-	{
-		switch (e.keysym.sym)
-		{
-		case (SDLK_a):
-			m_Velocity.x = 0;
-			break;
-		case (SDLK_d):
-			m_Velocity.x = 0;
-			break;
-		case (SDLK_SPACE):
-			if (m_IsGrounded) {
-				m_Velocity.y += m_JumpStrength;
-				m_pos += Vector2f(0, 1);
-			}
-			break;
-		case(SDLK_DELETE):
-			m_IsGravityMode = !m_IsGravityMode;
-			break;
-		}
-	}
+	if (e.keysym.sym == SDLK_DELETE) m_IsGravityMode = !m_IsGravityMode;
 }
-
 
 

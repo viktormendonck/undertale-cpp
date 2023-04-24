@@ -159,7 +159,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
-    <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chara.h" />
@@ -173,7 +173,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="AnimatedSprite.h" />
-    <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UndertaleGame.rc" />

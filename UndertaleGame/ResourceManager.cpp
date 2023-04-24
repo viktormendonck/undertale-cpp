@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "SpriteManager.h"
+#include "ResourceManager.h"
 #include "AnimatedSprite.h"
 #include <map>
 
 
-SpriteManager::SpriteManager()
+ResourceManager::ResourceManager()
 {
 	m_pCharaTexture = new Texture{ "Sprites/chara.png" };
 	m_pPlayerHeartTexture = new Texture{ "Sprites/PLayerHeart.png" };
@@ -26,33 +26,30 @@ SpriteManager::SpriteManager()
 		{"death",AnimationData{1,1}},
 		{"flee" ,AnimationData{3,2}}
 	};
-	m_pAnimatedSprites.push_back(new AnimatedSprite{ m_pCharaTexture,CharaData,19,29,"downIdle",0.2f});
-	m_pAnimatedSprites.push_back(new AnimatedSprite{ m_pPlayerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
+	m_AnimatedSprites.push_back(new AnimatedSprite{ m_pCharaTexture,CharaData,19,29,"downIdle",0.2f});
+	m_AnimatedSprites.push_back(new AnimatedSprite{ m_pPlayerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
 
-	m_pStaticTextures.push_back(m_pPlayerHeartTexture);
-	m_pStaticTextures.push_back(m_pFightBackGrounds);
+	m_StaticTextures.push_back(m_pPlayerHeartTexture);
+	m_StaticTextures.push_back(m_pFightBackGrounds);
 }
 
-SpriteManager::~SpriteManager()
+ResourceManager::~ResourceManager()
 {
-	for (AnimatedSprite* pAnimatedSprite : m_pAnimatedSprites)
+	for (AnimatedSprite* pAnimatedSprite : m_AnimatedSprites)
 	{
 		delete pAnimatedSprite;
 	}
-	for (Texture* pTexture : m_pStaticTextures)
+	for (Texture* pTexture : m_StaticTextures)
 	{
 		delete pTexture;
 	}
-	delete m_pCharaTexture;
-	delete m_pPlayerHeartTexture;
-	delete m_pPlayerHeartAnimTexture;
-	delete m_pFightBackGrounds;
+
 }
 
 
-void SpriteManager::Update(float deltaTime)
+void ResourceManager::Update(float deltaTime)
 {
-	for (AnimatedSprite* data : m_pAnimatedSprites)
+	for (AnimatedSprite* data : m_AnimatedSprites)
 	{
 		data->Update(deltaTime);
 	}

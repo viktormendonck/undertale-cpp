@@ -1,29 +1,33 @@
 #pragma once
+#include <vector>
+
+#include "Vector2f.h"
+
 class CollisionBox
 {
 public:
 	CollisionBox();
-	CollisionBox(Rectf rect );
+	CollisionBox(Rectf rect);
 	~CollisionBox();
 
 	CollisionBox(const CollisionBox& other); // Copy constructor
 	CollisionBox& operator=(const CollisionBox& other) noexcept; // Copy assignment operator
 
-	CollisionBox(CollisionBox&& other); // Move constructor
+	CollisionBox(CollisionBox&& other) noexcept; // Move constructor
 	CollisionBox& operator=(CollisionBox&& other) noexcept; // Move assignment operator
 
-	Rectf GetRect();
-	Linef GetBottom();
-	Linef GetLeft();
-	Linef GetRight();
-	Linef GetTop();
+	Rectf GetRect() const;
+	Linef GetBottom() const;
+	Linef GetLeft() const;
+	Linef GetRight() const;
+	Linef GetTop() const;
+	Vector2f GetLocation() const;
+	void SetLocation(Vector2f delta);
 
+	static std::pair<bool, Vector2f> SideCollisions(std::vector<CollisionBox> collisionBoxes, Rectf player);
 
 private:
 	Rectf m_Rect;
-	Linef m_Bottom{};
-	Linef m_Left{};
-	Linef m_Right{};
-	Linef m_Top{};
+	
 };
 

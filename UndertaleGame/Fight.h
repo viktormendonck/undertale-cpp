@@ -5,18 +5,18 @@
 #include "Texture.h"
 #include "Vector2f.h"
 
+
 class EnemyManager;
 class Enemy;
 class FightChara;
-class SpriteManager;
+class ResourceManager;
 class ParticleSystem;
 
 enum class FightState
 {
 	menu,
 	fight,
-	Transition,
-	menuToFight
+	transition
 };
 
 class Fight
@@ -62,6 +62,22 @@ private:
 	Vector2f m_MiddleLocation{};
 
 	FightState m_FightState{ FightState::fight };
+	FightState m_PreviousFightState{ FightState::fight };
+
+
+	float m_BoxTransitionSpeed{ 1 };
+	float m_BoxTransitionIncrementor{};
+	Rectf m_CurrentTransitionRect{};
+
+	std::vector<CollisionBox> m_Platforms{};
+	const int m_PlatformAmount{3};
+
+	void DrawPlatforms() const;
+	void UpdatePlatforms(float deltaTime);
+
+	const float m_PlatformTimer{ 5 };
+	float m_CurrentPlatformTimer{0};
+
 	
 };
 

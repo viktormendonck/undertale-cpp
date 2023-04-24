@@ -12,7 +12,7 @@ Chara::Chara(AnimatedSprite* playerSprite, float speed)
 
 Chara::~Chara()
 {
-	delete m_pSprite;
+	//delete m_pSprite;
 }
 
 void Chara::Update(float deltaTime)

@@ -25,15 +25,17 @@ public:
 	FightChara& operator=(FightChara&& other) = delete; // Move assignment operator
 
 	void Draw();
-	void Update(float deltaTime, Fight* fight);
+	void Update(float deltaTime, Fight* fight, std::vector<CollisionBox> colliders);
 
 	void DamageChara(int damage);
 	void SetFightCharaState(FightCharaState state);
-	Rectf GetLocationRect();
+	Rectf GetLocationRect() const;
+	bool IsGravityMode() const;
 	void SetPos(Vector2f pos);
 
-	void ButtonDownManager(const SDL_KeyboardEvent& e);
-	void ButtonUpManager(const SDL_KeyboardEvent& e);
+	void UpdateMovement(float deltaTime);
+
+	void OnButtonUp(const SDL_KeyboardEvent& e);
 
 private:
 	FightCharaState m_State{ FightCharaState::base };
@@ -53,8 +55,5 @@ private:
 	bool m_IsGrounded{};
 };
 
-inline Rectf FightChara::GetLocationRect()
-{
-	return Rectf(m_pos.ToPoint2f(), m_pHeartTexture->GetWidth(), m_pHeartTexture->GetHeight());
-}
+
 

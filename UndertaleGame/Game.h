@@ -5,10 +5,13 @@
 class Texture;
 class ParticleSystem;
 class AnimatedSprite;
-class SpriteManager;
+class ResourceManager;
 class Chara;
 class FightChara;
 class Fight;
+
+//test classes
+
 
 class Game : public BaseGame
 {
@@ -42,14 +45,16 @@ private:
 	GameState m_GameState{ GameState::fight };
 
 	ParticleSystem* m_pParticleSystem{};
-	Texture* m_pTexture{};
 	Texture* m_pInfoScreenTexture{};
 	Vector2f m_EnemyPos{};
-	SpriteManager* m_pSpriteManager{};
+	ResourceManager* m_pSpriteManager{};
 	Chara* m_pChara{};
 	FightChara* m_pFightChara{};
 	Fight* m_pFight{};
 	Rectf m_Window{};
+
+	//TEST CLASSES
+	
 
 
 		// FUNCTIONS

@@ -10,15 +10,16 @@
 #include "AnimatedSprite.h"
 #include <map>
 
-#include "SpriteManager.h"
+#include "ResourceManager.h"
 #include "Chara.h"
 #include "Fight.h"
 #include "FightChara.h"
 
+
+
 Game::Game(const Window& window)
 	: BaseGame{ window }
 	, m_pParticleSystem{new ParticleSystem{ 20, 0.6f}}
-	, m_pTexture{ new Texture{"Sprites/test2.png"}}
 	, m_pInfoScreenTexture{ new Texture{"Static_Screens/Controls.png"}}
 	, m_Window{ GetViewPort() }
 {
@@ -33,23 +34,21 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	m_pSpriteManager = new SpriteManager{};
-	m_pChara = new Chara{ m_pSpriteManager->m_pAnimatedSprites[0],40 };
-	m_pFightChara = new FightChara(m_pSpriteManager->m_pStaticTextures[0], m_pSpriteManager->m_pAnimatedSprites[1], 100,
+	m_pSpriteManager = new ResourceManager{};
+	m_pChara = new Chara{ m_pSpriteManager->m_AnimatedSprites[0],40 };
+	m_pFightChara = new FightChara(m_pSpriteManager->m_StaticTextures[0], m_pSpriteManager->m_AnimatedSprites[1], 100,
 	                               20);
-	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_pStaticTextures[1],m_pParticleSystem);
-
+	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_StaticTextures[1],m_pParticleSystem);
 }
 
 void Game::Cleanup()
 {
 	delete m_pParticleSystem;
-	delete m_pTexture;
-	delete m_pInfoScreenTexture;
-	delete m_pSpriteManager;
 	delete m_pChara;
 	delete m_pFightChara;
 	delete m_pFight;
+	delete m_pInfoScreenTexture;
+	delete m_pSpriteManager;
 }
 
 void Game::Update(float deltaTime)

@@ -2,7 +2,7 @@
 #include "Enemy.h"
 
 
-class Froggit : public Enemy
+class Froggit final : public Enemy
 {
 public:
 	Froggit() = delete;
@@ -15,10 +15,9 @@ public:
 	Froggit(Froggit&& other) = delete; // Move constructor
 	Froggit& operator=(Froggit&& other) = delete; // Move assignment operator
 
-	void Update(float deltaTime);
+	void UpdateEnemy(float deltaTime) override;
+	void DrawEnemy() override;
 
-	void Draw();
-	
 
 private:
 	Texture* m_pFroggitHead;

@@ -20,15 +20,17 @@ Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, Partic
 	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
 	m_pFightChara->SetPos(pos);
 	m_IsBossFight = false;
+
+	
+	const Vector2f platformSize{ 20,5 };
+	for (int i{}; i < m_PlatformAmount; ++i)
+	{
+		m_Platforms.push_back(CollisionBox(Rectf(0,0,platformSize.x, platformSize.y)));
+	}
 }	
 
 Fight::~Fight()
 {
-	delete m_pBackgroundTexture;
-	delete m_pFightChara;
-	delete m_pParticleSystem;
-	
-
 }
 
 void Fight::Draw()
@@ -39,22 +41,29 @@ void Fight::Draw()
 	switch (m_FightState)
 	{
 	case (FightState::menu):
-
-		break;
-	case (FightState::menuToFight):
-
+		utils::DrawRect(m_TextBox, m_BoxLineWidth);
 		break;
 	case (FightState::fight):
-		m_pFightChara->Draw();
-		utils::DrawRect(m_FightBoundary.GetRect(), static_cast<float>(m_BoxLineWidth));
-		break;
-	case (FightState::Transition):
+		{
 
+			utils::SetColor(Color4f(1, 1, 1, 1));
+			m_pFightChara->Draw();
+			utils::DrawRect(m_FightBoundary.GetRect(), m_BoxLineWidth);
+
+			if (m_pFightChara->IsGravityMode())
+			{
+				DrawPlatforms();
+			}
+
+			break;
+		}
+	case (FightState::transition):
+		utils::DrawRect(m_CurrentTransitionRect, m_BoxLineWidth);
 		break;
 	}
 }
 
-void Fight::Update(float deltaTime)
+void Fight::Update(const float deltaTime)
 {
 	switch (m_FightState)
 	{
@@ -62,53 +71,109 @@ void Fight::Update(float deltaTime)
 
 		break;
 	case (FightState::fight):
-		m_pFightChara->Update(deltaTime,this);
-		break;
-	case (FightState::Transition):
+		m_pFightChara->Update(deltaTime,this, m_Platforms);
+		if (m_pFightChara->IsGravityMode())
+		{
+			UpdatePlatforms(deltaTime);
+		}
 
+		break;
+	case (FightState::transition):
+		float distance {};
+		if (m_PreviousFightState == FightState::fight)
+		{
+			distance = m_TextBox.left - m_FightBoundary.GetRect().left;
+		}
+		else
+		{
+			distance = m_FightBoundary.GetRect().left - m_TextBox.left;
+		}
+
+		if ( m_BoxTransitionIncrementor < m_BoxTransitionSpeed)
+		{
+			m_BoxTransitionIncrementor += deltaTime / m_BoxTransitionSpeed;
+			m_CurrentTransitionRect.left += deltaTime * distance / m_BoxTransitionSpeed;
+			m_CurrentTransitionRect.width += distance * -2 * deltaTime / m_BoxTransitionSpeed;
+		}
+		else
+		{
+			m_BoxTransitionIncrementor = 0;
+			if (m_PreviousFightState == FightState::fight)
+			{
+				m_FightState = FightState::menu;
+			}
+			else
+			{
+				m_FightState = FightState::fight;
+			}
+		}
 		break;
 	}
 }
+
 
 CollisionBox Fight::GetFightBoundaryBox()
 {
 	return m_FightBoundary;
 }
-
 void Fight::ButtonDownManager(const SDL_KeyboardEvent& e)
 {
-	switch (m_FightState)
-	{
-	case (FightState::menu):
 
-		break;
-	case (FightState::menuToFight):
-
-		break;
-	case (FightState::fight):
-		m_pFightChara->ButtonDownManager(e);
-		break;
-	case (FightState::Transition):
-
-		break;
-	}
 }
-
 void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
 {
 	switch (m_FightState)
 	{
 	case (FightState::menu):
-
-		break;
-	case (FightState::menuToFight):
-
+		if (e.keysym.sym == SDLK_0) // test transition from menu to fight
+		{
+			m_FightState = FightState::transition;
+			m_PreviousFightState = FightState::menu;
+			m_CurrentTransitionRect = m_TextBox;
+		}
 		break;
 	case (FightState::fight):
-		m_pFightChara->ButtonUpManager(e);
+		m_pFightChara->OnButtonUp(e);
+		if (e.keysym.sym == SDLK_0) // test transition from fight to menu
+		{
+			m_FightState = FightState::transition;
+			m_PreviousFightState = FightState::fight;
+			m_CurrentTransitionRect = m_FightBoundary.GetRect();
+		}
 		break;
-	case (FightState::Transition):
 
+	case (FightState::transition):
 		break;
+	}
+}
+void Fight::UpdatePlatforms(float deltaTime)
+{
+
+	if (m_CurrentPlatformTimer <=0)
+	{
+		m_CurrentPlatformTimer = m_PlatformTimer;
+		const float platformOffset{ 30 };
+		for (int i{}; i < m_PlatformAmount; ++i)
+		{
+			const int randHeight{ utils::RandInRange(m_FightBoundary.GetRect().bottom + platformOffset,m_FightBoundary.GetRect().bottom + m_FightBoundary.GetRect().height - platformOffset) };
+			const int randWidth{ utils::RandInRange(m_FightBoundary.GetRect().left + platformOffset,
+				             m_FightBoundary.GetRect().left + m_FightBoundary.GetRect().width - platformOffset) };
+
+			m_Platforms[i].SetLocation(Vector2f(randWidth,randHeight));
+		}
+
+	} else
+	{
+		m_CurrentPlatformTimer -= deltaTime;
+	}
+
+}
+
+void Fight::DrawPlatforms() const
+{
+	utils::SetColor(Color4f(1, 1, 1, 1));
+	for (int i{}; i<m_Platforms.size();++i)
+	{
+		utils::FillRect(m_Platforms[i].GetRect());
 	}
 }

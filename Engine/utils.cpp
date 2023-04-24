@@ -730,4 +730,14 @@ float utils::Lerp(float a, float b, float t)
 	return a + t * (b - a);
 }
 
+Point2f utils::Lerp(Point2f a, Point2f b, float t)
+{
+	return Point2f{ (a.x + t * (b.x - a.x)), (a.y + t * (b.y - a.y)) };
+}
+
+int utils::RandInRange(int min, int max)
+{
+	return (rand() % (max + 1 - min)) + min;
+}
+
 #pragma endregion CollisionFunctionality

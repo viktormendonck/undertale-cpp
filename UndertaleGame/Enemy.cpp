@@ -21,6 +21,24 @@ Enemy::~Enemy()
 	delete m_pTexture;
 }
 
+void Enemy::Draw()
+{
+	if (IsDead()) return;
+
+	m_pTexture->Draw(m_Pos);
+	DrawEnemy();
+}
+
+void Enemy::Update(float deltaTime)
+{
+	if (IsDead())
+	{
+		
+	}
+	UpdateEnemy(deltaTime);
+}
+
+
 void Enemy::Damage(int damage)
 {
 	m_hp -= damage;

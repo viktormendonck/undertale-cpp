@@ -9,7 +9,7 @@ class Enemy
 public:
 	Enemy() = delete; // default constructor
 	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying); // constructor
-	~Enemy(); // destructor
+	virtual ~Enemy(); // destructor
 
 	Enemy(const Enemy& other) = delete; // Copy constructor
 	Enemy& operator=(const Enemy& other) = delete; // Copy assignment operator
@@ -17,8 +17,10 @@ public:
 	Enemy(Enemy&& other) = delete; // Move constructor
 	Enemy& operator=(Enemy&& other) = delete; // Move assignment operator
 
-	void draw( );
+	void Draw();
+	virtual void DrawEnemy() = 0;
 	void Update(float deltaTime);
+	virtual void UpdateEnemy(float deltaTime) = 0;
 
 	void Damage(int damage);
 	bool IsDead();
