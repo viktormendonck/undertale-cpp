@@ -14,8 +14,8 @@
 #include "Chara.h"
 #include "Fight.h"
 #include "FightChara.h"
-
-
+//TESTCLASSES
+#include "FroggitJumpAttack.h"
 
 Game::Game(const Window& window)
 	: BaseGame{ window }
@@ -39,6 +39,9 @@ void Game::Initialize()
 	m_pFightChara = new FightChara(m_pSpriteManager->m_StaticTextures[0], m_pSpriteManager->m_AnimatedSprites[1], 100,
 	                               20);
 	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_StaticTextures[1],m_pParticleSystem);
+	//TESTSTUFF
+	m_pTESTFROGGITJUMPATTACK = new FroggitJumpAttack(m_pSpriteManager->m_BulletAnimatedSprites[0],10,m_pFightChara);
+
 }
 
 void Game::Cleanup()
@@ -63,6 +66,9 @@ void Game::Update(float deltaTime)
 		break;
 	case GameState::fight:
 		m_pFight->Update(deltaTime);
+		//TESTSTUFF
+		m_pTESTFROGGITJUMPATTACK->Update(deltaTime);
+
 		break;
 	case GameState::infoScreen:
 		
@@ -87,7 +93,9 @@ void Game::Draw() const
 		break;
 	case GameState::fight:
 		m_pFight->Draw();
-		
+		//TestStuff
+		m_pTESTFROGGITJUMPATTACK->Draw();
+
 		break;
 	case GameState::infoScreen:
 		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });

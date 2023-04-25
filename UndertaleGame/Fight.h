@@ -69,7 +69,7 @@ private:
 	float m_BoxTransitionIncrementor{};
 	Rectf m_CurrentTransitionRect{};
 
-	std::vector<CollisionBox> m_Platforms{};
+	std::vector<CollisionBox> m_Colliders{};
 	const int m_PlatformAmount{3};
 
 	void DrawPlatforms() const;

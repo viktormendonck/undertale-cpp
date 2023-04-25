@@ -30,6 +30,12 @@
     <Filter Include="Source\classes\player\functionality">
       <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\Enemies\bullets">
+      <UniqueIdentifier>{2cc6bb21-8fc9-48a3-b5a1-faf420788482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Enemies\bullets\Froggit">
+      <UniqueIdentifier>{90690e2f-eade-4db7-ad4a-bedd224d905e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -71,6 +77,15 @@
     <ClCompile Include="CollisionBox.cpp">
       <Filter>Source\classes\player\functionality</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source\classes\Enemies\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="FroggitJumpAttack.cpp">
+      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+    </ClCompile>
+    <ClCompile Include="FroggitFireflyAttack.cpp">
+      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -108,6 +123,15 @@
     </ClInclude>
     <ClInclude Include="CollisionBox.h">
       <Filter>Source\classes\player\functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Source\classes\Enemies\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="FroggitJumpAttack.h">
+      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+    </ClInclude>
+    <ClInclude Include="FroggitFireflyAttack.h">
+      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

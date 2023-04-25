@@ -44,7 +44,7 @@ private:
 	int m_Hp;
 	float m_Speed;
 	bool m_IsGravityMode{false};
-	Vector2f m_pos{};
+	Vector2f m_Pos{};
 	Vector2f m_Velocity{};
 
 	float m_Gravity{ 120 };

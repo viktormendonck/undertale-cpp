@@ -15,10 +15,10 @@ FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float 
 	m_pHeartAnims{ heartAnims },
 	m_Hp{ startHealth },
 	m_Speed{ speed },
-	m_pos{ 0,0 },
+	m_Pos{ 0,0 },
 	m_JumpStrength{ 150 }
 {
-	m_LineCast = Linef(Point2f(m_pos.x, m_pos.y - 1), Point2f(m_pos.x + m_pHeartTexture->GetWidth(), m_pos.y - 1));
+	m_LineCast = Linef(Point2f(m_Pos.x, m_Pos.y - 1), Point2f(m_Pos.x + m_pHeartTexture->GetWidth(), m_Pos.y - 1));
 }
 
 FightChara::~FightChara()
@@ -33,16 +33,16 @@ void FightChara::Draw()
 	switch (m_State)
 	{
 	case (FightCharaState::base):
-		m_pHeartTexture->Draw(m_pos.ToPoint2f());
+		m_pHeartTexture->Draw(m_Pos.ToPoint2f());
 		break;
 	case (FightCharaState::running):
 		m_pHeartAnims->SetAnimation("flee");
-		m_pHeartAnims->Draw(m_pos);
+		m_pHeartAnims->Draw(m_Pos);
 
 		break;
 	case (FightCharaState::dying):
 		m_pHeartAnims->SetAnimation("dying");
-		m_pHeartAnims->Draw(m_pos);
+		m_pHeartAnims->Draw(m_Pos);
 		break;
 	}
 }
@@ -51,32 +51,36 @@ void FightChara::Update(float deltaTime,Fight* fight, std::vector<CollisionBox> 
 {
 	UpdateMovement(deltaTime);
 
-	m_LineCast = Linef(Point2f(m_pos.x, m_pos.y-1), Point2f(m_pos.x + m_pHeartTexture->GetWidth(), m_pos.y-1));
-	const Vector2f nextPlayerPos = m_pos + (m_Velocity * deltaTime);
+	const Vector2f nextPlayerPos = m_Pos + (m_Velocity * deltaTime);
 	const Rectf playerRect{ nextPlayerPos.ToPoint2f(),m_pHeartTexture->GetWidth(),m_pHeartTexture->GetHeight()};
-	colliders.push_back(fight->GetFightBoundaryBox());
 
+	Vector2f correctionTotal{};
+	// checks and corrects collisions
+	for (int i{}; i < colliders.size(); ++i) 
+	{
+		const std::pair<bool, Vector2f> collisionOutput{ CollisionBox::SideCollisions(colliders[i], playerRect) };
+		if (collisionOutput.first)
+		{
+			correctionTotal += collisionOutput.second;
+		}
+		if (collisionOutput.second.y < 0)
+		{
+			m_Velocity.y = 0;
+		}
+	}
+	m_Pos = correctionTotal + nextPlayerPos;
 
 	if (m_IsGravityMode)
 	{
-		m_IsGrounded = utils::IsOverlapping(fight->GetFightBoundaryBox().GetBottom(), playerRect);
+		m_IsGrounded = false;
 		for (int i{}; i < colliders.size(); ++i)
 		{
-			m_IsGrounded = m_IsGrounded || utils::IsOverlapping(colliders[i].GetBottom(), playerRect);
+			CollisionBox player(playerRect);
+			const float offset{5};
+			Linef groundedCheck{player.GetBottom().point1.x+offset,player.GetBottom().point1.y,player.GetBottom().point2.x-offset,player.GetBottom().point2.y};
+			if (utils::IsOverlapping(groundedCheck, colliders[i].GetRect())) m_IsGrounded = true;
 		}
 	}
-
-	Vector2f collisionOffset{};
-	bool collided{};
-	std::pair<bool,Vector2f> collisionOutput = CollisionBox::SideCollisions(colliders, playerRect);
-	if (collisionOutput.first)
-	{
-		m_pos = nextPlayerPos + collisionOutput.second;
-	} else
-	{
-		m_pos = nextPlayerPos;
-	}
-
 	if (m_Hp<=0)
 	{
 		m_State = FightCharaState::dying;
@@ -95,8 +99,9 @@ void FightChara::SetFightCharaState(FightCharaState state)
 
 Rectf FightChara::GetLocationRect() const
 {
-	return Rectf(m_pos.ToPoint2f(), m_pHeartTexture->GetWidth(), m_pHeartTexture->GetHeight());
+	return Rectf(m_Pos.ToPoint2f(), m_pHeartTexture->GetWidth(), m_pHeartTexture->GetHeight());
 }
+
 
 bool FightChara::IsGravityMode() const
 {
@@ -105,7 +110,7 @@ bool FightChara::IsGravityMode() const
 
 void FightChara::SetPos(Vector2f pos)
 {
-	m_pos = pos;
+	m_Pos = pos;
 }
 
 void FightChara::UpdateMovement(float deltaTime)
@@ -125,7 +130,9 @@ void FightChara::UpdateMovement(float deltaTime)
 		m_Velocity = Vector2f(xInputAxis, yInputAxis) * m_Speed;
 	} else
 	{
-		m_Velocity.y -= m_Gravity * deltaTime;
+		if (!m_IsGrounded) {
+			m_Velocity.y -= m_Gravity * deltaTime;
+		}
 		if (m_IsGrounded) m_Velocity.y = 0;
 		if (m_IsGrounded && inputJump) m_Velocity.y = m_JumpStrength;
 		

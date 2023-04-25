@@ -24,7 +24,7 @@ public:
 	Vector2f GetLocation() const;
 	void SetLocation(Vector2f delta);
 
-	static std::pair<bool, Vector2f> SideCollisions(std::vector<CollisionBox> collisionBoxes, Rectf player);
+	static std::pair<bool, Vector2f> SideCollisions(CollisionBox collider, Rectf player);
 
 private:
 	Rectf m_Rect;

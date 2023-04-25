@@ -16,6 +16,7 @@ Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, Partic
 {
 	m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_BoxBottomOffset,m_FightSquareDimentions, m_FightSquareDimentions));
 
+
 	m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_BoxBottomOffset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimentions);
 	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
 	m_pFightChara->SetPos(pos);
@@ -25,8 +26,16 @@ Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, Partic
 	const Vector2f platformSize{ 20,5 };
 	for (int i{}; i < m_PlatformAmount; ++i)
 	{
-		m_Platforms.push_back(CollisionBox(Rectf(0,0,platformSize.x, platformSize.y)));
+		m_Colliders.push_back(CollisionBox(Rectf(0,0,platformSize.x, platformSize.y)));
 	}
+	const float boxSize{ 5 };
+	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetBottom().point1.x, m_FightBoundary.GetBottom().point1.y - boxSize, m_FightSquareDimentions, boxSize)));
+	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetTop().point1, m_FightSquareDimentions, boxSize)));
+	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetLeft().point1.x-boxSize,m_FightBoundary.GetLeft().point1.y-boxSize, boxSize,m_FightSquareDimentions+(boxSize*2))));
+	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetRight().point1.x,m_FightBoundary.GetRight().point1.y-boxSize, boxSize,m_FightSquareDimentions+(boxSize*2))));
+
+
+
 }	
 
 Fight::~Fight()
@@ -71,7 +80,7 @@ void Fight::Update(const float deltaTime)
 
 		break;
 	case (FightState::fight):
-		m_pFightChara->Update(deltaTime,this, m_Platforms);
+		m_pFightChara->Update(deltaTime,this, m_Colliders);
 		if (m_pFightChara->IsGravityMode())
 		{
 			UpdatePlatforms(deltaTime);
@@ -159,7 +168,7 @@ void Fight::UpdatePlatforms(float deltaTime)
 			const int randWidth{ utils::RandInRange(m_FightBoundary.GetRect().left + platformOffset,
 				             m_FightBoundary.GetRect().left + m_FightBoundary.GetRect().width - platformOffset) };
 
-			m_Platforms[i].SetLocation(Vector2f(randWidth,randHeight));
+			m_Colliders[i].SetLocation(Vector2f(randWidth,randHeight));
 		}
 
 	} else
@@ -172,8 +181,8 @@ void Fight::UpdatePlatforms(float deltaTime)
 void Fight::DrawPlatforms() const
 {
 	utils::SetColor(Color4f(1, 1, 1, 1));
-	for (int i{}; i<m_Platforms.size();++i)
+	for (int i{}; i<m_PlatformAmount;++i)
 	{
-		utils::FillRect(m_Platforms[i].GetRect());
+		utils::FillRect(m_Colliders[i].GetRect());
 	}
 }

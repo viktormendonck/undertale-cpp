@@ -11,6 +11,7 @@ class FightChara;
 class Fight;
 
 //test classes
+class FroggitJumpAttack;
 
 
 class Game : public BaseGame
@@ -54,7 +55,7 @@ private:
 	Rectf m_Window{};
 
 	//TEST CLASSES
-	
+	FroggitJumpAttack* m_pTESTFROGGITJUMPATTACK{};
 
 
 		// FUNCTIONS
