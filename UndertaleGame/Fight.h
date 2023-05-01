@@ -3,13 +3,12 @@
 
 #include "CollisionBox.h"
 #include "Texture.h"
+#include "ResourceManager.h"
 #include "Vector2f.h"
-
+#include "Enemy.h"
 
 class EnemyManager;
-class Enemy;
 class FightChara;
-class ResourceManager;
 class ParticleSystem;
 
 enum class FightState
@@ -23,7 +22,7 @@ class Fight
 {
 public:
 	Fight() = delete;
-	Fight(FightChara* pChara,Rectf screen,Texture* backGroundTexture,ParticleSystem* pParticleSystem);
+	Fight(FightChara* pChara,Rectf screen,ResourceManager* pResourceManager,ParticleSystem* pParticleSystem, EnemyType enemy ,bool isBossFight);
 	~Fight();
 
 	Fight(const Fight& other) = delete; // Copy constructor
@@ -42,11 +41,12 @@ public:
 private:
 	FightChara* m_pFightChara;
 
-	std::vector<Enemy*> m_pEnemies;
+	Enemy* m_pEnemy;
 	Texture* m_pBackgroundTexture;
 	std::vector<Texture*> m_pButtonTextures;
 
 	ParticleSystem* m_pParticleSystem;
+	ResourceManager* m_pResourceManager;
 
 	bool m_IsBossFight{};
 	int m_BackGroundsAmount{2};

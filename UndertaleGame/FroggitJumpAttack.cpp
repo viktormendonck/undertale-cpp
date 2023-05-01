@@ -2,9 +2,9 @@
 #include "FroggitJumpAttack.h"
 
 
-FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage,FightChara* pFightChara)
+FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage)
 	:
-	Bullet(Vector2f(350,75),damage,pBulletTex,pFightChara)
+	Bullet(Vector2f(350,75),damage,pBulletTex)
 {
 	m_CountDownTimer = static_cast<float>(rand() % 3 + 1);
 }
@@ -28,11 +28,12 @@ void FroggitJumpAttack::Update(float deltaTime)
 		m_pBulletTexture->SetAnimation("jumping");
 		m_velocity += Gravity * deltaTime;
 		m_Pos += m_velocity * deltaTime;
+		m_cttl -= deltaTime;
+		if (m_cttl < 0)
+		{
+			m_IsActive = false;
+		}
 		break;
-	}
-	if (utils::IsOverlapping(m_pPlayer->GetLocationRect(), Rectf(m_Pos.ToPoint2f(), m_pBulletTexture->GetWidth(), m_pBulletTexture->GetHeight())))
-	{
-		m_pPlayer->DamageChara(m_Damage);
 	}
 }
 

@@ -735,6 +735,11 @@ Point2f utils::Lerp(Point2f a, Point2f b, float t)
 	return Point2f{ (a.x + t * (b.x - a.x)), (a.y + t * (b.y - a.y)) };
 }
 
+float utils::AngleBetweenPoints(Point2f p1, Point2f p2)
+{
+	return atan2(p2.y - p1.y, p2.x - p1.x)* (180 / 3.14159265);
+}
+
 int utils::RandInRange(int min, int max)
 {
 	return (rand() % (max + 1 - min)) + min;

@@ -11,7 +11,9 @@ class FightChara;
 class Fight;
 
 //test classes
+// TODO: remove
 class FroggitJumpAttack;
+class FroggitFlyAttack;
 
 
 class Game : public BaseGame
@@ -48,14 +50,16 @@ private:
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pInfoScreenTexture{};
 	Vector2f m_EnemyPos{};
-	ResourceManager* m_pSpriteManager{};
+	ResourceManager* m_pResourceManager{};
 	Chara* m_pChara{};
 	FightChara* m_pFightChara{};
 	Fight* m_pFight{};
 	Rectf m_Window{};
 
 	//TEST CLASSES
+	// TODO: remove
 	FroggitJumpAttack* m_pTESTFROGGITJUMPATTACK{};
+	FroggitFlyAttack* m_PTESTFROGGITFLYATTACK{};
 
 
 		// FUNCTIONS

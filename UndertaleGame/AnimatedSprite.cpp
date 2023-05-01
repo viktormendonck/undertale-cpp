@@ -72,3 +72,5 @@ float AnimatedSprite::GetHeight()
 {
 	return m_height;
 }
+
+

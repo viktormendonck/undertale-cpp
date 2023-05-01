@@ -1,28 +1,32 @@
 #include "pch.h"
 #include "Froggit.h"
-
+#include "utils.h"
 #include "AnimatedSprite.h"
+#include "Bullet.h"
 #include "Texture.h"
+#include "FroggitJumpAttack.h"
+#include "FroggitFlyAttack.h"
+#include "ResourceManager.h"
 
-Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount,float headMovementSpeed) 
+Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount,float headMovementSpeed, FightChara& player) 
 	:
-	Enemy(health, conversationAmount,pBaseTexture,pDeathTexture,false),
+	Enemy(health, conversationAmount,pBaseTexture,pDeathTexture,false,player),
 	m_pFroggitHead{pFroggitHead},
-	m_BaseHeadOffset{Vector2f(pBaseTexture->GetWidth()/2,pBaseTexture->GetHeight())},
-	m_HeadMovementSpeed{headMovementSpeed}
+	m_HeadMovementSpeed{headMovementSpeed},
+	m_BaseHeadOffset{Vector2f(0,pBaseTexture->GetHeight())}
 {
 }
 
 Froggit::~Froggit()
 {
-	delete m_pFroggitHead;
+
 }
 
 void Froggit::UpdateEnemy(float deltaTime)
 {
 	m_HeadMovingIncrementor = m_HeadMovingIncrementor + (deltaTime * m_HeadMovementSpeed);
-	float x = cosf(m_HeadMovingIncrementor);
-	float y = sinf(2 * m_HeadMovingIncrementor) / 2;
+	float x = cosf(m_HeadMovingIncrementor) * 4 ;
+	float y = sinf(2 * m_HeadMovingIncrementor) * 2;
 	m_CurrentHeadOffset = m_BaseHeadOffset + Vector2f(x, y);
 }
 
@@ -31,19 +35,19 @@ void Froggit::DrawEnemy()
 	Vector2f headPos = (Enemy::GetPos() + m_CurrentHeadOffset);
 	m_pFroggitHead->Draw(Rectf(headPos.ToPoint2f(), m_pFroggitHead->GetWidth(), m_pFroggitHead->GetHeight()));
 }
+void Froggit::SpawnBullet(ResourceManager* resourceManager)
+{
+	m_Bullets.clear();
+	int randAttack = utils::RandInRange(0,1); 
+	if (randAttack ==0)
+	{
+		m_Bullets.push_back(new FroggitJumpAttack{ resourceManager->m_BulletAnimatedSprites[0],6 });
+	} else
+	{
+		for (int i{ 1 }; i < 6; ++i) {
+			m_Bullets.push_back(new FroggitFlyAttack{ resourceManager->m_BulletAnimatedSprites[1],3,Vector2f{static_cast<float>(utils::RandInRange(240,390)),230}, &m_Player, i }); 
+		}
+	}
 
-//void Froggit::Update(float deltaTime)
-//{
-//	Enemy::Update(deltaTime);
-//	m_HeadMovingIncrementor = m_HeadMovingIncrementor + (deltaTime * m_HeadMovementSpeed);
-//	float x = cosf(m_HeadMovingIncrementor);
-//	float y = sinf(2 * m_HeadMovingIncrementor) / 2;
-//	m_CurrentHeadOffset = m_BaseHeadOffset + Vector2f(x, y);
-//}
-//
-//void Froggit::Draw()
-//{
-//	Enemy::Draw();
-//	Vector2f headPos = (Enemy::GetPos() + m_CurrentHeadOffset);
-//	m_pFroggitHead->Draw(Rectf(headPos.ToPoint2f(), m_pFroggitHead->GetWidth(), m_pFroggitHead->GetHeight()));
-//}
+}
+

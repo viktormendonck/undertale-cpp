@@ -6,7 +6,7 @@ class Froggit final : public Enemy
 {
 public:
 	Froggit() = delete;
-	Froggit(Texture* pFroggitHead, AnimatedSprite* pBaseTexture, Texture* pDeathTexture,int health, int conversationAmount, float headMovementSpeed);
+	Froggit(Texture* pFroggitHead, AnimatedSprite* pBaseTexture, Texture* pDeathTexture,int health, int conversationAmount, float headMovementSpeed, FightChara& player);
 	~Froggit();
 
 	Froggit(const Froggit& other) = delete; // Copy constructor
@@ -17,6 +17,7 @@ public:
 
 	void UpdateEnemy(float deltaTime) override;
 	void DrawEnemy() override;
+	void SpawnBullet(ResourceManager* resourceManager) override;
 
 
 private:

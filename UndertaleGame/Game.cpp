@@ -15,6 +15,8 @@
 #include "Fight.h"
 #include "FightChara.h"
 //TESTCLASSES
+// TODO: remove
+#include "FroggitFlyAttack.h"
 #include "FroggitJumpAttack.h"
 
 Game::Game(const Window& window)
@@ -34,13 +36,13 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	m_pSpriteManager = new ResourceManager{};
-	m_pChara = new Chara{ m_pSpriteManager->m_AnimatedSprites[0],40 };
-	m_pFightChara = new FightChara(m_pSpriteManager->m_StaticTextures[0], m_pSpriteManager->m_AnimatedSprites[1], 100,
-	                               20);
-	m_pFight = new Fight(m_pFightChara, GetViewPort(),m_pSpriteManager->m_StaticTextures[1],m_pParticleSystem);
+	m_pResourceManager = new ResourceManager{};
+	m_pChara = new Chara{ m_pResourceManager->m_AnimatedSprites[0],40 };
+	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1], 100,
+		20);
 	//TESTSTUFF
-	m_pTESTFROGGITJUMPATTACK = new FroggitJumpAttack(m_pSpriteManager->m_BulletAnimatedSprites[0],10,m_pFightChara);
+	//TODO > remove
+	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,EnemyType::loox,false);
 
 }
 
@@ -51,13 +53,13 @@ void Game::Cleanup()
 	delete m_pFightChara;
 	delete m_pFight;
 	delete m_pInfoScreenTexture;
-	delete m_pSpriteManager;
+	delete m_pResourceManager;
 }
 
 void Game::Update(float deltaTime)
 {
 	m_pParticleSystem->Update(deltaTime);
-	m_pSpriteManager->Update(deltaTime);
+	m_pResourceManager->Update(deltaTime);
 
 	switch (m_GameState)
 	{
@@ -67,7 +69,8 @@ void Game::Update(float deltaTime)
 	case GameState::fight:
 		m_pFight->Update(deltaTime);
 		//TESTSTUFF
-		m_pTESTFROGGITJUMPATTACK->Update(deltaTime);
+		// TODO: remove
+		//m_pTESTFROGGITJUMPATTACK->Update(deltaTime);
 
 		break;
 	case GameState::infoScreen:
@@ -94,8 +97,8 @@ void Game::Draw() const
 	case GameState::fight:
 		m_pFight->Draw();
 		//TestStuff
-		m_pTESTFROGGITJUMPATTACK->Draw();
-
+		// TODO: remove
+		//m_pTESTFROGGITJUMPATTACK->Draw();
 		break;
 	case GameState::infoScreen:
 		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });

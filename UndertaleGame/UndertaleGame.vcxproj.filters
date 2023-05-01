@@ -83,8 +83,11 @@
     <ClCompile Include="FroggitJumpAttack.cpp">
       <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
     </ClCompile>
-    <ClCompile Include="FroggitFireflyAttack.cpp">
+    <ClCompile Include="FroggitFlyAttack.cpp">
       <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+    </ClCompile>
+    <ClCompile Include="Loox.cpp">
+      <Filter>Source\classes\Enemies\enemyTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,8 +133,11 @@
     <ClInclude Include="FroggitJumpAttack.h">
       <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
     </ClInclude>
-    <ClInclude Include="FroggitFireflyAttack.h">
+    <ClInclude Include="FroggitFlyAttack.h">
       <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+    </ClInclude>
+    <ClInclude Include="Loox.h">
+      <Filter>Source\classes\Enemies\enemyTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

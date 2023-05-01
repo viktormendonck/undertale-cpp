@@ -6,12 +6,14 @@
 #include "ParticleSystem.h"
 #include "utils.h"
 #include "CollisionBox.h"
+#include "Froggit.h"
+#include "Loox.h"
 
 
-
-Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, ParticleSystem* pParticleSystem)
+Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem,EnemyType enemy, bool isBossFight)
 	: m_pFightChara{pChara},
-	  m_pBackgroundTexture{backGroundTexture},
+	  m_pBackgroundTexture{pResourceManager->m_StaticTextures[1]},
+      m_pResourceManager{pResourceManager},
 	  m_pParticleSystem{pParticleSystem}
 {
 	m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_BoxBottomOffset,m_FightSquareDimentions, m_FightSquareDimentions));
@@ -35,6 +37,28 @@ Fight::Fight(FightChara* pChara, Rectf screen,Texture* backGroundTexture, Partic
 	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetRight().point1.x,m_FightBoundary.GetRight().point1.y-boxSize, boxSize,m_FightSquareDimentions+(boxSize*2))));
 
 
+	switch (enemy)
+	{
+	case (EnemyType::froggit):
+		m_pEnemy = new Froggit(m_pResourceManager->m_StaticEnemyTextures[0], m_pResourceManager->m_AnimatedSprites[2], m_pResourceManager->m_StaticEnemyTextures[1], 30, 2, 4, *m_pFightChara);
+		break;
+	case (EnemyType::loox):
+		m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pFightChara);
+		break;
+	case (EnemyType::migosp):
+
+		break;
+	case (EnemyType::moldsmal):
+
+		break;
+	case (EnemyType::vegetoid):
+
+		break;
+	case (EnemyType::whimsum):
+
+		break;
+	}
+	m_pEnemy->SpawnBullet(pResourceManager);
 
 }	
 
@@ -70,6 +94,7 @@ void Fight::Draw()
 		utils::DrawRect(m_CurrentTransitionRect, m_BoxLineWidth);
 		break;
 	}
+	m_pEnemy->Draw();
 }
 
 void Fight::Update(const float deltaTime)
@@ -84,6 +109,12 @@ void Fight::Update(const float deltaTime)
 		if (m_pFightChara->IsGravityMode())
 		{
 			UpdatePlatforms(deltaTime);
+		}
+		if (!m_pEnemy->GetBulletActivity())
+		{
+			m_FightState = FightState::transition;
+			m_PreviousFightState = FightState::fight;
+			m_CurrentTransitionRect = m_FightBoundary.GetRect();
 		}
 
 		break;
@@ -113,11 +144,13 @@ void Fight::Update(const float deltaTime)
 			}
 			else
 			{
+				m_pEnemy->SpawnBullet(m_pResourceManager);
 				m_FightState = FightState::fight;
 			}
 		}
 		break;
 	}
+	m_pEnemy->Update(deltaTime);
 }
 
 
@@ -143,12 +176,7 @@ void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
 		break;
 	case (FightState::fight):
 		m_pFightChara->OnButtonUp(e);
-		if (e.keysym.sym == SDLK_0) // test transition from fight to menu
-		{
-			m_FightState = FightState::transition;
-			m_PreviousFightState = FightState::fight;
-			m_CurrentTransitionRect = m_FightBoundary.GetRect();
-		}
+
 		break;
 
 	case (FightState::transition):

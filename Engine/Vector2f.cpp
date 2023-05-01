@@ -152,6 +152,14 @@ Vector2f& Vector2f::operator-=(const Vector2f& rhs)
 	return *this;
 }
 
+Vector2f& Vector2f::operator=(const Point2f p)
+{
+	x = p.x;
+	y = p.y;
+
+	return *this;
+}
+
 Vector2f::operator Point2f()
 {
 	return Point2f{ x,y };
