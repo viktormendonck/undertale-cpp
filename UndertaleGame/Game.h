@@ -14,6 +14,7 @@ class Fight;
 // TODO: remove
 class FroggitJumpAttack;
 class FroggitFlyAttack;
+//class LooxAttack1;
 
 
 class Game : public BaseGame
@@ -58,9 +59,9 @@ private:
 
 	//TEST CLASSES
 	// TODO: remove
-	FroggitJumpAttack* m_pTESTFROGGITJUMPATTACK{};
-	FroggitFlyAttack* m_PTESTFROGGITFLYATTACK{};
-
+	//FroggitJumpAttack* m_pTESTFROGGITJUMPATTACK{};
+	//FroggitFlyAttack* m_PTESTFROGGITFLYATTACK{};
+	//LooxAttack1* m_pLOOXATTACK1{};
 
 		// FUNCTIONS
 	void Initialize();

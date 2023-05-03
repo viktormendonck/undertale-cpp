@@ -16,8 +16,7 @@
 #include "FightChara.h"
 //TESTCLASSES
 // TODO: remove
-#include "FroggitFlyAttack.h"
-#include "FroggitJumpAttack.h"
+//#include "LooxAttack1.h"
 
 Game::Game(const Window& window)
 	: BaseGame{ window }
@@ -38,11 +37,11 @@ void Game::Initialize()
 {
 	m_pResourceManager = new ResourceManager{};
 	m_pChara = new Chara{ m_pResourceManager->m_AnimatedSprites[0],40 };
-	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1], 100,
-		20);
+	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1], 100, 20);
 	//TESTSTUFF
 	//TODO > remove
 	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,EnemyType::loox,false);
+	//m_pLOOXATTACK1 = new LooxAttack1(m_pFight->GetFightBoundaryBox().GetLocation(), 3, m_pResourceManager->m_BulletAnimatedSprites[2], "small", Vector2f{ 5,6 }, 0);
 
 }
 
@@ -71,6 +70,7 @@ void Game::Update(float deltaTime)
 		//TESTSTUFF
 		// TODO: remove
 		//m_pTESTFROGGITJUMPATTACK->Update(deltaTime);
+		//m_pLOOXATTACK1->Update(deltaTime);
 
 		break;
 	case GameState::infoScreen:
@@ -99,6 +99,7 @@ void Game::Draw() const
 		//TestStuff
 		// TODO: remove
 		//m_pTESTFROGGITJUMPATTACK->Draw();
+		//m_pLOOXATTACK1->Draw();
 		break;
 	case GameState::infoScreen:
 		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });

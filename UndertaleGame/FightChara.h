@@ -12,7 +12,7 @@ enum class FightCharaState
 	dying
 };
 
-class FightChara
+class FightChara final
 {
 public:
 	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth);

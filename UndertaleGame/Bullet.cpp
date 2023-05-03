@@ -2,11 +2,12 @@
 #include "Bullet.h"
 #include "utils.h"
 
-Bullet::Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex)
+Bullet::Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider)
 	:
 	m_Pos{pos},
 	m_Damage{damage},
-	m_pBulletTexture{pBulletTex}
+	m_pBulletTexture{pBulletTex},
+	m_Collider{collider}
 {
 
 }

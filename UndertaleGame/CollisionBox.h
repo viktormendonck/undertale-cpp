@@ -3,7 +3,7 @@
 
 #include "Vector2f.h"
 
-class CollisionBox
+class CollisionBox final
 {
 public:
 	CollisionBox();

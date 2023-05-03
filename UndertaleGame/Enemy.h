@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 
+#include "CollisionBox.h"
 #include "Vector2f.h"
 
 class Bullet;
@@ -23,7 +24,7 @@ class Enemy
 {
 public:
 	Enemy() = delete; // default constructor
-	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying, FightChara& player); // constructor
+	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying, FightChara& player, CollisionBox collider); // constructor
 	virtual ~Enemy(); // destructor
 
 	Enemy(const Enemy& other) = delete; // Copy constructor
@@ -40,7 +41,7 @@ public:
 
 	void Damage(int damage);
 	bool IsDead();
-	bool GetBulletActivity();
+	bool AreBulletsActive();
 
 	Texture* GetDeathTexture();
 	Vector2f GetPos();
@@ -57,5 +58,7 @@ protected:
 	Point2f m_PossibleSpawnLocations[6]{ Point2f(19,244),Point2f(119,244) ,Point2f(222,244) ,Point2f(321,244) ,Point2f(424,244),Point2f(527,244)};
 	FightChara& m_Player;
 	std::vector<Bullet*> m_Bullets;
+	CollisionBox m_Collider;
+	
 };
 

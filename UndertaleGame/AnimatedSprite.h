@@ -13,7 +13,7 @@ struct AnimationData
 
 };
 
-class AnimatedSprite
+class AnimatedSprite final
 {
 public:
 	AnimatedSprite(Texture* pTexture, std::map<std::string,AnimationData> animationData,int width, int height, std::string startAnim,float timeBetweenFrames);

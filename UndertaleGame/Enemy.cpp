@@ -7,14 +7,15 @@
 #include "utils.h"
 
 
-Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying,FightChara& player)
+Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying,FightChara& player, CollisionBox collider)
 	:
 	m_hp{health},
 	m_ConversationAmount{conversationAmount},
 	m_pTexture{baseTexture},
 	m_pEnemyDeathTexture{deathTexture},
 	m_IsFlying{isFlying},
-	m_Player{player}
+	m_Player{player},
+	m_Collider{collider}
 {
 	m_Pos = m_PossibleSpawnLocations[utils::RandInRange(0, 5)];
 	m_Pos.y += static_cast<float>(m_IsFlying) * m_FlightOffset;
@@ -65,7 +66,7 @@ bool Enemy::IsDead()
 	return m_hp <= 0;
 }
 
-bool Enemy::GetBulletActivity()
+bool Enemy::AreBulletsActive()
 {
 	bool result{};
 	for (Bullet* bullet : m_Bullets)

@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "Vector2f.h"
 
-class ParticleSystem
+class ParticleSystem final
 {
 public:
 	ParticleSystem(int dissolveParticlesPerSecond, float dissolveParticleLifetime);

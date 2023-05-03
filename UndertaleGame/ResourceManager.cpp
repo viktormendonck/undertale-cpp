@@ -7,37 +7,38 @@
 ResourceManager::ResourceManager()
 {
 	//player
-	m_pCharaTexture = new Texture{ "Sprites/chara.png" };
-	m_pPlayerHeartTexture = new Texture{ "Sprites/PLayerHeart.png" };
-	m_pPlayerHeartAnimTexture = new Texture{ "Sprites/PlayerHeartAnims.png" };
-	m_pFightBackGrounds = new Texture{ "Static_Screens/FightBackGrounds.png" };
+	Texture* charaTexture = new Texture{ "Sprites/chara.png" };
+	Texture* playerHeartTexture = new Texture{ "Sprites/PLayerHeart.png" };
+	Texture* playerHeartAnimTexture = new Texture{ "Sprites/PlayerHeartAnims.png" };
+	Texture* fightBackGrounds = new Texture{ "Static_Screens/FightBackGrounds.png" };
 	//froggit
-	m_pFroggitLeapAttackTexture = new Texture{ "Sprites/Froggit/JumpAttack.png" };
-	m_pFroggitFlyAttackTexture = new Texture{ "Sprites/Froggit/flyAttack.png" };
-	m_pFroggitHead = new Texture{ "Sprites/Froggit/head.png" };
-	m_pFroggitBody = new Texture{ "Sprites/Froggit/body.png" };
-	m_pFroggitDeath = new Texture{ "Sprites/Froggit/death.png" };
+	Texture* froggitLeapAttackTexture = new Texture{ "Sprites/Froggit/JumpAttack.png" };
+	Texture* froggitFlyAttackTexture = new Texture{ "Sprites/Froggit/flyAttack.png" };
+	Texture* froggitHead = new Texture{ "Sprites/Froggit/head.png" };
+	Texture* froggitBody = new Texture{ "Sprites/Froggit/body.png" };
+	Texture* froggitDeath = new Texture{ "Sprites/Froggit/death.png" };
 	//loox
-	m_pLoox = new Texture{ "Sprites/Loox/loox.png" };
-	m_pLooxDeath = new Texture{ "Sprites/loox/death.png" };
-	m_pLooxAttack = new Texture{ "Sprites/loox/bullet.png" };
+	Texture* loox = new Texture{ "Sprites/Loox/loox.png" };
+	Texture* looxDeath = new Texture{ "Sprites/loox/death.png" };
+	Texture* looxAttackBig = new Texture{ "Sprites/loox/bullet.png" };
 	//migosp
-	m_pMigosp = new Texture{ "Sprites/migosp/migosp.png"};
-	m_pMigospDeath = new Texture{ "Sprites/migosp/death.png"};
-	m_pMigospAttack1 = new Texture{ "Sprites/migosp/bullet1.png"};
-	m_pMigospAttack2 = new Texture{ "Sprites/migosp/bullet2.png"};
+	Texture* migosp = new Texture{ "Sprites/migosp/migosp.png"};
+	Texture* migospDeath = new Texture{ "Sprites/migosp/death.png"};
+	Texture* migospAttack1 = new Texture{ "Sprites/migosp/bullet1.png"};
+	Texture* migospAttack2 = new Texture{ "Sprites/migosp/bullet2.png"};
 	//moldsmal
-	m_pMoldsmal = new Texture{ "Sprites/Moldsmal/moldsmal.png" };
-	m_pMoldsmalAttack = new Texture{ "Sprites/Moldsmal/bullet.png" };
+	Texture* moldsmal = new Texture{ "Sprites/Moldsmal/moldsmal.png" };
+	Texture* moldsmalDeath = new Texture{ "Sprites/Moldsmal/moldsmal.png" };
+	Texture* moldsmalAttack = new Texture{ "Sprites/Moldsmal/bullet.png" };
 	//Vegetoid
-	m_pVegetoid = new Texture{ "Sprites/Vegetoid/vegetoid.png" };
-	m_pVegetoidDeath = new Texture{ "Sprites/Vegetoid/death.png" };
-	m_pVegetoidAttack = new Texture{ "Sprites/Vegetoid/bullet.png" };
-	m_pVegetoidHeal = new Texture{ "Sprites/Vegetoid/heal.png" };
+	Texture* vegetoid = new Texture{ "Sprites/Vegetoid/vegetoid.png" };
+	Texture* vegetoidDeath = new Texture{ "Sprites/Vegetoid/death.png" };
+	Texture* vegetoidAttack = new Texture{ "Sprites/Vegetoid/bullet.png" };
+	Texture* vegetoidHeal = new Texture{ "Sprites/Vegetoid/heal.png" };
 	//Whimsun
-	m_pWhimsun = new Texture{ "Sprites/Whimsun/whimsun.png" };
-	m_pWhimsunDeath = new Texture{ "Sprites/Whimsun/death.png" };
-	m_pWhimsunAttack = new Texture{ "Sprites/Whimsun/attack.png" };
+	Texture* whimsun = new Texture{ "Sprites/Whimsun/whimsun.png" };
+	Texture* whimsunDeath = new Texture{ "Sprites/Whimsun/death.png" };
+	Texture* whimsunAttack = new Texture{ "Sprites/Whimsun/bullet.png" };
 
 	std::map<std::string, AnimationData> CharaData{
 		{"down"	  ,AnimationData{1,4}},
@@ -73,14 +74,14 @@ ResourceManager::ResourceManager()
 	};
 
 
-	m_AnimatedSprites.push_back(new AnimatedSprite{ m_pCharaTexture,CharaData,19,29,"downIdle",0.2f});
-	m_AnimatedSprites.push_back(new AnimatedSprite{ m_pPlayerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
-	m_AnimatedSprites.push_back(new AnimatedSprite{ m_pFroggitBody,froggitAnimData,92,48,"live",0.5f });
-	m_AnimatedSprites.push_back(new AnimatedSprite(m_pLoox, LooxAnimData, 100, 116, "live", 0.2f));
-	m_AnimatedSprites.push_back(new AnimatedSprite(m_pMigosp, migospAnimData,72, 96, "live", 0.2f));
-	m_AnimatedSprites.push_back(new AnimatedSprite(m_pMoldsmal, moldsmalAnimData,102, 84, "live", FLT_MAX));
-	m_AnimatedSprites.push_back(new AnimatedSprite(m_pVegetoid, vegetoidAnimData,72, 104, "live", 0.2f));
-	m_AnimatedSprites.push_back(new AnimatedSprite(m_pWhimsun, whimsunAnimData,72, 104, "live", 0.2f));
+	m_AnimatedSprites.push_back(new AnimatedSprite{ charaTexture,CharaData,19,29,"downIdle",0.2f});
+	m_AnimatedSprites.push_back(new AnimatedSprite{ playerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
+	m_AnimatedSprites.push_back(new AnimatedSprite{ froggitBody,froggitAnimData,92,48,"live",0.5f });
+	m_AnimatedSprites.push_back(new AnimatedSprite(loox, LooxAnimData, 100, 116, "live", 0.2f));
+	m_AnimatedSprites.push_back(new AnimatedSprite(migosp, migospAnimData,72, 96, "live", 0.2f));
+	m_AnimatedSprites.push_back(new AnimatedSprite(moldsmal, moldsmalAnimData,102, 84, "live", FLT_MAX));
+	m_AnimatedSprites.push_back(new AnimatedSprite(vegetoid, vegetoidAnimData,72, 104, "live", 0.2f));
+	m_AnimatedSprites.push_back(new AnimatedSprite(whimsun, whimsunAnimData,72, 104, "live", 0.2f));
 	std::map<std::string, AnimationData> froggitLeapAttackAnimData{
 		{"charging",AnimationData{1,1}},
 		{"jumping" ,AnimationData{2,1}}
@@ -89,9 +90,9 @@ ResourceManager::ResourceManager()
 		{"fly",AnimationData{1,2}}
 	};
 	std::map<std::string, AnimationData> looxAttackAnimData{
-		{"big",AnimationData{3,1}},
-		{"medium",AnimationData{2,1}},
-		{"small",AnimationData{1,1}}
+		{"big",AnimationData{1,1}},
+		{"med",AnimationData{2,1}},
+		{"small",AnimationData{3,1}}
 	};
 	std::map<std::string, AnimationData> migospAttackAnimData{
 		{"fly",AnimationData{1,2}}
@@ -120,47 +121,49 @@ ResourceManager::ResourceManager()
 		{"attack",AnimationData{1,2}}
 	};
 
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pFroggitLeapAttackTexture,froggitLeapAttackAnimData,40,38,"charging", FLT_MAX});
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pFroggitFlyAttackTexture,froggitFlyAttackAnimData,8,6,"fly",0.075f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pLooxAttack, looxAttackAnimData ,14 ,14 , "big", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pMigospAttack1, migospAttackAnimData ,16 ,16 , "fly", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pMigospAttack2, migospAttack2AnimData ,32 ,32 , "live", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pMoldsmalAttack, moldsmalAttackAnimData ,12 ,12 , "big", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pVegetoidAttack, vegetoidAttackAnimData ,24 ,24 , "veg", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pVegetoidHeal, vegetoidHealAnimData ,24 ,24 , "heal", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ m_pWhimsunAttack, whimsumAttackAnimData ,15 ,15 , "attack", 0.5f });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ froggitLeapAttackTexture,froggitLeapAttackAnimData,40,38,"charging", FLT_MAX});
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ froggitFlyAttackTexture,froggitFlyAttackAnimData,8,6,"fly",0.075f });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ looxAttackBig, looxAttackAnimData ,14 ,14 , "big", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ migospAttack1, migospAttackAnimData ,16 ,16 , "fly", 0.5f });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ migospAttack2, migospAttack2AnimData ,32 ,32 , "live", 0.5f });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ moldsmalAttack, moldsmalAttackAnimData ,12 ,12 , "big", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ vegetoidAttack, vegetoidAttackAnimData ,24 ,24 , "veg", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ vegetoidHeal, vegetoidHealAnimData ,24 ,24 , "heal", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ whimsunAttack, whimsumAttackAnimData ,15 ,15 , "attack", 0.5f });
 
-	m_StaticEnemyTextures.push_back(m_pFroggitHead);
-	m_StaticEnemyTextures.push_back(m_pFroggitDeath);
-	m_StaticEnemyTextures.push_back(m_pLooxDeath);
-	m_StaticEnemyTextures.push_back(m_pMigospDeath);
-	m_StaticEnemyTextures.push_back(m_pMoldsmal);
-	m_StaticEnemyTextures.push_back(m_pVegetoidDeath);
-	m_StaticEnemyTextures.push_back(m_pWhimsunDeath);
+	m_StaticEnemyTextures.push_back(froggitHead);
+	m_StaticEnemyTextures.push_back(froggitDeath);
+	m_StaticEnemyTextures.push_back(looxDeath);
+	m_StaticEnemyTextures.push_back(migospDeath);
+	m_StaticEnemyTextures.push_back(moldsmalDeath);
+	m_StaticEnemyTextures.push_back(vegetoidDeath);
+	m_StaticEnemyTextures.push_back(whimsunDeath);
 
-	m_StaticTextures.push_back(m_pPlayerHeartTexture);
-	m_StaticTextures.push_back(m_pFightBackGrounds);
+	m_StaticTextures.push_back(playerHeartTexture);
+	m_StaticTextures.push_back(fightBackGrounds);
 }
 
 ResourceManager::~ResourceManager()
 {
-	for (AnimatedSprite* pAnimatedSprite : m_AnimatedSprites)
+	for (int i = 0; i < m_AnimatedSprites.size(); i++)
 	{
-		delete pAnimatedSprite;
-	}
-	for (AnimatedSprite* pBulletAnimatedSprite : m_BulletAnimatedSprites)
-	{
-		delete pBulletAnimatedSprite;
-	}
-	for (Texture* pTexture : m_StaticEnemyTextures)
-	{
-		delete pTexture;
-	}
-	for (Texture* pTexture : m_StaticTextures)
-	{
-		delete pTexture;
+		delete m_AnimatedSprites[i];
 	}
 
+	for (int i = 0; i < m_BulletAnimatedSprites.size(); i++)
+	{
+		delete m_BulletAnimatedSprites[i];
+	}
+
+	for (int i = 0; i < m_StaticEnemyTextures.size(); i++)
+	{
+		delete m_StaticEnemyTextures[i];
+	}
+
+	for (int i = 0; i < m_StaticTextures.size(); i++)
+	{
+		delete m_StaticTextures[i];
+	}
 }
 
 

@@ -18,7 +18,7 @@ enum class FightState
 	transition
 };
 
-class Fight
+class Fight final
 {
 public:
 	Fight() = delete;

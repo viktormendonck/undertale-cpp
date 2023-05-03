@@ -3,7 +3,7 @@
 
 class AnimatedSprite;
 
-class Chara
+class Chara final
 {
 public:
 	Chara(AnimatedSprite* playerSprite, float speed);

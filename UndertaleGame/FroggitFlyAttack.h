@@ -7,7 +7,7 @@ class FroggitFlyAttack final : public Bullet
 {
 public:
 
-	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,Vector2f startPos, FightChara* pPlayer, int bulletItteration );
+	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,Vector2f startPos, FightChara* pPlayer, int bulletItteration, CollisionBox collider);
 
 	virtual void Update(float deltaTime) override;
 	virtual	void Draw() const override;

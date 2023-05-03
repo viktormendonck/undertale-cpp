@@ -5,11 +5,11 @@ class Loox : public Enemy
 {
 public:
 	Loox() = delete;
-	Loox(AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount, FightChara& player);
+	Loox(AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount, FightChara& player, CollisionBox collider);
 	void UpdateEnemy(float deltaTime) override;
 	void DrawEnemy() override;
-	void SpawnBullet(ResourceManager* resourceManager) override;
+	void SpawnBullet(ResourceManager* pResourceManager) override;
 private:
-
+	float m_DelayBetweenBullets{1};
 };
 

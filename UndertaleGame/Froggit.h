@@ -6,7 +6,7 @@ class Froggit final : public Enemy
 {
 public:
 	Froggit() = delete;
-	Froggit(Texture* pFroggitHead, AnimatedSprite* pBaseTexture, Texture* pDeathTexture,int health, int conversationAmount, float headMovementSpeed, FightChara& player);
+	Froggit(Texture* pFroggitHead, AnimatedSprite* pBaseTexture, Texture* pDeathTexture,int health, int conversationAmount, float headMovementSpeed, FightChara& player, CollisionBox collider);
 	~Froggit();
 
 	Froggit(const Froggit& other) = delete; // Copy constructor

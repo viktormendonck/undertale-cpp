@@ -2,9 +2,9 @@
 #include "FroggitJumpAttack.h"
 
 
-FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage)
+FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, CollisionBox collider)
 	:
-	Bullet(Vector2f(350,75),damage,pBulletTex)
+	Bullet(Vector2f(350,75),damage,pBulletTex, collider)
 {
 	m_CountDownTimer = static_cast<float>(rand() % 3 + 1);
 }
@@ -28,8 +28,8 @@ void FroggitJumpAttack::Update(float deltaTime)
 		m_pBulletTexture->SetAnimation("jumping");
 		m_velocity += Gravity * deltaTime;
 		m_Pos += m_velocity * deltaTime;
-		m_cttl -= deltaTime;
-		if (m_cttl < 0)
+		m_CurrentTimeToLive -= deltaTime;
+		if (m_CurrentTimeToLive < 0)
 		{
 			m_IsActive = false;
 		}

@@ -151,7 +151,6 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="Chara.cpp" />
     <ClCompile Include="CollisionBox.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="FightChara.cpp" />
     <ClCompile Include="Froggit.cpp" />
@@ -159,6 +158,8 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="FroggitJumpAttack.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Loox.cpp" />
+    <ClCompile Include="LooxAttack1.cpp" />
+    <ClCompile Include="LooxAttack2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="pch.cpp" />
@@ -170,7 +171,6 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="Chara.h" />
     <ClInclude Include="CollisionBox.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="FightChara.h" />
     <ClInclude Include="Froggit.h" />
@@ -178,6 +178,8 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="FroggitJumpAttack.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Loox.h" />
+    <ClInclude Include="LooxAttack1.h" />
+    <ClInclude Include="LooxAttack2.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="AnimatedSprite.h" />

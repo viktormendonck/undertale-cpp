@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Fight.h"
-#include "EnemyManager.h"
 #include "FightChara.h"
 #include "Enemy.h"
 #include "ParticleSystem.h"
@@ -40,10 +39,10 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 	switch (enemy)
 	{
 	case (EnemyType::froggit):
-		m_pEnemy = new Froggit(m_pResourceManager->m_StaticEnemyTextures[0], m_pResourceManager->m_AnimatedSprites[2], m_pResourceManager->m_StaticEnemyTextures[1], 30, 2, 4, *m_pFightChara);
+		m_pEnemy = new Froggit(m_pResourceManager->m_StaticEnemyTextures[0], m_pResourceManager->m_AnimatedSprites[2], m_pResourceManager->m_StaticEnemyTextures[1], 30, 2, 4, *m_pFightChara,m_FightBoundary);
 		break;
 	case (EnemyType::loox):
-		m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pFightChara);
+		m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pFightChara, m_FightBoundary);
 		break;
 	case (EnemyType::migosp):
 
@@ -110,7 +109,7 @@ void Fight::Update(const float deltaTime)
 		{
 			UpdatePlatforms(deltaTime);
 		}
-		if (!m_pEnemy->GetBulletActivity())
+		if (!m_pEnemy->AreBulletsActive())
 		{
 			m_FightState = FightState::transition;
 			m_PreviousFightState = FightState::fight;

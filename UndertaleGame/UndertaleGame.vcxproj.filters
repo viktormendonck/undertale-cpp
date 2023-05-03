@@ -27,14 +27,17 @@
     <Filter Include="Source\classes\Enemies\enemyTypes">
       <UniqueIdentifier>{a7a0f3a9-9da9-47fe-ad25-06cf1035ec84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\classes\player\functionality">
-      <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\classes\Enemies\bullets">
       <UniqueIdentifier>{2cc6bb21-8fc9-48a3-b5a1-faf420788482}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\classes\Enemies\bullets\Froggit">
       <UniqueIdentifier>{90690e2f-eade-4db7-ad4a-bedd224d905e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Enemies\bullets\Loox">
+      <UniqueIdentifier>{7850dbf3-c033-4f82-a9e2-13123843a6e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\functionality">
+      <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,16 +69,13 @@
       <Filter>Source\classes\player</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Source\classes\player\functionality</Filter>
+      <Filter>Source\functionality</Filter>
     </ClCompile>
     <ClCompile Include="Froggit.cpp">
       <Filter>Source\classes\Enemies\enemyTypes</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Source\classes\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionBox.cpp">
-      <Filter>Source\classes\player\functionality</Filter>
+      <Filter>Source\functionality</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source\classes\Enemies\bullets</Filter>
@@ -88,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="Loox.cpp">
       <Filter>Source\classes\Enemies\enemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="LooxAttack1.cpp">
+      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+    </ClCompile>
+    <ClCompile Include="LooxAttack2.cpp">
+      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,16 +122,13 @@
       <Filter>Source\classes\player</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Source\classes\player\functionality</Filter>
+      <Filter>Source\functionality</Filter>
     </ClInclude>
     <ClInclude Include="Froggit.h">
       <Filter>Source\classes\Enemies\enemyTypes</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Source\classes\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionBox.h">
-      <Filter>Source\classes\player\functionality</Filter>
+      <Filter>Source\functionality</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Source\classes\Enemies\bullets</Filter>
@@ -138,6 +141,12 @@
     </ClInclude>
     <ClInclude Include="Loox.h">
       <Filter>Source\classes\Enemies\enemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="LooxAttack1.h">
+      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+    </ClInclude>
+    <ClInclude Include="LooxAttack2.h">
+      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
