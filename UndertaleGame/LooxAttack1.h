@@ -15,8 +15,11 @@ private:
 	Vector2f m_Direction;
 	Vector2f m_StartPos;
 	std::string m_CurrentState;
-	float m_incrementor{};
-	float m_incrementorSpeed{15};
+	float m_Incrementor{};
+	const float m_IncrementorSpeed{15};
+	const float m_BulletSpeedMulti{ 3 };
+	const float m_SinWaveLengthMulti{ 2 };
+	const float m_SinWaveWidthMulti{ 4 };
 	float m_Delay{};
 	float m_DelayTillDespawn{ 2 };
 };

@@ -23,8 +23,7 @@ Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* bas
 
 Enemy::~Enemy()
 {
-	delete m_pEnemyDeathTexture;
-	delete m_pTexture;
+	this->DeleteBullets();
 }
 
 void Enemy::Draw()
@@ -74,6 +73,15 @@ bool Enemy::AreBulletsActive()
 		result = result || bullet->IsActive();
 	}
 	return result;
+}
+
+void Enemy::DeleteBullets()
+{
+	for (int i{}; i < m_Bullets.size(); ++i)
+	{
+		delete m_Bullets[i];
+	}
+	m_Bullets.clear();
 }
 
 Texture* Enemy::GetDeathTexture()

@@ -38,8 +38,7 @@ void Froggit::DrawEnemy()
 void Froggit::SpawnBullet(ResourceManager* resourceManager)
 {
 	m_Bullets.clear();
-	int randAttack = utils::RandInRange(0,1); 
-	if (randAttack ==0)
+	if (utils::RandBool())
 	{
 		m_Bullets.push_back(new FroggitJumpAttack{ resourceManager->m_BulletAnimatedSprites[0],6,m_Collider });
 	} else

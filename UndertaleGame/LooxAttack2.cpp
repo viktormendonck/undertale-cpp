@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "LooxAttack2.h"
 
+#include <iostream>
+
 #include "Bullet.h"
 
 //TODO:doesnt really work that well, fix ASAP
@@ -29,9 +31,15 @@ void LooxAttack2::Update(float deltaTime)
 {
 	if (m_Delay<=0)
 	{
+		//TODO: remove commented out testcode
+		//std::cout << "x:" << m_Pos.x << "y:" << m_Pos.y << std::endl;
 		m_TimeToLive -= deltaTime;
-		bool overlapX{ utils::IsOverlapping(m_Collider.GetLeft(),this->GetRect()) || utils::IsOverlapping(m_Collider.GetRight(),this->GetRect()) };
-		bool overlapY{ utils::IsOverlapping(m_Collider.GetBottom(),this->GetRect()) || utils::IsOverlapping(m_Collider.GetTop(),this->GetRect()) };
+		Vector2f tempPos = m_Pos + m_Velocity * m_Speed * deltaTime;
+		Rectf nextPosBulletRect = Rectf(tempPos.x,tempPos.y,this->GetRect().width, this->GetRect().height);
+		bool overlapX{	utils::IsOverlapping(m_Collider.GetLeft(),nextPosBulletRect) || 
+						utils::IsOverlapping(m_Collider.GetRight(),nextPosBulletRect) };
+		bool overlapY{	utils::IsOverlapping(m_Collider.GetBottom(),nextPosBulletRect) ||
+						utils::IsOverlapping(m_Collider.GetTop(),nextPosBulletRect) };
 		if (overlapY)
 		{
 			m_Velocity.y = -m_Velocity.y;

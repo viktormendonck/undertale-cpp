@@ -78,6 +78,21 @@ private:
 	const float m_PlatformTimer{ 5 };
 	float m_CurrentPlatformTimer{0};
 
+	//UI
+	enum class UiState
+	{
+		fightSelected,
+		actSelected,
+		itemSelected,
+		mercySelected,
+		idle
+
+	};
+	void DrawUi() const;
+	void UpdateUi(float deltaTime);
+	Vector2f m_ButtonLocations[4]{ Vector2f{16,15},Vector2f{16+110+56,15},Vector2f{16+110*2+56+57,15},Vector2f{16+110*3+56*2+57,15} };
+	int  m_ButtonsAmount{ 4 };
+	UiState m_UiState{ UiState::idle };
 	
 };
 

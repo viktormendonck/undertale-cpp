@@ -15,7 +15,7 @@ public:
 
 private:
 	Vector2f m_Velocity{1,1};
-	float m_Speed{100};
+	float m_Speed{75};
 	float m_Delay{};
 	float m_TimeToLive{};
 };

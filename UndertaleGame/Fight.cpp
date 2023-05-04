@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Fight.h"
+
+#include "AnimatedSprite.h"
 #include "FightChara.h"
 #include "Enemy.h"
 #include "ParticleSystem.h"
@@ -29,6 +31,7 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 	{
 		m_Colliders.push_back(CollisionBox(Rectf(0,0,platformSize.x, platformSize.y)));
 	}
+
 	const float boxSize{ 5 };
 	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetBottom().point1.x, m_FightBoundary.GetBottom().point1.y - boxSize, m_FightSquareDimentions, boxSize)));
 	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetTop().point1, m_FightSquareDimentions, boxSize)));
@@ -44,7 +47,7 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 	case (EnemyType::loox):
 		m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pFightChara, m_FightBoundary);
 		break;
-	case (EnemyType::migosp):
+	/*case (EnemyType::migosp):
 
 		break;
 	case (EnemyType::moldsmal):
@@ -55,7 +58,7 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 		break;
 	case (EnemyType::whimsum):
 
-		break;
+		break;*/
 	}
 	m_pEnemy->SpawnBullet(pResourceManager);
 
@@ -63,13 +66,14 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 
 Fight::~Fight()
 {
+	delete m_pEnemy;
 }
 
 void Fight::Draw()
 {
 	Rectf srcRect{ 0,(m_pBackgroundTexture->GetHeight() / static_cast<float>(m_BackGroundsAmount)*static_cast<float>(m_IsBossFight)),m_pBackgroundTexture->GetWidth(),m_pBackgroundTexture->GetHeight() / static_cast<float>(m_BackGroundsAmount)};
 	m_pBackgroundTexture->Draw(Point2f(0, 0), srcRect);
-
+	
 	switch (m_FightState)
 	{
 	case (FightState::menu):
@@ -94,6 +98,7 @@ void Fight::Draw()
 		break;
 	}
 	m_pEnemy->Draw();
+	DrawUi();
 }
 
 void Fight::Update(const float deltaTime)
@@ -109,13 +114,14 @@ void Fight::Update(const float deltaTime)
 		{
 			UpdatePlatforms(deltaTime);
 		}
+
 		if (!m_pEnemy->AreBulletsActive())
 		{
 			m_FightState = FightState::transition;
 			m_PreviousFightState = FightState::fight;
 			m_CurrentTransitionRect = m_FightBoundary.GetRect();
+			m_pEnemy->DeleteBullets();
 		}
-
 		break;
 	case (FightState::transition):
 		float distance {};
@@ -140,16 +146,19 @@ void Fight::Update(const float deltaTime)
 			if (m_PreviousFightState == FightState::fight)
 			{
 				m_FightState = FightState::menu;
+				m_UiState = UiState::fightSelected;
 			}
 			else
 			{
 				m_pEnemy->SpawnBullet(m_pResourceManager);
 				m_FightState = FightState::fight;
+				m_UiState = UiState::idle;
 			}
 		}
 		break;
 	}
 	m_pEnemy->Update(deltaTime);
+	UpdateUi(deltaTime);
 }
 
 
@@ -166,12 +175,31 @@ void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
 	switch (m_FightState)
 	{
 	case (FightState::menu):
-		if (e.keysym.sym == SDLK_0) // test transition from menu to fight
+		switch (e.keysym.sym)
 		{
+		case (SDLK_0):
 			m_FightState = FightState::transition;
 			m_PreviousFightState = FightState::menu;
 			m_CurrentTransitionRect = m_TextBox;
+			break;
+		case (SDLK_a):
+			if (m_UiState != UiState::fightSelected)
+			{
+				m_UiState = static_cast<UiState>(static_cast<int>(m_UiState) - 1);
+			}
+			break;
+		case (SDLK_d):
+			if (m_UiState != UiState::mercySelected)
+			{
+				m_UiState = static_cast<UiState>(static_cast<int>(m_UiState) + 1);
+			}
+			break;
+		case (SDLK_RETURN):
+
+			break;
 		}
+
+
 		break;
 	case (FightState::fight):
 		m_pFightChara->OnButtonUp(e);
@@ -202,8 +230,8 @@ void Fight::UpdatePlatforms(float deltaTime)
 	{
 		m_CurrentPlatformTimer -= deltaTime;
 	}
-
 }
+
 
 void Fight::DrawPlatforms() const
 {
@@ -211,5 +239,25 @@ void Fight::DrawPlatforms() const
 	for (int i{}; i<m_PlatformAmount;++i)
 	{
 		utils::FillRect(m_Colliders[i].GetRect());
+	}
+}
+
+void Fight::DrawUi() const
+{
+	for (int i{}; i < m_ButtonsAmount; ++i)
+	{
+		m_pResourceManager->m_UiElementSprites[i]->Draw(m_ButtonLocations[i]);
+	}
+}
+
+void Fight::UpdateUi(float deltaTime)
+{
+	for (int i{}; i < m_ButtonsAmount; ++i)
+	{
+		m_pResourceManager->m_UiElementSprites[i]->SetAnimation("inactive");
+	}
+	if (m_UiState != UiState::idle && m_FightState == FightState::menu)
+	{
+		m_pResourceManager->m_UiElementSprites[static_cast<int>(m_UiState)]->SetAnimation("active");
 	}
 }

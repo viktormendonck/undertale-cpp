@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Bullet.h"
+
+#include <iostream>
+
 #include "utils.h"
 
 Bullet::Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider)
@@ -10,6 +13,10 @@ Bullet::Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBo
 	m_Collider{collider}
 {
 
+}
+
+Bullet::~Bullet()
+{
 }
 
 bool Bullet::IsActive()

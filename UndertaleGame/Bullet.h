@@ -10,6 +10,8 @@ class Bullet
 {
 public:
 	Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider);
+	virtual ~Bullet();
+
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() const = 0;
 	bool IsActive();

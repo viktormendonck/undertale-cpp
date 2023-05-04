@@ -14,9 +14,9 @@ LooxAttack1::LooxAttack1(Vector2f pos, int damage, AnimatedSprite* pBulletTex, C
 void LooxAttack1::Update(float deltaTime)
 {
 	if (m_Delay <= 0) {
-		m_incrementor += deltaTime * m_incrementorSpeed;
-		Vector2f dirFinal = m_Direction * m_incrementor * 2;
-		m_Pos = m_StartPos + dirFinal + m_OrthoNormal * 2 * sinf(m_incrementor);
+		m_Incrementor += deltaTime * m_IncrementorSpeed;
+		Vector2f dirFinal = m_Direction * m_Incrementor * m_BulletSpeedMulti;
+		m_Pos = m_StartPos + dirFinal + m_OrthoNormal * m_SinWaveWidthMulti * sinf(m_Incrementor/m_SinWaveLengthMulti);
 		m_DelayTillDespawn -= deltaTime;
 		if (m_DelayTillDespawn <= 0)
 		{

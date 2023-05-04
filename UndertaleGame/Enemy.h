@@ -13,11 +13,11 @@ class ResourceManager;
 enum class EnemyType
 {
 	froggit,
-	loox,
+	loox/*,
 	migosp,
 	moldsmal,
 	vegetoid,
-	whimsum
+	whimsum*/
 };
 
 class Enemy
@@ -42,6 +42,7 @@ public:
 	void Damage(int damage);
 	bool IsDead();
 	bool AreBulletsActive();
+	void DeleteBullets();
 
 	Texture* GetDeathTexture();
 	Vector2f GetPos();

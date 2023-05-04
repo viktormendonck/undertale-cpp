@@ -745,4 +745,10 @@ int utils::RandInRange(int min, int max)
 	return (rand() % (max + 1 - min)) + min;
 }
 
+bool utils::RandBool()
+{
+	
+	return RandInRange(0, 1) == 0;
+}
+
 #pragma endregion CollisionFunctionality

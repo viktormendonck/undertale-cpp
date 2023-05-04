@@ -22,6 +22,7 @@ public:
 
 	std::vector<AnimatedSprite*> m_AnimatedSprites{};
 	std::vector<AnimatedSprite*> m_BulletAnimatedSprites{};
+	std::vector<AnimatedSprite*> m_UiElementSprites{};
 	std::vector<Texture*> m_StaticTextures{};
 	std::vector<Texture*> m_StaticEnemyTextures{};
 private:
