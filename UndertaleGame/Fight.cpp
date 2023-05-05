@@ -69,7 +69,12 @@ Fight::~Fight()
 	delete m_pEnemy;
 }
 
-void Fight::Draw()
+
+
+
+
+//Drawing functions
+void Fight::Draw() const
 {
 	Rectf srcRect{ 0,(m_pBackgroundTexture->GetHeight() / static_cast<float>(m_BackGroundsAmount)*static_cast<float>(m_IsBossFight)),m_pBackgroundTexture->GetWidth(),m_pBackgroundTexture->GetHeight() / static_cast<float>(m_BackGroundsAmount)};
 	m_pBackgroundTexture->Draw(Point2f(0, 0), srcRect);
@@ -77,137 +82,163 @@ void Fight::Draw()
 	switch (m_FightState)
 	{
 	case (FightState::menu):
-		utils::DrawRect(m_TextBox, m_BoxLineWidth);
+		DrawMenu();
 		break;
 	case (FightState::fight):
-		{
-
-			utils::SetColor(Color4f(1, 1, 1, 1));
-			m_pFightChara->Draw();
-			utils::DrawRect(m_FightBoundary.GetRect(), m_BoxLineWidth);
-
-			if (m_pFightChara->IsGravityMode())
-			{
-				DrawPlatforms();
-			}
-
-			break;
-		}
+		DrawFight();
+		break;
 	case (FightState::transition):
-		utils::DrawRect(m_CurrentTransitionRect, m_BoxLineWidth);
+		DrawTransition();
 		break;
 	}
 	m_pEnemy->Draw();
 	DrawUi();
 }
 
+void Fight::DrawMenu() const
+{
+	utils::DrawRect(m_TextBox, m_BoxLineWidth);
+}
+void Fight::DrawFight() const
+{
+	utils::SetColor(Color4f(1, 1, 1, 1));
+	m_pFightChara->Draw();
+	utils::DrawRect(m_FightBoundary.GetRect(), m_BoxLineWidth);
+
+	if (m_pFightChara->IsGravityMode())
+	{
+		DrawPlatforms();
+	}
+}
+void Fight::DrawMenuSelected() const
+{
+	switch (m_MenuSelectedState)
+	{
+	case(UiState::fightSelected):
+		m_pResourceManager->m_StaticTextures[2]->Draw(m_TextBox);
+		break;
+	case (UiState::actSelected):
+
+		break;
+	case(UiState::itemSelected):
+
+		break;
+	case (UiState::mercySelected):
+
+		break;
+	}
+}
+void Fight::DrawTransition() const
+{
+	utils::DrawRect(m_CurrentTransitionRect, m_BoxLineWidth);
+}
+void Fight::DrawPlatforms() const
+{
+	utils::SetColor(Color4f(1, 1, 1, 1));
+	for (int i{}; i<m_PlatformAmount;++i)
+	{
+		utils::FillRect(m_Colliders[i].GetRect());
+	}
+}
+void Fight::DrawUi() const
+{
+	for (int i{}; i < m_ButtonsAmount; ++i)
+	{
+		m_pResourceManager->m_UiElementSprites[i]->Draw(m_ButtonLocations[i]);
+	}
+}
+
+//Update Finctions
 void Fight::Update(const float deltaTime)
 {
 	switch (m_FightState)
 	{
 	case (FightState::menu):
-
+		UpdateMenu(deltaTime);
+		break;
+	case (FightState::menuSelected):
+		UpdateMenuSelected(deltaTime);
 		break;
 	case (FightState::fight):
-		m_pFightChara->Update(deltaTime,this, m_Colliders);
-		if (m_pFightChara->IsGravityMode())
-		{
-			UpdatePlatforms(deltaTime);
-		}
-
-		if (!m_pEnemy->AreBulletsActive())
-		{
-			m_FightState = FightState::transition;
-			m_PreviousFightState = FightState::fight;
-			m_CurrentTransitionRect = m_FightBoundary.GetRect();
-			m_pEnemy->DeleteBullets();
-		}
+		UpdateFight(deltaTime);
 		break;
 	case (FightState::transition):
-		float distance {};
-		if (m_PreviousFightState == FightState::fight)
-		{
-			distance = m_TextBox.left - m_FightBoundary.GetRect().left;
-		}
-		else
-		{
-			distance = m_FightBoundary.GetRect().left - m_TextBox.left;
-		}
-
-		if ( m_BoxTransitionIncrementor < m_BoxTransitionSpeed)
-		{
-			m_BoxTransitionIncrementor += deltaTime / m_BoxTransitionSpeed;
-			m_CurrentTransitionRect.left += deltaTime * distance / m_BoxTransitionSpeed;
-			m_CurrentTransitionRect.width += distance * -2 * deltaTime / m_BoxTransitionSpeed;
-		}
-		else
-		{
-			m_BoxTransitionIncrementor = 0;
-			if (m_PreviousFightState == FightState::fight)
-			{
-				m_FightState = FightState::menu;
-				m_UiState = UiState::fightSelected;
-			}
-			else
-			{
-				m_pEnemy->SpawnBullet(m_pResourceManager);
-				m_FightState = FightState::fight;
-				m_UiState = UiState::idle;
-			}
-		}
+		UpdateTransition(deltaTime);
 		break;
 	}
 	m_pEnemy->Update(deltaTime);
 	UpdateUi(deltaTime);
 }
 
-
-CollisionBox Fight::GetFightBoundaryBox()
+void Fight::UpdateMenu(float deltaTime)
 {
-	return m_FightBoundary;
 }
-void Fight::ButtonDownManager(const SDL_KeyboardEvent& e)
+void Fight::UpdateFight(float deltaTime)
 {
-
-}
-void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
-{
-	switch (m_FightState)
+	m_pFightChara->Update(deltaTime, this, m_Colliders);
+	if (m_pFightChara->IsGravityMode())
 	{
-	case (FightState::menu):
-		switch (e.keysym.sym)
+		UpdatePlatforms(deltaTime);
+	}
+
+	if (!m_pEnemy->AreBulletsActive())
+	{
+		m_FightState = FightState::transition;
+		m_PreviousFightState = FightState::fight;
+		m_CurrentTransitionRect = m_FightBoundary.GetRect();
+		m_pEnemy->DeleteBullets();
+	}
+}
+void Fight::UpdateMenuSelected(float deltaTime)
+{
+	switch (m_MenuSelectedState)
+	{
+	case(UiState::fightSelected):
+		
+		break;
+	case (UiState::actSelected):
+
+		break;
+	case(UiState::itemSelected):
+
+		break;
+	case (UiState::mercySelected):
+
+		break;
+	}
+}
+void Fight::UpdateTransition(float deltaTime)
+{
+	float distance{};
+	if (m_PreviousFightState == FightState::fight)
+	{
+		distance = m_TextBox.left - m_FightBoundary.GetRect().left;
+	}
+	else
+	{
+		distance = m_FightBoundary.GetRect().left - m_TextBox.left;
+	}
+
+	if (m_BoxTransitionIncrementor < m_BoxTransitionSpeed)
+	{
+		m_BoxTransitionIncrementor += deltaTime / m_BoxTransitionSpeed;
+		m_CurrentTransitionRect.left += deltaTime * distance / m_BoxTransitionSpeed;
+		m_CurrentTransitionRect.width += distance * -2 * deltaTime / m_BoxTransitionSpeed;
+	}
+	else
+	{
+		m_BoxTransitionIncrementor = 0;
+		if (m_PreviousFightState == FightState::fight)
 		{
-		case (SDLK_0):
-			m_FightState = FightState::transition;
-			m_PreviousFightState = FightState::menu;
-			m_CurrentTransitionRect = m_TextBox;
-			break;
-		case (SDLK_a):
-			if (m_UiState != UiState::fightSelected)
-			{
-				m_UiState = static_cast<UiState>(static_cast<int>(m_UiState) - 1);
-			}
-			break;
-		case (SDLK_d):
-			if (m_UiState != UiState::mercySelected)
-			{
-				m_UiState = static_cast<UiState>(static_cast<int>(m_UiState) + 1);
-			}
-			break;
-		case (SDLK_RETURN):
-
-			break;
+			m_FightState = FightState::menu;
+			m_UiState = UiState::fightSelected;
 		}
-
-
-		break;
-	case (FightState::fight):
-		m_pFightChara->OnButtonUp(e);
-
-		break;
-
-	case (FightState::transition):
-		break;
+		else
+		{
+			m_pEnemy->SpawnBullet(m_pResourceManager);
+			m_FightState = FightState::fight;
+			m_UiState = UiState::idle;
+		}
 	}
 }
 void Fight::UpdatePlatforms(float deltaTime)
@@ -231,25 +262,6 @@ void Fight::UpdatePlatforms(float deltaTime)
 		m_CurrentPlatformTimer -= deltaTime;
 	}
 }
-
-
-void Fight::DrawPlatforms() const
-{
-	utils::SetColor(Color4f(1, 1, 1, 1));
-	for (int i{}; i<m_PlatformAmount;++i)
-	{
-		utils::FillRect(m_Colliders[i].GetRect());
-	}
-}
-
-void Fight::DrawUi() const
-{
-	for (int i{}; i < m_ButtonsAmount; ++i)
-	{
-		m_pResourceManager->m_UiElementSprites[i]->Draw(m_ButtonLocations[i]);
-	}
-}
-
 void Fight::UpdateUi(float deltaTime)
 {
 	for (int i{}; i < m_ButtonsAmount; ++i)
@@ -260,4 +272,94 @@ void Fight::UpdateUi(float deltaTime)
 	{
 		m_pResourceManager->m_UiElementSprites[static_cast<int>(m_UiState)]->SetAnimation("active");
 	}
+}
+
+
+// Button Manager
+void Fight::ButtonDownManager(const SDL_KeyboardEvent& e)
+{
+
+}
+void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
+{
+	switch (m_FightState)
+	{
+	case (FightState::menu):
+		ButtonUpMenuManager(e);
+		break;
+	case (FightState::menuSelected):
+		ButtonUpMenuSelectedManager(e);
+		break;
+	case (FightState::fight):
+		ButtonUpFightManager(e);
+		break;
+	}
+}
+void Fight::ButtonUpMenuManager(const SDL_KeyboardEvent& e)
+{
+	switch (e.keysym.sym)
+	{
+	case (SDLK_0):
+		m_FightState = FightState::transition;
+		m_PreviousFightState = FightState::menu;
+		m_CurrentTransitionRect = m_TextBox;
+		break;
+	case (SDLK_a):
+	case (SDLK_LEFT):
+		if (m_UiState != UiState::fightSelected)
+		{
+			m_UiState = static_cast<UiState>(static_cast<int>(m_UiState) - 1);
+		}
+		break;
+	case (SDLK_d):
+	case(SDLK_RIGHT):
+		if (m_UiState != UiState::mercySelected)
+		{
+			m_UiState = static_cast<UiState>(static_cast<int>(m_UiState) + 1);
+		}
+		break;
+	case (SDLK_RETURN):
+	case (SDLK_x):
+		m_MenuSelectedState = m_UiState;
+		m_UiState = UiState::idle;
+		break;
+	}
+}
+void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
+{
+	switch (m_MenuSelectedState)
+	{
+	case(UiState::fightSelected):
+		switch (e.keysym.sym)
+		{
+		case (SDLK_RETURN):
+		case (SDLK_x):
+
+			break;
+		}
+		break;
+	case (UiState::actSelected):
+
+		break;
+	case(UiState::itemSelected):
+
+		break;
+	case (UiState::mercySelected):
+
+		break;
+	}
+
+
+
+}
+void Fight::ButtonUpFightManager(const SDL_KeyboardEvent& e)
+{
+	m_pFightChara->OnButtonUp(e);
+}
+
+//getters and setters
+
+CollisionBox Fight::GetFightBoundaryBox()
+{
+	return m_FightBoundary;
 }

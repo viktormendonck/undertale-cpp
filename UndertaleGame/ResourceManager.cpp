@@ -44,6 +44,8 @@ ResourceManager::ResourceManager()
 	Texture* itemButtonTexture = new Texture{ "UI/itemButton.png" };
 	Texture* mercyButtonTexture = new Texture{ "UI/mercyButton.png" };
 
+	Texture* fightMenuScreenTexture = new Texture{ "UI/fightTarget.png" };
+
 
 
 
@@ -160,6 +162,7 @@ ResourceManager::ResourceManager()
 
 	m_StaticTextures.push_back(playerHeartTexture);
 	m_StaticTextures.push_back(fightBackGrounds);
+	m_StaticTextures.push_back(fightMenuScreenTexture);
 }
 
 ResourceManager::~ResourceManager()

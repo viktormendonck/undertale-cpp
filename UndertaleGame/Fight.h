@@ -14,6 +14,7 @@ class ParticleSystem;
 enum class FightState
 {
 	menu,
+	menuSelected,
 	fight,
 	transition
 };
@@ -31,7 +32,7 @@ public:
 	Fight(Fight&& other) = delete; // Move constructor
 	Fight& operator=(Fight&& other) = delete; // Move assignment operator
 
-	void Draw();
+	void Draw() const;
 	void Update(float deltaTime);
 
 	CollisionBox GetFightBoundaryBox();
@@ -61,8 +62,8 @@ private:
 
 	Vector2f m_MiddleLocation{};
 
-	FightState m_FightState{ FightState::fight };
-	FightState m_PreviousFightState{ FightState::fight };
+	FightState m_FightState{ FightState::menu };
+	FightState m_PreviousFightState{ m_FightState };
 
 
 	float m_BoxTransitionSpeed{ 1 };
@@ -72,8 +73,6 @@ private:
 	std::vector<CollisionBox> m_Colliders{};
 	const int m_PlatformAmount{3};
 
-	void DrawPlatforms() const;
-	void UpdatePlatforms(float deltaTime);
 
 	const float m_PlatformTimer{ 5 };
 	float m_CurrentPlatformTimer{0};
@@ -88,11 +87,34 @@ private:
 		idle
 
 	};
-	void DrawUi() const;
-	void UpdateUi(float deltaTime);
 	Vector2f m_ButtonLocations[4]{ Vector2f{16,15},Vector2f{16+110+56,15},Vector2f{16+110*2+56+57,15},Vector2f{16+110*3+56*2+57,15} };
 	int  m_ButtonsAmount{ 4 };
 	UiState m_UiState{ UiState::idle };
-	
+	UiState m_MenuSelectedState{ UiState::idle };
+
+	//Draw cleanup functions
+	void DrawMenu() const;
+	void DrawFight() const;
+	void DrawMenuSelected() const;
+	void DrawTransition() const;
+	void DrawUi() const;
+	void DrawPlatforms() const;
+
+
+	//Update cleanup functions
+	void UpdateMenu(float deltaTime);
+	void UpdateFight(float deltaTime);
+	void UpdateMenuSelected(float deltaTime);
+	void UpdateTransition(float deltaTime);
+	void UpdateUi(float deltaTime);
+	void UpdatePlatforms(float deltaTime);
+
+
+
+	//Button input cleanup functions
+	void ButtonUpMenuManager(const SDL_KeyboardEvent& e);
+	void ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e);
+	void ButtonUpFightManager(const SDL_KeyboardEvent& e);
+
 };
 
