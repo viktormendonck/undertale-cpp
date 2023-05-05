@@ -113,6 +113,11 @@ void FightChara::SetPos(Vector2f pos)
 	m_Pos = pos;
 }
 
+float FightChara::GetDamage()
+{
+	return m_Damage;
+}
+
 void FightChara::UpdateMovement(float deltaTime)
 {
 	const Uint8* state{ SDL_GetKeyboardState(nullptr) };

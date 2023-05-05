@@ -45,7 +45,8 @@ ResourceManager::ResourceManager()
 	Texture* mercyButtonTexture = new Texture{ "UI/mercyButton.png" };
 
 	Texture* fightMenuScreenTexture = new Texture{ "UI/fightTarget.png" };
-
+	Texture* fightMenuPlayerBarTexture = new Texture{ "Sprites/Player/attackSelector.png" };
+	Texture* playerAttackTexture = new Texture{ "Sprites/Player/attackAnim.png" };
 
 
 
@@ -150,7 +151,16 @@ ResourceManager::ResourceManager()
 	m_UiElementSprites.push_back(new AnimatedSprite{ itemButtonTexture ,buttonAnimData,110,42,"inactive",FLT_MAX });
 	m_UiElementSprites.push_back(new AnimatedSprite{ mercyButtonTexture,buttonAnimData,110,42,"inactive",FLT_MAX });
 
+	std::map<std::string, AnimationData> playerAttackBarAnimData{
+		{"inactive",AnimationData{0,1}},
+		{"active",AnimationData{1,1}}
+	};
+	std::map<std::string, AnimationData> playerAttackAnimData{
+		{"swing",AnimationData{0,1}},
+	};
 
+	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ fightMenuPlayerBarTexture,playerAttackBarAnimData,8,124,"active",FLT_MAX });
+	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ playerAttackTexture,playerAttackAnimData,26,110,"swing",0.2f });
 
 	m_StaticEnemyTextures.push_back(froggitHead);
 	m_StaticEnemyTextures.push_back(froggitDeath);
@@ -175,6 +185,10 @@ ResourceManager::~ResourceManager()
 	for (int i{}; i < m_BulletAnimatedSprites.size(); ++i)
 	{
 		delete m_BulletAnimatedSprites[i];
+	}
+	for (int i{}; i < m_MiscAnimatedSprites.size(); ++i)
+	{
+		delete m_MiscAnimatedSprites[i];
 	}
 
 	for (int i{}; i < m_UiElementSprites.size(); ++i )

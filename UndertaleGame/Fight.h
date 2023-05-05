@@ -52,17 +52,17 @@ private:
 	bool m_IsBossFight{};
 	int m_BackGroundsAmount{2};
 
-	CollisionBox m_FightBoundary;
+	CollisionBox m_FightBoundary{};
 	Rectf m_TextBox{};
 	float m_FightSquareDimentions{150};
 	float m_TextBoxSideOffset{10};
 	float m_BoxLineWidth{ 2 };
-	float m_BoxBottomOffset{ 75 };
+	float m_box_bottom_offset{ 75 };
 
 
 	Vector2f m_MiddleLocation{};
 
-	FightState m_FightState{ FightState::menu };
+	FightState m_FightState{ FightState::fight };
 	FightState m_PreviousFightState{ m_FightState };
 
 
@@ -85,12 +85,19 @@ private:
 		itemSelected,
 		mercySelected,
 		idle
-
 	};
 	Vector2f m_ButtonLocations[4]{ Vector2f{16,15},Vector2f{16+110+56,15},Vector2f{16+110*2+56+57,15},Vector2f{16+110*3+56*2+57,15} };
 	int  m_ButtonsAmount{ 4 };
 	UiState m_UiState{ UiState::idle };
 	UiState m_MenuSelectedState{ UiState::idle };
+
+	//Fightmenu variables
+
+	Vector2f m_AttackBarLocation{Vector2f(m_TextBox.left,m_TextBox.bottom)};
+	float m_DistanceFromWall{};
+	bool m_BarStopped{};
+	float m_BarSpeed{20};
+	float m_MaxPlayerDamageMulti{ 2.5f };
 
 	//Draw cleanup functions
 	void DrawMenu() const;

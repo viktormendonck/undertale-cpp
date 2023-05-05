@@ -32,6 +32,7 @@ public:
 	Rectf GetLocationRect() const;
 	bool IsGravityMode() const;
 	void SetPos(Vector2f pos);
+	float GetDamage();
 
 	void UpdateMovement(float deltaTime);
 
@@ -47,6 +48,7 @@ private:
 	Vector2f m_Pos{};
 	Vector2f m_Velocity{};
 
+	float m_Damage{ 10 };
 	float m_Gravity{ 120 };
 	float  m_JumpStrength{};
 

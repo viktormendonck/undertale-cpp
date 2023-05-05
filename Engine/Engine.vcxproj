@@ -140,6 +140,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalIncludeDirectories>D:\exams\undertale-cpp\Libraries\SDLImage\SDL2_image-2.6.3;D:\exams\undertale-cpp\Libraries\SDLMain\SDL2-2.26.3;D:\exams\undertale-cpp\Libraries\SDLMixer\SDL2_mixer-2.6.3;D:\exams\undertale-cpp\Libraries\SDLTtf\SDL2_ttf-2.20.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

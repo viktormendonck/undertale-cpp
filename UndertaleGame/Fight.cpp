@@ -17,10 +17,10 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
       m_pResourceManager{pResourceManager},
 	  m_pParticleSystem{pParticleSystem}
 {
-	m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_BoxBottomOffset,m_FightSquareDimentions, m_FightSquareDimentions));
+	m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_box_bottom_offset,m_FightSquareDimentions, m_FightSquareDimentions));
 
 
-	m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_BoxBottomOffset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimentions);
+	m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_box_bottom_offset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimentions);
 	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
 	m_pFightChara->SetPos(pos);
 	m_IsBossFight = false;
@@ -87,6 +87,9 @@ void Fight::Draw() const
 	case (FightState::fight):
 		DrawFight();
 		break;
+	case(FightState::menuSelected):
+		DrawMenuSelected();
+		break;
 	case (FightState::transition):
 		DrawTransition();
 		break;
@@ -116,6 +119,7 @@ void Fight::DrawMenuSelected() const
 	{
 	case(UiState::fightSelected):
 		m_pResourceManager->m_StaticTextures[2]->Draw(m_TextBox);
+		m_pResourceManager->m_MiscAnimatedSprites[0]->Draw(m_AttackBarLocation);
 		break;
 	case (UiState::actSelected):
 
@@ -127,6 +131,7 @@ void Fight::DrawMenuSelected() const
 
 		break;
 	}
+	utils::DrawRect(m_TextBox, m_BoxLineWidth);
 }
 void Fight::DrawTransition() const
 {
@@ -194,7 +199,26 @@ void Fight::UpdateMenuSelected(float deltaTime)
 	switch (m_MenuSelectedState)
 	{
 	case(UiState::fightSelected):
-		
+
+		if (!m_BarStopped)
+		{
+			int directionMulti{1};
+			Vector2f nextPos{ m_AttackBarLocation.x + m_BarSpeed * deltaTime ,m_AttackBarLocation.y };
+			Rectf barRect{ nextPos.x, nextPos.y, m_pResourceManager->m_MiscAnimatedSprites[0]->GetWidth(), m_pResourceManager->m_MiscAnimatedSprites[0]->GetWidth() };
+			if (utils::IsOverlapping(Linef(m_TextBox.left,m_TextBox.bottom, m_TextBox.left, m_TextBox.bottom + m_TextBox.height),barRect)||
+				utils::IsOverlapping(Linef(m_TextBox.left + m_TextBox.width, m_TextBox.bottom, m_TextBox.left + m_TextBox.width, m_TextBox.bottom + m_TextBox.height), barRect))
+			{
+				directionMulti *= -1;
+			}
+			m_AttackBarLocation.x += m_BarSpeed * deltaTime * directionMulti;
+		} else
+		{
+			float maxDistanceFromSide{ m_TextBox.width / 2 };
+			float damageMultiplier{ (m_DistanceFromWall / maxDistanceFromSide) * m_MaxPlayerDamageMulti };
+			m_pEnemy->Damage(m_pFightChara->GetDamage());
+		}
+
+
 		break;
 	case (UiState::actSelected):
 
@@ -274,7 +298,6 @@ void Fight::UpdateUi(float deltaTime)
 	}
 }
 
-
 // Button Manager
 void Fight::ButtonDownManager(const SDL_KeyboardEvent& e)
 {
@@ -299,11 +322,11 @@ void Fight::ButtonUpMenuManager(const SDL_KeyboardEvent& e)
 {
 	switch (e.keysym.sym)
 	{
-	case (SDLK_0):
+	/*case (SDLK_0):
 		m_FightState = FightState::transition;
 		m_PreviousFightState = FightState::menu;
 		m_CurrentTransitionRect = m_TextBox;
-		break;
+		break;*/
 	case (SDLK_a):
 	case (SDLK_LEFT):
 		if (m_UiState != UiState::fightSelected)
@@ -320,6 +343,7 @@ void Fight::ButtonUpMenuManager(const SDL_KeyboardEvent& e)
 		break;
 	case (SDLK_RETURN):
 	case (SDLK_x):
+		m_FightState = FightState::menuSelected;
 		m_MenuSelectedState = m_UiState;
 		m_UiState = UiState::idle;
 		break;
@@ -334,7 +358,16 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 		{
 		case (SDLK_RETURN):
 		case (SDLK_x):
-
+			m_BarStopped = true;
+			float distanceFromLeftWall = m_AttackBarLocation.x - m_TextBox.left ;
+			float distanceFromRightWall = abs( m_AttackBarLocation.x - m_TextBox.left - m_TextBox.width );
+			if (distanceFromLeftWall < distanceFromRightWall)
+			{
+				m_DistanceFromWall = distanceFromLeftWall;
+			}else
+			{
+				m_DistanceFromWall = distanceFromRightWall;
+			}
 			break;
 		}
 		break;
