@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Enemy.h"
+
+#include <iostream>
+
 #include "FightChara.h"
 #include "Texture.h"
 #include "AnimatedSprite.h"
@@ -41,6 +44,7 @@ void Enemy::Draw()
 
 void Enemy::Update(float deltaTime)
 {
+	std::cout << m_hp << "\n";
 	for (Bullet* bullet : m_Bullets)
 	{
 		if (bullet->IsActive() && utils::IsOverlapping(bullet->GetRect(),m_Player.GetLocationRect())) {

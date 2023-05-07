@@ -34,6 +34,7 @@ public:
 
 	void Draw() const;
 	void Update(float deltaTime);
+	bool IsFightOver();
 
 	CollisionBox GetFightBoundaryBox();
 	void ButtonDownManager(const SDL_KeyboardEvent& e);
@@ -86,7 +87,7 @@ private:
 		mercySelected,
 		idle
 	};
-	Vector2f m_ButtonLocations[4]{ Vector2f{16,15},Vector2f{16+110+56,15},Vector2f{16+110*2+56+57,15},Vector2f{16+110*3+56*2+57,15} };
+	Vector2f m_ButtonLocations[4]{ Vector2f{16,5},Vector2f{16+110+56,5},Vector2f{16+110*2+56+57,5},Vector2f{16+110*3+56*2+57,5} };
 	int  m_ButtonsAmount{ 4 };
 	UiState m_UiState{ UiState::idle };
 	UiState m_MenuSelectedState{ UiState::idle };
@@ -94,10 +95,18 @@ private:
 	//Fightmenu variables
 
 	Vector2f m_AttackBarLocation{Vector2f(m_TextBox.left,m_TextBox.bottom)};
+	Vector2f m_AttackBarStartLocation{};
+
 	float m_DistanceFromWall{};
 	bool m_BarStopped{};
-	float m_BarSpeed{20};
+	int m_BarDirectionMulti{1};
+	float m_BarStoppedMaxCountDown{1};
+	float m_CurrentBarStoppedCountDown{m_BarStoppedMaxCountDown};
+	float m_BarSpeed{250};
 	float m_MaxPlayerDamageMulti{ 2.5f };
+
+	bool m_FightEnded{};
+	float m_UpdateTimeAfterDeath{3};
 
 	//Draw cleanup functions
 	void DrawMenu() const;
@@ -115,6 +124,8 @@ private:
 	void UpdateTransition(float deltaTime);
 	void UpdateUi(float deltaTime);
 	void UpdatePlatforms(float deltaTime);
+
+	void StartFight();
 
 
 

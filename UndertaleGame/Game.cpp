@@ -40,7 +40,7 @@ void Game::Initialize()
 	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1], 100, 20);
 	//TESTSTUFF
 	//TODO > remove
-	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,EnemyType::loox,false);
+	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,EnemyType::froggit,false);
 	//m_pLOOXATTACK1 = new LooxAttack1(m_pFight->GetFightBoundaryBox().GetLocation(), 3, m_pResourceManager->m_BulletAnimatedSprites[2], "small", Vector2f{ 5,6 }, 0);
 
 }

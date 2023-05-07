@@ -156,11 +156,11 @@ ResourceManager::ResourceManager()
 		{"active",AnimationData{1,1}}
 	};
 	std::map<std::string, AnimationData> playerAttackAnimData{
-		{"swing",AnimationData{0,1}},
+		{"swing",AnimationData{0,6}},
 	};
 
 	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ fightMenuPlayerBarTexture,playerAttackBarAnimData,8,124,"active",FLT_MAX });
-	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ playerAttackTexture,playerAttackAnimData,26,110,"swing",0.2f });
+	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ playerAttackTexture,playerAttackAnimData,26,110,"swing",0.15f });
 
 	m_StaticEnemyTextures.push_back(froggitHead);
 	m_StaticEnemyTextures.push_back(froggitDeath);
@@ -218,7 +218,9 @@ void ResourceManager::Update(float deltaTime)
 	{
 		data->Update(deltaTime);
 	}
+	for (AnimatedSprite* data : m_MiscAnimatedSprites)
+	{
+		data->Update(deltaTime);
+	}
 
 }
-
-
