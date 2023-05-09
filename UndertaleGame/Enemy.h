@@ -24,7 +24,7 @@ class Enemy
 {
 public:
 	Enemy() = delete; // default constructor
-	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying, FightChara& player, CollisionBox collider); // constructor
+	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying, FightChara& player, CollisionBox collider,EnemyType type); // constructor
 	virtual ~Enemy(); // destructor
 
 	Enemy(const Enemy& other) = delete; // Copy constructor
@@ -39,16 +39,21 @@ public:
 	virtual void UpdateEnemy(float deltaTime) = 0;
 	virtual void SpawnBullet(ResourceManager* resourceManager) = 0;
 
+	void Converse();
+
 	void Damage(int damage);
 	bool IsDead();
 	bool AreBulletsActive();
 	void DeleteBullets();
+	EnemyType GetEnemyType();
 
 	Texture* GetDeathTexture();
 	Vector2f GetPos();
+	bool GetMercyAble();
 
 protected:
-	int m_hp;
+	int m_Hp;
+	int m_MaxHp;
 	int m_ConversationAmount; // amount of times you have to do correct conversation inputs with this enemy to make giving them mercy possible
 	AnimatedSprite* m_pTexture;
 	Texture* m_pEnemyDeathTexture;
@@ -60,6 +65,8 @@ protected:
 	FightChara& m_Player;
 	std::vector<Bullet*> m_Bullets;
 	CollisionBox m_Collider;
+	EnemyType m_EnemyType{};
+	bool m_IsMercyable;
 	
 };
 

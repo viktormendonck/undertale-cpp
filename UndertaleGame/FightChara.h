@@ -33,6 +33,8 @@ public:
 	bool IsGravityMode() const;
 	void SetPos(Vector2f pos);
 	float GetDamage();
+	float GetHealth();
+	float GetMaxHealth();
 
 	void UpdateMovement(float deltaTime);
 
@@ -43,6 +45,7 @@ private:
 	Texture* m_pHeartTexture;
 	AnimatedSprite* m_pHeartAnims;
 	int m_Hp;
+	int m_MaxHp;
 	float m_Speed;
 	bool m_IsGravityMode{false};
 	Vector2f m_Pos{};

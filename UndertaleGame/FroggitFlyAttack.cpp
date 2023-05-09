@@ -3,11 +3,11 @@
 
 #include "FightChara.h"
 
-FroggitFlyAttack::FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage, Vector2f startPos, FightChara* pPlayer, int bulletItteration, CollisionBox collider)
+FroggitFlyAttack::FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage, Vector2f startPos, FightChara* pPlayer, int bulletIteration, CollisionBox collider)
 	:
 	Bullet(startPos, damage, pBulletTex, collider),
 	m_pPlayer{ pPlayer },
-	m_CurrentAttackDelay{ static_cast<float>(m_MaxAttackDelay * bulletItteration + static_cast<float>(utils::RandInRange(1,5))/2) }
+	m_CurrentAttackDelay{ static_cast<float>(m_MaxAttackDelay * bulletIteration + static_cast<float>(utils::RandFloatInRange(1,3,2))) }
 {
 }
 

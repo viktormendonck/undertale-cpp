@@ -10,7 +10,7 @@
 
 Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount,float headMovementSpeed, FightChara& player, CollisionBox collider)
 	:
-	Enemy(health, conversationAmount,pBaseTexture,pDeathTexture,false,player,collider),
+	Enemy(health, conversationAmount,pBaseTexture,pDeathTexture,false,player,collider,EnemyType::froggit),
 	m_pFroggitHead{pFroggitHead},
 	m_HeadMovementSpeed{headMovementSpeed},
 	m_BaseHeadOffset{Vector2f(0,pBaseTexture->GetHeight())}
@@ -43,7 +43,7 @@ void Froggit::SpawnBullet(ResourceManager* resourceManager)
 		m_Bullets.push_back(new FroggitJumpAttack{ resourceManager->m_BulletAnimatedSprites[0],6,m_Collider });
 	} else
 	{
-		for (int i{ 1 }; i < 6; ++i) {
+		for (int i{}; i < 6; ++i) {
 			m_Bullets.push_back(new FroggitFlyAttack{ resourceManager->m_BulletAnimatedSprites[1],3,Vector2f{static_cast<float>(utils::RandInRange(240,390)),230}, &m_Player, i,m_Collider }); 
 		}
 	}

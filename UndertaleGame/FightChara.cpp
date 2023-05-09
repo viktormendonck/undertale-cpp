@@ -14,6 +14,7 @@ FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float 
 	m_pHeartTexture{ heartTexture },
 	m_pHeartAnims{ heartAnims },
 	m_Hp{ startHealth },
+	m_MaxHp{startHealth},
 	m_Speed{ speed },
 	m_Pos{ 0,0 },
 	m_JumpStrength{ 150 }
@@ -118,6 +119,16 @@ float FightChara::GetDamage()
 	return m_Damage;
 }
 
+float FightChara::GetHealth()
+{
+	return m_Hp;
+}
+
+float FightChara::GetMaxHealth()
+{
+	return m_MaxHp;
+}
+
 void FightChara::UpdateMovement(float deltaTime)
 {
 	const Uint8* state{ SDL_GetKeyboardState(nullptr) };
@@ -125,10 +136,10 @@ void FightChara::UpdateMovement(float deltaTime)
 	int xInputAxis{};
 	int yInputAxis{};
 	bool inputJump{};
-	if (state[SDL_SCANCODE_W]) yInputAxis = 1;
-	if (state[SDL_SCANCODE_A]) xInputAxis = -1;
-	if (state[SDL_SCANCODE_S]) yInputAxis = -1;
-	if (state[SDL_SCANCODE_D]) xInputAxis = 1;
+	if (state[SDL_SCANCODE_W] || state[SDL_SCANCODE_UP]) yInputAxis = 1;
+	if (state[SDL_SCANCODE_A] || state[SDL_SCANCODE_LEFT]) xInputAxis = -1;
+	if (state[SDL_SCANCODE_S] || state[SDL_SCANCODE_DOWN]) yInputAxis = -1;
+	if (state[SDL_SCANCODE_D] || state[SDL_SCANCODE_RIGHT]) xInputAxis = 1;
 	if (state[SDL_SCANCODE_SPACE]) inputJump = true;
 
 	if (!m_IsGravityMode) {

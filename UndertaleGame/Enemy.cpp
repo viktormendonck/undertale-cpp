@@ -10,15 +10,17 @@
 #include "utils.h"
 
 
-Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying,FightChara& player, CollisionBox collider)
+Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying,FightChara& player, CollisionBox collider, EnemyType type)
 	:
-	m_hp{health},
+	m_Hp{health},
+	m_MaxHp{health},
 	m_ConversationAmount{conversationAmount},
 	m_pTexture{baseTexture},
 	m_pEnemyDeathTexture{deathTexture},
 	m_IsFlying{isFlying},
 	m_Player{player},
-	m_Collider{collider}
+	m_Collider{collider},
+	m_EnemyType{type}
 {
 	m_Pos = m_PossibleSpawnLocations[utils::RandInRange(0, 5)];
 	m_Pos.y += static_cast<float>(m_IsFlying) * m_FlightOffset;
@@ -44,7 +46,6 @@ void Enemy::Draw()
 
 void Enemy::Update(float deltaTime)
 {
-	std::cout << m_hp << "\n";
 	for (Bullet* bullet : m_Bullets)
 	{
 		if (bullet->IsActive() && utils::IsOverlapping(bullet->GetRect(),m_Player.GetLocationRect())) {
@@ -56,17 +57,26 @@ void Enemy::Update(float deltaTime)
 		}
 	}
 	UpdateEnemy(deltaTime);
+	if (m_Hp <= (m_MaxHp/5) || m_ConversationAmount <=0)
+	{
+		m_IsMercyable = true;
+	}
 }
 
 
+void Enemy::Converse()
+{
+	m_ConversationAmount--;
+}
+
 void Enemy::Damage(int damage)
 {
-	m_hp -= damage;
+	m_Hp -= damage;
 }
 
 bool Enemy::IsDead()
 {
-	return m_hp <= 0;
+	return m_Hp <= 0;
 }
 
 bool Enemy::AreBulletsActive()
@@ -88,6 +98,12 @@ void Enemy::DeleteBullets()
 	m_Bullets.clear();
 }
 
+EnemyType Enemy::GetEnemyType()
+{
+	return m_EnemyType;
+}
+
+
 Texture* Enemy::GetDeathTexture()
 {
 	return m_pEnemyDeathTexture;
@@ -96,4 +112,9 @@ Texture* Enemy::GetDeathTexture()
 Vector2f Enemy::GetPos()
 {
 	return m_Pos;
+}
+
+bool Enemy::GetMercyAble()
+{
+	return m_IsMercyable;
 }

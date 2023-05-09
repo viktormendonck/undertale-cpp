@@ -8,7 +8,7 @@ class AnimatedSprite;
 class ResourceManager final
 {
 public:
-	ResourceManager();
+	ResourceManager(std::string playerName);
 	~ResourceManager();
 
 	ResourceManager(const ResourceManager& other) = delete; // Copy constructor
@@ -26,6 +26,12 @@ public:
 	std::vector<AnimatedSprite*> m_MiscAnimatedSprites{};
 	std::vector<Texture*> m_StaticTextures{};
 	std::vector<Texture*> m_StaticEnemyTextures{};
+	std::vector<Texture*> m_TextTextures{};
+	std::vector<Texture*> m_FroggitTextTextures{};
+	std::vector<Texture*> m_LooxTextTextures{};
+
+
+
 private:
 	
 };

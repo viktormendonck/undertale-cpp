@@ -6,7 +6,7 @@
 #include "utils.h"
 
 Loox::Loox(AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount, FightChara& player, CollisionBox collider)
-	: Enemy(health, conversationAmount, pBaseTexture, pDeathTexture, false, player,collider)
+	: Enemy(health, conversationAmount, pBaseTexture, pDeathTexture, false, player,collider,EnemyType::loox)
 {
 }
 void Loox::UpdateEnemy(float deltaTime)

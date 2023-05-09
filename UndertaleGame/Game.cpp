@@ -35,7 +35,7 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	m_pResourceManager = new ResourceManager{};
+	m_pResourceManager = new ResourceManager{"Viktor"};
 	m_pChara = new Chara{ m_pResourceManager->m_AnimatedSprites[0],40 };
 	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1], 100, 20);
 	//TESTSTUFF
@@ -67,10 +67,7 @@ void Game::Update(float deltaTime)
 		break;
 	case GameState::fight:
 		m_pFight->Update(deltaTime);
-		//TESTSTUFF
 		// TODO: remove
-		//m_pTESTFROGGITJUMPATTACK->Update(deltaTime);
-		//m_pLOOXATTACK1->Update(deltaTime);
 
 		break;
 	case GameState::infoScreen:

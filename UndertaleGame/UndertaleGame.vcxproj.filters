@@ -39,6 +39,9 @@
     <Filter Include="Source\functionality">
       <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\player\Inventory">
+      <UniqueIdentifier>{4b80c910-fabd-4829-bcb2-37d214ebcba1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -95,6 +98,15 @@
     <ClCompile Include="LooxAttack2.cpp">
       <Filter>Source\classes\Enemies\bullets\Loox</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source\classes\player\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Source\classes\player\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source\classes\player\Inventory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -147,6 +159,15 @@
     </ClInclude>
     <ClInclude Include="LooxAttack2.h">
       <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Source\classes\player\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Source\classes\player\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Source\classes\player\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

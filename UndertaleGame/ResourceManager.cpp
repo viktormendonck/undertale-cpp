@@ -4,7 +4,7 @@
 #include <map>
 
 
-ResourceManager::ResourceManager()
+ResourceManager::ResourceManager(std::string playerName)
 {
 	//player
 	Texture* charaTexture = new Texture{ "Sprites/chara.png" };
@@ -48,6 +48,29 @@ ResourceManager::ResourceManager()
 	Texture* fightMenuPlayerBarTexture = new Texture{ "Sprites/Player/attackSelector.png" };
 	Texture* playerAttackTexture = new Texture{ "Sprites/Player/attackAnim.png" };
 
+	//text Textures
+
+	Texture* playerNameTexture = new Texture{ playerName,"UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* playerHealthTexture = new Texture{ "20/20 Hp","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+
+	Texture* actCheckTexture = new Texture{ "* Check","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* froggitActTexture1 = new Texture{ "* Compliment","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* froggitActTexture2 = new Texture{ "* Threaten","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* froggitCheckResponseTexture0 = new Texture{ "text/froggit/checkResponse.png" };
+	Texture* froggitResponseTexture1 = new Texture{ "text/froggit/flatterResponse.png"};
+	Texture* froggitResponseTexture2 = new Texture{  "text/froggit/insultResponse.png"};
+
+
+	Texture* looxActTexture1 = new Texture{ "* Pick on","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* looxActTexture2 = new Texture{ "* Don't pick on","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* looxCheckResponseTexture0 = new Texture{ "text/loox/checkResponse.png" };
+	Texture* looxResponseTexture1 = new Texture{ "You rude little snipe","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* looxResponseTexture2 = new Texture{ "Finaly, someone gets it","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+
+	Texture* mercyTextTexture = new Texture{ "* Mercy","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* fleeTextTexture = new Texture{ "* Flee","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	
+
 
 
 	std::map<std::string, AnimationData> CharaData{
@@ -82,7 +105,6 @@ ResourceManager::ResourceManager()
 	std::map<std::string, AnimationData> whimsunAnimData{
 		{"live",AnimationData{1,2}}
 	};*/
-
 
 	m_AnimatedSprites.push_back(new AnimatedSprite{ charaTexture,CharaData,19,29,"downIdle",0.2f});
 	m_AnimatedSprites.push_back(new AnimatedSprite{ playerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
@@ -173,6 +195,25 @@ ResourceManager::ResourceManager()
 	m_StaticTextures.push_back(playerHeartTexture);
 	m_StaticTextures.push_back(fightBackGrounds);
 	m_StaticTextures.push_back(fightMenuScreenTexture);
+
+	m_TextTextures.push_back(playerNameTexture);
+	m_TextTextures.push_back(playerHealthTexture);
+	m_TextTextures.push_back(mercyTextTexture);
+	m_TextTextures.push_back(fleeTextTexture);
+
+	m_FroggitTextTextures.push_back(actCheckTexture);
+	m_FroggitTextTextures.push_back(froggitActTexture1);
+	m_FroggitTextTextures.push_back(froggitActTexture2);
+	m_FroggitTextTextures.push_back(froggitCheckResponseTexture0);
+	m_FroggitTextTextures.push_back(froggitResponseTexture1);
+	m_FroggitTextTextures.push_back(froggitResponseTexture2);
+
+	m_LooxTextTextures.push_back(actCheckTexture);
+	m_LooxTextTextures.push_back(looxActTexture1);
+	m_LooxTextTextures.push_back(looxActTexture2);
+	m_LooxTextTextures.push_back(looxCheckResponseTexture0);
+	m_LooxTextTextures.push_back(looxResponseTexture1);
+	m_LooxTextTextures.push_back(looxResponseTexture2);
 }
 
 ResourceManager::~ResourceManager()
@@ -204,6 +245,19 @@ ResourceManager::~ResourceManager()
 	for (int i{}; i < m_StaticTextures.size(); ++i)
 	{
 		delete m_StaticTextures[i];
+	}
+
+	for (int i{}; i < m_TextTextures.size(); ++i)
+	{
+		delete m_TextTextures[i];
+	}
+	for (int i{}; i < m_FroggitTextTextures.size(); ++i)
+	{
+		delete m_FroggitTextTextures[i];
+	}
+	for (int i{1}; i < m_LooxTextTextures.size(); ++i)
+	{
+		delete m_LooxTextTextures[i];
 	}
 }
 

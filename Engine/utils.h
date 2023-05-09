@@ -94,5 +94,6 @@ namespace utils
 	float AngleBetweenPoints(Point2f p1, Point2f p2);
 
 	int RandInRange(int min, int max);
+	float RandFloatInRange(float min, float max, int decimals);
 	bool RandBool();
 }

@@ -745,6 +745,12 @@ int utils::RandInRange(int min, int max)
 	return (rand() % (max + 1 - min)) + min;
 }
 
+float utils::RandFloatInRange(float min, float max,int decimals)
+{
+	float decimalMulti = pow(10, decimals);
+	return static_cast<float>(RandInRange(min * decimalMulti, max * decimalMulti)) / decimalMulti;
+}
+
 bool utils::RandBool()
 {
 	
