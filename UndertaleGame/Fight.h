@@ -41,7 +41,7 @@ public:
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
 
 private:
-	FightChara* m_pFightChara;
+	FightChara* m_pPlayer;
 
 	Enemy* m_pEnemy;
 	Texture* m_pBackgroundTexture;
@@ -113,14 +113,20 @@ private:
 	float m_PreviousHealth{};
 
 	//ActMenu variables
-	const int m_AmountOfTextLocations{ 3 };
+	const int m_AmountOfActOptions{ 3 };
 	const float m_MaxReadingTime{ 5 };
 	float m_CurrentReadingTime{ m_MaxReadingTime };
-	Vector2f m_TextLocations[3]{ Vector2f{50,180},Vector2f{330,180},Vector2f{50,110} };
+	const int m_AmountOfTextLocations{ 4 };
+	Vector2f m_TextLocations[4]{ Vector2f{50,180},Vector2f{330,180},Vector2f{50,110},Vector2f{330,110} };
 	Vector2f m_ResponsePos{};
 	Vector2f m_ResponsePosOrigin{ 50,200 };
 	int m_CurrentSelectedOption{};
 	bool m_HasActed{};
+
+	//itemMenuVars
+	int m_AmountOfItemPages{};
+	int m_CurrentItemPage{};
+
 
 	//Draw cleanup functions
 	void DrawMenu() const;
@@ -152,4 +158,3 @@ private:
 	void ButtonUpFightManager(const SDL_KeyboardEvent& e);
 
 };
-

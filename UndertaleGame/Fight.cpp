@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Fight.h"
 
+#include <iostream>
 #include <sstream>
 
 #include "AnimatedSprite.h"
@@ -11,10 +12,11 @@
 #include "CollisionBox.h"
 #include "Froggit.h"
 #include "Loox.h"
+#include "Inventory.h"
 
 
 Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem,EnemyType enemy, bool isBossFight)
-	: m_pFightChara{pChara},
+	: m_pPlayer{pChara},
 	  m_pBackgroundTexture{pResourceManager->m_StaticTextures[1]},
 	  m_pParticleSystem{pParticleSystem},
       m_pResourceManager{pResourceManager},
@@ -25,7 +27,7 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 
 	//fight vars
 	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
-	m_pFightChara->SetPos(pos);
+	m_pPlayer->SetPos(pos);
 	const Vector2f platformSize{ 20,5 };
 	for (int i{}; i < m_PlatformAmount; ++i)
 	{
@@ -35,10 +37,6 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 	// fightmenu vars
 	m_AttackBarStartLocation = Vector2f(m_TextBox.left, m_TextBox.bottom + 10);
 	m_AttackBarLocation = m_AttackBarStartLocation;
-
-	//actMenu vars
-	
-
 
 	//make collisions for the fight
 	const float collisionBoxWidth{ 5 };
@@ -51,10 +49,10 @@ Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager
 	switch (enemy)
 	{
 	case (EnemyType::froggit):
-		m_pEnemy = new Froggit(m_pResourceManager->m_StaticEnemyTextures[0], m_pResourceManager->m_AnimatedSprites[2], m_pResourceManager->m_StaticEnemyTextures[1], 30, 2, 4, *m_pFightChara,m_FightBoundary);
+		m_pEnemy = new Froggit(m_pResourceManager->m_StaticEnemyTextures[0], m_pResourceManager->m_AnimatedSprites[2], m_pResourceManager->m_StaticEnemyTextures[1], 30, 2, 4, *m_pPlayer,m_FightBoundary);
 		break;
 	case (EnemyType::loox):
-		m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pFightChara, m_FightBoundary);
+		m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pPlayer, m_FightBoundary);
 		break;
 	/*case (EnemyType::migosp):
 
@@ -79,6 +77,8 @@ void Fight::StartFightSegment()
 {
 	m_MenuSelectedState = UiState::idle;
 	m_FightState = FightState::fight;
+	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
+	m_pPlayer->SetPos(pos);
 	m_pEnemy->SpawnBullet(m_pResourceManager);
 }
 
@@ -119,10 +119,10 @@ void Fight::DrawMenu() const
 void Fight::DrawFight() const
 {
 	utils::SetColor(Color4f(1, 1, 1, 1));
-	m_pFightChara->Draw();
+	m_pPlayer->Draw();
 	utils::DrawRect(m_FightBoundary.GetRect(), m_BoxLineWidth);
 
-	if (m_pFightChara->IsGravityMode())
+	if (m_pPlayer->IsGravityMode())
 	{
 		DrawPlatforms();
 	}
@@ -152,6 +152,15 @@ void Fight::DrawMenuSelected() const
 		break;
 		
 	case(UiState::itemSelected):
+
+		
+		for (int y{}; y< m_AmountOfTextLocations;++y)
+		{
+			int pageStartIndex = m_CurrentItemPage * m_AmountOfTextLocations;
+			m_pPlayer->GetInv()->GetItemText(pageStartIndex + y)->Draw(m_TextLocations[y].ToPoint2f());
+		}
+		m_pResourceManager->m_StaticTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
+
 
 		break;
 	case (UiState::mercySelected):
@@ -191,13 +200,13 @@ void Fight::DrawActMenuOptions() const
 	switch (m_pEnemy->GetEnemyType())
 	{
 	case(EnemyType::froggit):
-		for (int i{}; i < m_AmountOfTextLocations; ++i)
+		for (int i{}; i < m_AmountOfActOptions; ++i)
 		{
 			m_pResourceManager->m_FroggitTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());
 		}
 		break;
 	case (EnemyType::loox):
-		for (int i{}; i < m_AmountOfTextLocations; ++i)
+		for (int i{}; i < m_AmountOfActOptions; ++i)
 		{
 			m_pResourceManager->m_FroggitTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());\
 		}
@@ -212,10 +221,10 @@ void Fight::DrawActMenuResponses() const
 	switch (m_pEnemy->GetEnemyType())
 	{
 	case(EnemyType::froggit):
-		m_pResourceManager->m_FroggitTextTextures[m_CurrentSelectedOption + m_AmountOfTextLocations]->Draw(m_ResponsePos.ToPoint2f());
+		m_pResourceManager->m_FroggitTextTextures[m_CurrentSelectedOption + m_AmountOfActOptions]->Draw(m_ResponsePos.ToPoint2f());
 		break;
 	case (EnemyType::loox):
-		m_pResourceManager->m_LooxTextTextures[m_CurrentSelectedOption + m_AmountOfTextLocations]->Draw(m_ResponsePos.ToPoint2f());
+		m_pResourceManager->m_LooxTextTextures[m_CurrentSelectedOption + m_AmountOfActOptions]->Draw(m_ResponsePos.ToPoint2f());
 		break;
 	}
 }
@@ -259,8 +268,8 @@ void Fight::UpdateMenu(float deltaTime)
 }
 void Fight::UpdateFight(float deltaTime)
 {
-	m_pFightChara->Update(deltaTime, this, m_Colliders);
-	if (m_pFightChara->IsGravityMode())
+	m_pPlayer->Update(deltaTime, this, m_Colliders);
+	if (m_pPlayer->IsGravityMode())
 	{
 		UpdatePlatforms(deltaTime);
 	}
@@ -272,11 +281,11 @@ void Fight::UpdateFight(float deltaTime)
 		m_CurrentTransitionRect = m_FightBoundary.GetRect();
 		m_pEnemy->DeleteBullets();
 	}
-	if (m_PreviousHealth != m_pFightChara->GetHealth())
+	if (m_PreviousHealth != m_pPlayer->GetHealth())
 	{
-		float playerHealth= m_pFightChara->GetHealth();
+		float playerHealth= m_pPlayer->GetHealth();
 		std::stringstream hpStringStream;
-		hpStringStream << playerHealth << "/" << m_pFightChara->GetMaxHealth() << "HP";
+		hpStringStream << playerHealth << "/" << m_pPlayer->GetMaxHealth() << "HP";
 		m_pResourceManager->m_TextTextures[1] = new Texture{ hpStringStream.str(),"UI/determinationFont.ttf",30,Color4f(1,1,1,1) };
 	}
 }
@@ -319,7 +328,7 @@ void Fight::UpdateMenuSelected(float deltaTime)
 				m_BarStopped = false;
 				m_AttackBarLocation = m_AttackBarStartLocation;
 
-				m_pEnemy->Damage(static_cast<float>(m_pFightChara->GetDamage()) * damageMultiplier);
+				m_pEnemy->Damage(static_cast<float>(m_pPlayer->GetDamage()) * damageMultiplier);
 				StartFightSegment();
 			}
 			else
@@ -464,6 +473,8 @@ void Fight::ButtonUpMenuManager(const SDL_KeyboardEvent& e)
 	case (SDLK_x):
 		m_FightState = FightState::menuSelected;
 		m_MenuSelectedState = m_UiState;
+		m_CurrentSelectedOption = 0;
+		m_AmountOfItemPages = (m_pPlayer->GetInv()->GetCurrentItemAmount() - 1) / 4 ;
 		m_UiState = UiState::idle;
 		break;
 	}
@@ -504,7 +515,8 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 				break;
 			}
 
-		}else 
+		}
+		else 
 		{
 			switch (e.keysym.sym)
 			{
@@ -528,7 +540,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 				break;
 			case (SDLK_d):
 			case (SDLK_RIGHT):
-				if (m_CurrentSelectedOption < m_AmountOfTextLocations)
+				if (m_CurrentSelectedOption < m_AmountOfActOptions)
 				{
 					++m_CurrentSelectedOption;
 				}
@@ -539,10 +551,10 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 				switch (m_pEnemy->GetEnemyType())
 				{
 				case(EnemyType::froggit):
-					m_ResponsePos = m_ResponsePosOrigin - Vector2f{ 0,m_pResourceManager->m_FroggitTextTextures[m_CurrentSelectedOption + m_AmountOfTextLocations]->GetHeight() };
+					m_ResponsePos = m_ResponsePosOrigin - Vector2f{ 0,m_pResourceManager->m_FroggitTextTextures[m_CurrentSelectedOption + m_AmountOfActOptions]->GetHeight() };
 					break;
 				case (EnemyType::loox):
-					m_ResponsePos = m_ResponsePosOrigin - Vector2f{ 0,m_pResourceManager->m_LooxTextTextures[m_CurrentSelectedOption + m_AmountOfTextLocations]->GetHeight() };
+					m_ResponsePos = m_ResponsePosOrigin - Vector2f{ 0,m_pResourceManager->m_LooxTextTextures[m_CurrentSelectedOption + m_AmountOfActOptions]->GetHeight() };
 					break;
 				}
 				break;
@@ -562,6 +574,55 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 			m_FightState = FightState::menu;
 			m_MenuSelectedState = UiState::idle;
 			m_UiState = UiState::fightSelected;
+			break;
+
+		case (SDLK_w):
+		case (SDLK_UP):
+			if (m_CurrentSelectedOption <= 2)
+			{
+				m_CurrentSelectedOption -= 2;
+			}
+			break;
+		case (SDLK_s):
+		case (SDLK_DOWN):
+			if (m_CurrentSelectedOption >= 2)
+			{
+				m_CurrentSelectedOption += 2;
+			}
+			break;
+		case (SDLK_a):
+		case (SDLK_LEFT):
+			if (m_CurrentSelectedOption > 0)
+			{
+				--m_CurrentSelectedOption;
+			} else if (m_CurrentItemPage > 0)
+			{
+				m_CurrentSelectedOption = 0;
+				m_CurrentItemPage--;
+			}
+			break;
+		case (SDLK_d):
+		case (SDLK_RIGHT):
+			if (m_CurrentSelectedOption < m_AmountOfTextLocations)
+			{
+				++m_CurrentSelectedOption;
+			}
+			if ( m_CurrentSelectedOption == m_AmountOfTextLocations && m_CurrentItemPage < m_AmountOfItemPages) {
+				m_CurrentSelectedOption = 0;
+				m_CurrentItemPage++;
+			} else if (m_CurrentSelectedOption == m_AmountOfTextLocations)
+			{
+				--m_CurrentSelectedOption;
+			}
+			break;
+		case (SDLK_RETURN):
+		case(SDLK_x):
+			if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth()) {
+				const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
+				m_pPlayer->DamageChara(-(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration)));
+				m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
+				StartFightSegment();
+			}
 			break;
 		}
 		break;
@@ -596,7 +657,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 }
 void Fight::ButtonUpFightManager(const SDL_KeyboardEvent& e)
 {
-	m_pFightChara->OnButtonUp(e);
+	m_pPlayer->OnButtonUp(e);
 }
 
 //getters and setters

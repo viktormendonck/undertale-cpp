@@ -21,26 +21,29 @@
     <Filter Include="Source\classes\Fight">
       <UniqueIdentifier>{09eefc88-d9fc-4666-9c52-ae9cb9310ca1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\classes\Enemies">
-      <UniqueIdentifier>{80a690b0-afe2-4baf-ab56-ae29b6263afe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\classes\Enemies\enemyTypes">
-      <UniqueIdentifier>{a7a0f3a9-9da9-47fe-ad25-06cf1035ec84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\classes\Enemies\bullets">
-      <UniqueIdentifier>{2cc6bb21-8fc9-48a3-b5a1-faf420788482}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\classes\Enemies\bullets\Froggit">
-      <UniqueIdentifier>{90690e2f-eade-4db7-ad4a-bedd224d905e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\classes\Enemies\bullets\Loox">
-      <UniqueIdentifier>{7850dbf3-c033-4f82-a9e2-13123843a6e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\functionality">
       <UniqueIdentifier>{8bee104c-2335-4b73-b273-b149b20a1157}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\classes\player\Inventory">
       <UniqueIdentifier>{4b80c910-fabd-4829-bcb2-37d214ebcba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\AdventureManager">
+      <UniqueIdentifier>{c9b380d6-db23-4285-b51d-e8ef617a8271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Fight\Enemies">
+      <UniqueIdentifier>{80a690b0-afe2-4baf-ab56-ae29b6263afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Fight\Enemies\enemyTypes">
+      <UniqueIdentifier>{a7a0f3a9-9da9-47fe-ad25-06cf1035ec84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Fight\Enemies\bullets">
+      <UniqueIdentifier>{2cc6bb21-8fc9-48a3-b5a1-faf420788482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Fight\Enemies\bullets\Froggit">
+      <UniqueIdentifier>{90690e2f-eade-4db7-ad4a-bedd224d905e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Fight\Enemies\bullets\Loox">
+      <UniqueIdentifier>{7850dbf3-c033-4f82-a9e2-13123843a6e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +69,7 @@
       <Filter>Source\classes\Fight</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Source\classes\Enemies</Filter>
+      <Filter>Source\classes\Fight\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="FightChara.cpp">
       <Filter>Source\classes\player</Filter>
@@ -75,28 +78,28 @@
       <Filter>Source\functionality</Filter>
     </ClCompile>
     <ClCompile Include="Froggit.cpp">
-      <Filter>Source\classes\Enemies\enemyTypes</Filter>
+      <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
     </ClCompile>
     <ClCompile Include="CollisionBox.cpp">
       <Filter>Source\functionality</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Source\classes\Enemies\bullets</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets</Filter>
     </ClCompile>
     <ClCompile Include="FroggitJumpAttack.cpp">
-      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Froggit</Filter>
     </ClCompile>
     <ClCompile Include="FroggitFlyAttack.cpp">
-      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Froggit</Filter>
     </ClCompile>
     <ClCompile Include="Loox.cpp">
-      <Filter>Source\classes\Enemies\enemyTypes</Filter>
+      <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
     </ClCompile>
     <ClCompile Include="LooxAttack1.cpp">
-      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClCompile>
     <ClCompile Include="LooxAttack2.cpp">
-      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Source\classes\player\Inventory</Filter>
@@ -106,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>Source\classes\player\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="AdventureManager.cpp">
+      <Filter>Source\classes\AdventureManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +134,7 @@
       <Filter>Source\classes\Fight</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Source\classes\Enemies</Filter>
+      <Filter>Source\classes\Fight\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="FightChara.h">
       <Filter>Source\classes\player</Filter>
@@ -137,28 +143,28 @@
       <Filter>Source\functionality</Filter>
     </ClInclude>
     <ClInclude Include="Froggit.h">
-      <Filter>Source\classes\Enemies\enemyTypes</Filter>
+      <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
     </ClInclude>
     <ClInclude Include="CollisionBox.h">
       <Filter>Source\functionality</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Source\classes\Enemies\bullets</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets</Filter>
     </ClInclude>
     <ClInclude Include="FroggitJumpAttack.h">
-      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Froggit</Filter>
     </ClInclude>
     <ClInclude Include="FroggitFlyAttack.h">
-      <Filter>Source\classes\Enemies\bullets\Froggit</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Froggit</Filter>
     </ClInclude>
     <ClInclude Include="Loox.h">
-      <Filter>Source\classes\Enemies\enemyTypes</Filter>
+      <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
     </ClInclude>
     <ClInclude Include="LooxAttack1.h">
-      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClInclude>
     <ClInclude Include="LooxAttack2.h">
-      <Filter>Source\classes\Enemies\bullets\Loox</Filter>
+      <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Source\classes\player\Inventory</Filter>
@@ -168,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>Source\classes\player\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="AdventureManager.h">
+      <Filter>Source\classes\AdventureManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

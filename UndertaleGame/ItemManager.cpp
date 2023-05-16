@@ -2,17 +2,17 @@
 #include "ItemManager.h"
 
 #include "Item.h"
+#include "ResourceManager.h"
 
-ItemManager::ItemManager()
+ItemManager::ItemManager(ResourceManager* pResourceManager)
 	:
 	m_Items{
-		{"Stick",Item{ItemType::weapon,true,"Stick",0}},
-		{"Toy knife",Item{ItemType::weapon,true,"Toy knife",3}},
-		{"Bandage",Item{ItemType::armor,true,"Bandage",1}},
-		{"Monster candy",Item{ItemType::healing,false,"Monster candy",1}},
-		{"Spider donut",Item{ItemType::healing,false,"Spider donut",1}},
-		{"Spider cider",Item{ItemType::healing,false,"Spider cider",1}},
-		{"-",Item{ItemType::empty,false,"-",0}}
+		{"Stick",Item{ItemType::weapon,pResourceManager->m_ItemTextTextures[0],true,"Stick",0}},
+		{"Toy knife",Item{ItemType::weapon,pResourceManager->m_ItemTextTextures[1],true,"Toy knife",3}},
+		{"Bandage",Item{ItemType::armor,pResourceManager->m_ItemTextTextures[2],true,"Bandage",0}},
+		{"Faded Ribbon",Item{ItemType::armor,pResourceManager->m_ItemTextTextures[3],true,"Faded Ribbon",3}},
+		{"Monster candy",Item{ItemType::healing,pResourceManager->m_ItemTextTextures[4],false,"Monster candy",4}},
+		{"-",Item{ItemType::empty,pResourceManager->m_ItemTextTextures[5],false,"-",0}}
 	}
 {
 }

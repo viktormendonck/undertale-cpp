@@ -29,8 +29,10 @@ public:
 	std::vector<Texture*> m_TextTextures{};
 	std::vector<Texture*> m_FroggitTextTextures{};
 	std::vector<Texture*> m_LooxTextTextures{};
-
-
+	std::vector<Texture*> m_RoomTextures{};
+	std::vector<Texture*> m_RoomCorrectionTiles{};
+	std::vector<Texture*> m_ItemTextTextures{};
+	
 
 private:
 	

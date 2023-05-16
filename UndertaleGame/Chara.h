@@ -1,4 +1,5 @@
 #pragma once
+#include "Inventory.h"
 #include "Vector2f.h"
 
 class AnimatedSprite;
@@ -6,7 +7,7 @@ class AnimatedSprite;
 class Chara final
 {
 public:
-	Chara(AnimatedSprite* playerSprite, float speed);
+	Chara(AnimatedSprite* playerSprite, Inventory* pInv, float speed);
 	~Chara();
 
 	Chara(const Chara& other) = delete; // Copy constructor
@@ -17,15 +18,16 @@ public:
 
 	void Update(float deltaTime);
 	void Draw();
-	void PlayerButtonDownManager(const SDL_KeyboardEvent& e);
-	void PlayerButtonUpManager(const SDL_KeyboardEvent& e);
+	void UpdateMovement();
+	void ButtonUpManager(const SDL_KeyboardEvent& e);
 
 	Vector2f GetPlayerPos() const;
 private:
 	AnimatedSprite* m_pSprite;
-	std::string m_PreviousMovementState{}; //gets held to remember what way to look when Chara stops walking
+	Inventory* m_pInventory;
+	std::string m_CurrentIdleStateName{}; //gets held to remember what way to look when Chara stops walking
 	float m_Speed{};
-	Vector2f m_CurrentSpeed{};
+	Vector2f m_Velocity{};
 
 	float m_RunStopDelay{};
 	float m_CurrentRunStopDelay{};

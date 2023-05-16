@@ -2,6 +2,7 @@
 #include "Vector2f.h"
 #include "Fight.h"
 
+class Inventory;
 class Texture;
 class AnimatedSprite;
 
@@ -15,7 +16,7 @@ enum class FightCharaState
 class FightChara final
 {
 public:
-	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth);
+	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth);
 	~FightChara();
 
 	FightChara(const FightChara& other) = delete; // Copy constructor
@@ -32,10 +33,10 @@ public:
 	Rectf GetLocationRect() const;
 	bool IsGravityMode() const;
 	void SetPos(Vector2f pos);
-	float GetDamage();
-	float GetHealth();
-	float GetMaxHealth();
-
+	float GetDamage() const;
+	int GetHealth() const;
+	int GetMaxHealth() const;
+	Inventory* GetInv() const;
 	void UpdateMovement(float deltaTime);
 
 	void OnButtonUp(const SDL_KeyboardEvent& e);
@@ -44,6 +45,7 @@ private:
 	FightCharaState m_State{ FightCharaState::base };
 	Texture* m_pHeartTexture;
 	AnimatedSprite* m_pHeartAnims;
+	Inventory* m_pInventory;
 	int m_Hp;
 	int m_MaxHp;
 	float m_Speed;

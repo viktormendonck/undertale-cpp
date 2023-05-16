@@ -8,11 +8,13 @@
 #include "Texture.h"
 #include "utils.h"
 #include "CollisionBox.h"
+#include "Inventory.h"
 
-FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, float speed, int startHealth)
+FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth)
 	:
 	m_pHeartTexture{ heartTexture },
 	m_pHeartAnims{ heartAnims },
+	m_pInventory{pInv},
 	m_Hp{ startHealth },
 	m_MaxHp{startHealth},
 	m_Speed{ speed },
@@ -114,19 +116,24 @@ void FightChara::SetPos(Vector2f pos)
 	m_Pos = pos;
 }
 
-float FightChara::GetDamage()
+float FightChara::GetDamage() const
 {
 	return m_Damage;
 }
 
-float FightChara::GetHealth()
+int FightChara::GetHealth() const
 {
 	return m_Hp;
 }
 
-float FightChara::GetMaxHealth()
+int FightChara::GetMaxHealth() const
 {
 	return m_MaxHp;
+}
+
+Inventory* FightChara::GetInv() const
+{
+	return m_pInventory;
 }
 
 void FightChara::UpdateMovement(float deltaTime)

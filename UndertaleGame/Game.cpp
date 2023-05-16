@@ -14,6 +14,7 @@
 #include "Chara.h"
 #include "Fight.h"
 #include "FightChara.h"
+#include "ItemManager.h"
 //TESTCLASSES
 // TODO: remove
 //#include "LooxAttack1.h"
@@ -36,13 +37,17 @@ Game::~Game()
 void Game::Initialize()
 {
 	m_pResourceManager = new ResourceManager{"Viktor"};
-	m_pChara = new Chara{ m_pResourceManager->m_AnimatedSprites[0],40 };
-	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1], 100, 20);
+	m_pInventory = new Inventory{ 10,new ItemManager{m_pResourceManager} };
+	m_pChara = new Chara{ m_pResourceManager->m_AnimatedSprites[0],m_pInventory,40 };
+	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
 	//TESTSTUFF
 	//TODO > remove
+	m_pInventory->InputItem("Monster candy");
+	m_pInventory->InputItem("Monster candy");
+	m_pInventory->InputItem("Monster candy");
+	m_pInventory->InputItem("Monster candy");
+	m_pInventory->InputItem("Monster candy");
 	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,EnemyType::froggit,false);
-	//m_pLOOXATTACK1 = new LooxAttack1(m_pFight->GetFightBoundaryBox().GetLocation(), 3, m_pResourceManager->m_BulletAnimatedSprites[2], "small", Vector2f{ 5,6 }, 0);
-
 }
 
 void Game::Cleanup()
@@ -67,7 +72,11 @@ void Game::Update(float deltaTime)
 		break;
 	case GameState::fight:
 		m_pFight->Update(deltaTime);
-		// TODO: remove
+		if (m_pFight->IsFightOver())
+		{
+			m_GameState = GameState::adventure;
+		}
+		//TODO: remove
 
 		break;
 	case GameState::infoScreen:
@@ -114,7 +123,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 	switch (m_GameState)
 	{
 	case GameState::adventure:
-		m_pChara->PlayerButtonDownManager(e);
+		
 		break;
 	case GameState::fight:
 		m_pFight->ButtonDownManager(e);
@@ -134,7 +143,7 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 	switch (m_GameState)
 	{
 	case GameState::adventure:
-		m_pChara->PlayerButtonUpManager(e);
+		m_pChara->ButtonUpManager(e);
 		break;
 	case GameState::fight:
 		m_pFight->ButtonUpManager(e);

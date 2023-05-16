@@ -69,7 +69,24 @@ ResourceManager::ResourceManager(std::string playerName)
 
 	Texture* mercyTextTexture = new Texture{ "* Mercy","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* fleeTextTexture = new Texture{ "* Flee","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
-	
+
+	//map locations and tiles
+	Texture* room1Tex = new Texture{ "map/Room1.png" };
+	Texture* room1_5Tex = new Texture{ "map/Room1.5.png" };
+	Texture* room2Tex = new Texture{ "map/Room2.png" };
+	Texture* room2_5Tex = new Texture{ "map/Room2.5.png" };
+	Texture* room3Tex = new Texture{ "map/Room3.png" };
+	Texture* room4Tex = new Texture{ "map/Room4.png" };
+	Texture* room4_5Tex = new Texture{ "map/Room4.5.png" };
+	Texture* room5Tex = new Texture{ "map/Room5.png" };
+
+	Texture* stickTextTexture = new Texture{ "* Stick","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* toyKnifeTextTexture = new Texture{ "* Toy Knife","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* bandageTextTexture = new Texture{ "* Bandage","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* fadedRibbonTextTexture = new Texture{ "* FadedRibbon","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* monsterCandyTexture = new Texture{ "* Monster Candy","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture*  emptyTextTexture = new Texture{ "  -","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+
 
 
 
@@ -214,6 +231,22 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_LooxTextTextures.push_back(looxCheckResponseTexture0);
 	m_LooxTextTextures.push_back(looxResponseTexture1);
 	m_LooxTextTextures.push_back(looxResponseTexture2);
+
+	m_RoomTextures.push_back(room1Tex);
+	m_RoomTextures.push_back(room1_5Tex);
+	m_RoomTextures.push_back(room2Tex);
+	m_RoomTextures.push_back(room2_5Tex);
+	m_RoomTextures.push_back(room3Tex);
+	m_RoomTextures.push_back(room4Tex);
+	m_RoomTextures.push_back(room4_5Tex);
+	m_RoomTextures.push_back(room5Tex);
+
+	m_ItemTextTextures.push_back(stickTextTexture);
+	m_ItemTextTextures.push_back(toyKnifeTextTexture);
+	m_ItemTextTextures.push_back(bandageTextTexture);
+	m_ItemTextTextures.push_back(fadedRibbonTextTexture);
+	m_ItemTextTextures.push_back(monsterCandyTexture);
+	m_ItemTextTextures.push_back(emptyTextTexture);
 }
 
 ResourceManager::~ResourceManager()
@@ -258,6 +291,14 @@ ResourceManager::~ResourceManager()
 	for (int i{1}; i < m_LooxTextTextures.size(); ++i)
 	{
 		delete m_LooxTextTextures[i];
+	}
+	for (int i{ 1 }; i < m_RoomTextures.size(); ++i)
+	{
+		delete m_RoomTextures[i];
+	}
+	for (int i{ 1 }; i < m_RoomCorrectionTiles.size(); ++i)
+	{
+		delete m_RoomCorrectionTiles[i];
 	}
 }
 

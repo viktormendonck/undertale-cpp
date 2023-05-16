@@ -2,6 +2,7 @@
 #include "BaseGame.h"
 #include "Vector2f.h"
 
+class Inventory;
 class Texture;
 class ParticleSystem;
 class AnimatedSprite;
@@ -12,9 +13,6 @@ class Fight;
 
 //test classes
 // TODO: remove
-class FroggitJumpAttack;
-class FroggitFlyAttack;
-//class LooxAttack1;
 
 
 class Game : public BaseGame
@@ -54,14 +52,13 @@ private:
 	ResourceManager* m_pResourceManager{};
 	Chara* m_pChara{};
 	FightChara* m_pFightChara{};
+	Inventory* m_pInventory{};
 	Fight* m_pFight{};
 	Rectf m_Window{};
 
 	//TEST CLASSES
 	// TODO: remove
-	//FroggitJumpAttack* m_pTESTFROGGITJUMPATTACK{};
-	//FroggitFlyAttack* m_PTESTFROGGITFLYATTACK{};
-	//LooxAttack1* m_pLOOXATTACK1{};
+
 
 		// FUNCTIONS
 	void Initialize();
