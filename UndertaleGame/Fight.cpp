@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "AnimatedSprite.h"
-#include "FightChara.h"
+#include "FightPlayer.h"
 #include "Enemy.h"
 #include "ParticleSystem.h"
 #include "utils.h"
@@ -15,7 +15,7 @@
 #include "Inventory.h"
 
 
-Fight::Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem,EnemyType enemy, bool isBossFight)
+Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem,EnemyType enemy, bool isBossFight)
 	: m_pPlayer{pChara},
 	  m_pBackgroundTexture{pResourceManager->m_StaticTextures[1]},
 	  m_pParticleSystem{pParticleSystem},
@@ -470,7 +470,7 @@ void Fight::ButtonUpMenuManager(const SDL_KeyboardEvent& e)
 		}
 		break;
 	case (SDLK_RETURN):
-	case (SDLK_x):
+	case (SDLK_z):
 		m_FightState = FightState::menuSelected;
 		m_MenuSelectedState = m_UiState;
 		m_CurrentSelectedOption = 0;
@@ -487,7 +487,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 		switch (e.keysym.sym)
 		{
 		case (SDLK_RETURN):
-		case (SDLK_x):
+		case (SDLK_z):
 			{
 			m_BarStopped = true;
 			float distanceFromLeftWall = m_AttackBarLocation.x - m_TextBox.left;
@@ -510,7 +510,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 			switch (e.keysym.sym)
 			{
 			case (SDLK_RETURN):
-			case(SDLK_x):
+			case(SDLK_z):
 				m_CurrentReadingTime = 0;
 				break;
 			}
@@ -546,7 +546,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 				}
 				break;
 			case (SDLK_RETURN):
-			case (SDLK_x):
+			case (SDLK_z):
 				m_HasActed = !m_HasActed;
 				switch (m_pEnemy->GetEnemyType())
 				{
@@ -559,6 +559,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 				}
 				break;
 			case (SDLK_ESCAPE):
+			case(SDLK_x):
 				m_FightState = FightState::menu;
 				m_MenuSelectedState = UiState::idle;
 				m_UiState = UiState::fightSelected;
@@ -571,6 +572,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 		switch (e.keysym.sym)
 		{
 		case (SDLK_ESCAPE):
+		case(SDLK_x):
 			m_FightState = FightState::menu;
 			m_MenuSelectedState = UiState::idle;
 			m_UiState = UiState::fightSelected;
@@ -616,7 +618,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 			}
 			break;
 		case (SDLK_RETURN):
-		case(SDLK_x):
+		case(SDLK_z):
 			if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth()) {
 				const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
 				m_pPlayer->DamageChara(-(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration)));
@@ -644,6 +646,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 			}
 			break;
 		case (SDLK_ESCAPE):
+		case (SDLK_x):
 			m_FightState = FightState::menu;
 			m_MenuSelectedState = UiState::idle;
 			m_UiState = UiState::fightSelected;
@@ -664,7 +667,7 @@ void Fight::ButtonUpFightManager(const SDL_KeyboardEvent& e)
 
 bool Fight::IsFightOver()
 {
-	return m_FightEnded && m_UpdateTimeAfterDeath <=0;
+	return m_FightEnded && (m_UpdateTimeAfterDeath <= 0);
 }
 CollisionBox Fight::GetFightBoundaryBox()
 {

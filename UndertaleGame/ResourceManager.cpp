@@ -123,7 +123,7 @@ ResourceManager::ResourceManager(std::string playerName)
 		{"live",AnimationData{1,2}}
 	};*/
 
-	m_AnimatedSprites.push_back(new AnimatedSprite{ charaTexture,CharaData,19,29,"downIdle",0.2f});
+	m_AnimatedSprites.push_back(new AnimatedSprite{ charaTexture,CharaData,38,58,"downIdle",0.2f});
 	m_AnimatedSprites.push_back(new AnimatedSprite{ playerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
 	m_AnimatedSprites.push_back(new AnimatedSprite{ froggitBody,froggitAnimData,92,48,"live",0.5f });
 	m_AnimatedSprites.push_back(new AnimatedSprite(loox, LooxAnimData, 100, 116, "live", 0.2f));

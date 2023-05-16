@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "FightChara.h"
+#include "FightPlayer.h"
 
 #include <iostream>
 
@@ -10,7 +10,7 @@
 #include "CollisionBox.h"
 #include "Inventory.h"
 
-FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth)
+FightPlayer::FightPlayer(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth)
 	:
 	m_pHeartTexture{ heartTexture },
 	m_pHeartAnims{ heartAnims },
@@ -24,33 +24,33 @@ FightChara::FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, Invent
 	m_LineCast = Linef(Point2f(m_Pos.x, m_Pos.y - 1), Point2f(m_Pos.x + m_pHeartTexture->GetWidth(), m_Pos.y - 1));
 }
 
-FightChara::~FightChara()
+FightPlayer::~FightPlayer()
 {
 	//delete m_pHeartAnims;
 	//delete m_pHeartTexture;
 
 }
 
-void FightChara::Draw()
+void FightPlayer::Draw()
 {
 	switch (m_State)
 	{
-	case (FightCharaState::base):
+	case (FightPlayerState::base):
 		m_pHeartTexture->Draw(m_Pos.ToPoint2f());
 		break;
-	case (FightCharaState::running):
+	case (FightPlayerState::running):
 		m_pHeartAnims->SetAnimation("flee");
 		m_pHeartAnims->Draw(m_Pos);
 
 		break;
-	case (FightCharaState::dying):
+	case (FightPlayerState::dying):
 		m_pHeartAnims->SetAnimation("dying");
 		m_pHeartAnims->Draw(m_Pos);
 		break;
 	}
 }
 
-void FightChara::Update(float deltaTime,Fight* fight, std::vector<CollisionBox> colliders)
+void FightPlayer::Update(float deltaTime,Fight* fight, std::vector<CollisionBox> colliders)
 {
 	UpdateMovement(deltaTime);
 
@@ -86,57 +86,57 @@ void FightChara::Update(float deltaTime,Fight* fight, std::vector<CollisionBox> 
 	}
 	if (m_Hp<=0)
 	{
-		m_State = FightCharaState::dying;
+		m_State = FightPlayerState::dying;
 	}
 }
 
-void FightChara::DamageChara(int damage)
+void FightPlayer::DamageChara(int damage)
 {
 	m_Hp -= damage;
 }
 
-void FightChara::SetFightCharaState(FightCharaState state)
+void FightPlayer::SetFightPlayerState(FightPlayerState state)
 {
 	m_State = state;
 }
 
-Rectf FightChara::GetLocationRect() const
+Rectf FightPlayer::GetLocationRect() const
 {
 	return Rectf(m_Pos.ToPoint2f(), m_pHeartTexture->GetWidth(), m_pHeartTexture->GetHeight());
 }
 
 
-bool FightChara::IsGravityMode() const
+bool FightPlayer::IsGravityMode() const
 {
 	return m_IsGravityMode;
 }
 
-void FightChara::SetPos(Vector2f pos)
+void FightPlayer::SetPos(Vector2f pos)
 {
 	m_Pos = pos;
 }
 
-float FightChara::GetDamage() const
+float FightPlayer::GetDamage() const
 {
 	return m_Damage;
 }
 
-int FightChara::GetHealth() const
+int FightPlayer::GetHealth() const
 {
 	return m_Hp;
 }
 
-int FightChara::GetMaxHealth() const
+int FightPlayer::GetMaxHealth() const
 {
 	return m_MaxHp;
 }
 
-Inventory* FightChara::GetInv() const
+Inventory* FightPlayer::GetInv() const
 {
 	return m_pInventory;
 }
 
-void FightChara::UpdateMovement(float deltaTime)
+void FightPlayer::UpdateMovement(float deltaTime)
 {
 	const Uint8* state{ SDL_GetKeyboardState(nullptr) };
 
@@ -163,7 +163,7 @@ void FightChara::UpdateMovement(float deltaTime)
 
 	}
 }
-void FightChara::OnButtonUp(const SDL_KeyboardEvent& e)
+void FightPlayer::OnButtonUp(const SDL_KeyboardEvent& e)
 {
 	if (e.keysym.sym == SDLK_DELETE) m_IsGravityMode = !m_IsGravityMode;
 }

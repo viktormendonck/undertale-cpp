@@ -18,6 +18,7 @@ public:
 
 	float GetWidth() const;
 	float GetHeight() const;
+	Rectf GetRect() const;
 	bool IsCreationOk( ) const;
 
 	GLuint GetTextureId() const;

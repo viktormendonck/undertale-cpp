@@ -45,6 +45,15 @@
     <Filter Include="Source\classes\Fight\Enemies\bullets\Loox">
       <UniqueIdentifier>{7850dbf3-c033-4f82-a9e2-13123843a6e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\AdventureManager\Room">
+      <UniqueIdentifier>{aa58c087-dc2f-4f5c-9596-dc33d30a53cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\AdventureManager\Room\Interactions">
+      <UniqueIdentifier>{9b278646-dae7-4089-a955-8489118342e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\AdventureManager\Room\RoomExtras">
+      <UniqueIdentifier>{d6e87e90-61f4-4c21-9dd5-0e3cb351b7a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -62,7 +71,7 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source\classes\sprites</Filter>
     </ClCompile>
-    <ClCompile Include="Chara.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>Source\classes\player</Filter>
     </ClCompile>
     <ClCompile Include="Fight.cpp">
@@ -71,7 +80,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source\classes\Fight\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="FightChara.cpp">
+    <ClCompile Include="FightPlayer.cpp">
       <Filter>Source\classes\player</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
@@ -110,8 +119,32 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Source\classes\player\Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="AdventureManager.cpp">
+    <ClCompile Include="Interactable.cpp">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="TextInteract.cpp">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Adventure.cpp">
       <Filter>Source\classes\AdventureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Source\classes\AdventureManager\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>Source\classes\AdventureManager\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundFall.cpp">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInteract.cpp">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="RockInteract.cpp">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source\classes\AdventureManager\Room\RoomExtras</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +160,7 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Source\classes\sprites</Filter>
     </ClInclude>
-    <ClInclude Include="Chara.h">
+    <ClInclude Include="Player.h">
       <Filter>Source\classes\player</Filter>
     </ClInclude>
     <ClInclude Include="Fight.h">
@@ -136,7 +169,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Source\classes\Fight\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="FightChara.h">
+    <ClInclude Include="FightPlayer.h">
       <Filter>Source\classes\player</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
@@ -175,8 +208,32 @@
     <ClInclude Include="Inventory.h">
       <Filter>Source\classes\player\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="AdventureManager.h">
+    <ClInclude Include="Adventure.h">
       <Filter>Source\classes\AdventureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Interactable.h">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="TextInteract.h">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Source\classes\AdventureManager\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>Source\classes\AdventureManager\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundFall.h">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInteract.h">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="RockInteract.h">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Source\classes\AdventureManager\Room\RoomExtras</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

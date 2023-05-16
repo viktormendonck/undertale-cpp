@@ -158,20 +158,26 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AdventureManager.cpp" />
+    <ClCompile Include="Adventure.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Chara.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="CollisionBox.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fight.cpp" />
-    <ClCompile Include="FightChara.cpp" />
+    <ClCompile Include="FightPlayer.cpp" />
     <ClCompile Include="Froggit.cpp" />
     <ClCompile Include="FroggitFlyAttack.cpp" />
     <ClCompile Include="FroggitJumpAttack.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GroundFall.cpp" />
+    <ClCompile Include="Interactable.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemInteract.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="RockInteract.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="Loox.cpp" />
     <ClCompile Include="LooxAttack1.cpp" />
     <ClCompile Include="LooxAttack2.cpp" />
@@ -180,22 +186,30 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="RoomManager.cpp" />
+    <ClCompile Include="TextInteract.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdventureManager.h" />
+    <ClInclude Include="Adventure.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Chara.h" />
+    <ClInclude Include="Door.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="CollisionBox.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fight.h" />
-    <ClInclude Include="FightChara.h" />
+    <ClInclude Include="FightPlayer.h" />
     <ClInclude Include="Froggit.h" />
     <ClInclude Include="FroggitFlyAttack.h" />
     <ClInclude Include="FroggitJumpAttack.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GroundFall.h" />
+    <ClInclude Include="Interactable.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemInteract.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="RockInteract.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Loox.h" />
     <ClInclude Include="LooxAttack1.h" />
     <ClInclude Include="LooxAttack2.h" />
@@ -203,6 +217,8 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     <ClInclude Include="pch.h" />
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="RoomManager.h" />
+    <ClInclude Include="TextInteract.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UndertaleGame.rc" />

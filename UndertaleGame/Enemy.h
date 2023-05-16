@@ -5,7 +5,7 @@
 #include "Vector2f.h"
 
 class Bullet;
-class FightChara;
+class FightPlayer;
 class Texture;
 class AnimatedSprite;
 class ResourceManager;
@@ -13,7 +13,9 @@ class ResourceManager;
 enum class EnemyType
 {
 	froggit,
-	loox/*,
+	loox
+	
+	/*,
 	migosp,
 	moldsmal,
 	vegetoid,
@@ -23,8 +25,8 @@ enum class EnemyType
 class Enemy
 {
 public:
+	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying, FightPlayer& player, CollisionBox collider,EnemyType type); // constructor
 	Enemy() = delete; // default constructor
-	Enemy(int health, int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying, FightChara& player, CollisionBox collider,EnemyType type); // constructor
 	virtual ~Enemy(); // destructor
 
 	Enemy(const Enemy& other) = delete; // Copy constructor
@@ -62,7 +64,7 @@ protected:
 	const bool m_IsFlying;
 	float m_FlightOffset{118};
 	Point2f m_PossibleSpawnLocations[6]{ Point2f(19,244),Point2f(119,244) ,Point2f(222,244) ,Point2f(321,244) ,Point2f(424,244),Point2f(527,244)};
-	FightChara& m_Player;
+	FightPlayer& m_Player;
 	std::vector<Bullet*> m_Bullets;
 	CollisionBox m_Collider;
 	EnemyType m_EnemyType{};

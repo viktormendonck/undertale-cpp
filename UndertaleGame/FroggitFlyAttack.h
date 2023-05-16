@@ -1,13 +1,13 @@
 #pragma once
 #include "Bullet.h"
 
-class FightChara;
+class FightPlayer;
 
 class FroggitFlyAttack final : public Bullet
 {
 public:
 
-	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,Vector2f startPos, FightChara* pPlayer, int bulletIteration, CollisionBox collider);
+	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,Vector2f startPos, FightPlayer* pPlayer, int bulletIteration, CollisionBox collider);
 
 	virtual void Update(float deltaTime) override;
 	virtual	void Draw() const override;
@@ -18,7 +18,7 @@ private:
 		waiting, attacking
 	};
 	AttackState m_AttackState{ AttackState::waiting };
-	FightChara* m_pPlayer{};
+	FightPlayer* m_pPlayer{};
 	Vector2f m_velocity{ -125,200 };
 	Vector2f m_TargetLocation{};
 	int m_MaxAttackDelay{1};

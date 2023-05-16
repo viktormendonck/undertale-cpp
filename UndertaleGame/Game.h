@@ -2,13 +2,15 @@
 #include "BaseGame.h"
 #include "Vector2f.h"
 
+class RoomManager;
+class Adventure;
 class Inventory;
 class Texture;
 class ParticleSystem;
 class AnimatedSprite;
 class ResourceManager;
-class Chara;
-class FightChara;
+class Player;
+class FightPlayer;
 class Fight;
 
 //test classes
@@ -39,22 +41,26 @@ public:
 private:
 	enum class GameState
 	{
-		startScreen,
 		infoScreen,
 		adventure,
 		fight
 	};
-	GameState m_GameState{ GameState::fight };
+	GameState m_GameState{ GameState::adventure };
 
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pInfoScreenTexture{};
 	Vector2f m_EnemyPos{};
 	ResourceManager* m_pResourceManager{};
-	Chara* m_pChara{};
-	FightChara* m_pFightChara{};
+	Player* m_pPlayer{};
+	FightPlayer* m_pFightChara{};
 	Inventory* m_pInventory{};
+
 	Fight* m_pFight{};
-	Rectf m_Window{};
+	Adventure* m_pAdventure{};
+	RoomManager* m_pRoomManager{};
+	Rectf m_ViewPort{};
+
+	GameState m_SavePreviousState{}; // save state for when you're in the infoState
 
 	//TEST CLASSES
 	// TODO: remove

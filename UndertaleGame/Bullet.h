@@ -4,7 +4,7 @@
 #include "Vector2f.h"
 #include "utils.h"
 
-class FightChara;
+class FightPlayer;
 
 class Bullet
 {

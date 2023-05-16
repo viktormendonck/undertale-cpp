@@ -8,7 +8,7 @@
 #include "Enemy.h"
 
 class EnemyManager;
-class FightChara;
+class FightPlayer;
 class ParticleSystem;
 
 enum class FightState
@@ -23,7 +23,7 @@ class Fight final
 {
 public:
 	Fight() = delete;
-	Fight(FightChara* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem, EnemyType enemy, bool isBossFight);
+	Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem, EnemyType enemy, bool isBossFight);
 	~Fight();
 
 	Fight(const Fight& other) = delete; // Copy constructor
@@ -41,7 +41,7 @@ public:
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
 
 private:
-	FightChara* m_pPlayer;
+	FightPlayer* m_pPlayer;
 
 	Enemy* m_pEnemy;
 	Texture* m_pBackgroundTexture;

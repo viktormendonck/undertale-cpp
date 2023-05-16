@@ -6,30 +6,30 @@ class Inventory;
 class Texture;
 class AnimatedSprite;
 
-enum class FightCharaState
+enum class FightPlayerState
 {
 	base,
 	running,
 	dying
 };
 
-class FightChara final
+class FightPlayer final
 {
 public:
-	FightChara(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth);
-	~FightChara();
+	FightPlayer(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth);
+	~FightPlayer();
 
-	FightChara(const FightChara& other) = delete; // Copy constructor
-	FightChara& operator=(const FightChara& other) = delete; // Copy assignment operator
+	FightPlayer(const FightPlayer& other) = delete; // Copy constructor
+	FightPlayer& operator=(const FightPlayer& other) = delete; // Copy assignment operator
 
-	FightChara(FightChara&& other) = delete; // Move constructor
-	FightChara& operator=(FightChara&& other) = delete; // Move assignment operator
+	FightPlayer(FightPlayer&& other) = delete; // Move constructor
+	FightPlayer& operator=(FightPlayer&& other) = delete; // Move assignment operator
 
 	void Draw();
 	void Update(float deltaTime, Fight* fight, std::vector<CollisionBox> colliders);
 
 	void DamageChara(int damage);
-	void SetFightCharaState(FightCharaState state);
+	void SetFightPlayerState(FightPlayerState state);
 	Rectf GetLocationRect() const;
 	bool IsGravityMode() const;
 	void SetPos(Vector2f pos);
@@ -42,7 +42,7 @@ public:
 	void OnButtonUp(const SDL_KeyboardEvent& e);
 
 private:
-	FightCharaState m_State{ FightCharaState::base };
+	FightPlayerState m_State{ FightPlayerState::base };
 	Texture* m_pHeartTexture;
 	AnimatedSprite* m_pHeartAnims;
 	Inventory* m_pInventory;

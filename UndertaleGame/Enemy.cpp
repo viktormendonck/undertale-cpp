@@ -3,14 +3,14 @@
 
 #include <iostream>
 
-#include "FightChara.h"
+#include "FightPlayer.h"
 #include "Texture.h"
 #include "AnimatedSprite.h"
 #include "Bullet.h"
 #include "utils.h"
 
 
-Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying,FightChara& player, CollisionBox collider, EnemyType type)
+Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* baseTexture, Texture* deathTexture, bool isFlying,FightPlayer& player, CollisionBox collider, EnemyType type)
 	:
 	m_Hp{health},
 	m_MaxHp{health},

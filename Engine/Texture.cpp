@@ -333,6 +333,11 @@ float Texture::GetHeight() const
 	return m_Height;
 }
 
+Rectf Texture::GetRect() const
+{
+	return Rectf(0, 0, m_Width, m_Height);
+}
+
 bool Texture::IsCreationOk( ) const
 {
 	return m_CreationOk;

@@ -10,11 +10,13 @@
 #include "AnimatedSprite.h"
 #include <map>
 
+#include "Adventure.h"
 #include "ResourceManager.h"
-#include "Chara.h"
+#include "Player.h"
 #include "Fight.h"
-#include "FightChara.h"
+#include "FightPlayer.h"
 #include "ItemManager.h"
+#include "RoomManager.h"
 //TESTCLASSES
 // TODO: remove
 //#include "LooxAttack1.h"
@@ -23,7 +25,7 @@ Game::Game(const Window& window)
 	: BaseGame{ window }
 	, m_pParticleSystem{new ParticleSystem{ 20, 0.6f}}
 	, m_pInfoScreenTexture{ new Texture{"Static_Screens/Controls.png"}}
-	, m_Window{ GetViewPort() }
+	, m_ViewPort{ GetViewPort() }
 {
 	
 	Initialize();
@@ -38,26 +40,24 @@ void Game::Initialize()
 {
 	m_pResourceManager = new ResourceManager{"Viktor"};
 	m_pInventory = new Inventory{ 10,new ItemManager{m_pResourceManager} };
-	m_pChara = new Chara{ m_pResourceManager->m_AnimatedSprites[0],m_pInventory,40 };
-	m_pFightChara = new FightChara(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
+	m_pPlayer = new Player{ m_pResourceManager->m_AnimatedSprites[0],m_pInventory,200 };
+	m_pFightChara = new FightPlayer(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
+	m_pRoomManager = new RoomManager(m_pResourceManager);
+	m_pAdventure = new Adventure(m_pPlayer,m_pRoomManager,m_ViewPort);
 	//TESTSTUFF
 	//TODO > remove
-	m_pInventory->InputItem("Monster candy");
-	m_pInventory->InputItem("Monster candy");
-	m_pInventory->InputItem("Monster candy");
-	m_pInventory->InputItem("Monster candy");
-	m_pInventory->InputItem("Monster candy");
-	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,EnemyType::froggit,false);
+	
 }
 
 void Game::Cleanup()
 {
 	delete m_pParticleSystem;
-	delete m_pChara;
+	delete m_pPlayer;
 	delete m_pFightChara;
 	delete m_pFight;
 	delete m_pInfoScreenTexture;
 	delete m_pResourceManager;
+	delete m_pInventory;
 }
 
 void Game::Update(float deltaTime)
@@ -68,7 +68,12 @@ void Game::Update(float deltaTime)
 	switch (m_GameState)
 	{
 	case GameState::adventure:
-		m_pChara->Update(deltaTime);
+		m_pAdventure->Update(deltaTime);
+		if (m_pAdventure->GetAdventureEnd())
+		{
+			m_GameState = GameState::fight;
+			m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,static_cast<EnemyType>(utils::RandInRange(0,1)),false);
+		}
 		break;
 	case GameState::fight:
 		m_pFight->Update(deltaTime);
@@ -76,14 +81,9 @@ void Game::Update(float deltaTime)
 		{
 			m_GameState = GameState::adventure;
 		}
-		//TODO: remove
-
 		break;
 	case GameState::infoScreen:
 		
-		break;
-	case GameState::startScreen:
-
 		break;
 
 	}
@@ -95,25 +95,15 @@ void Game::Draw() const
 	switch (m_GameState)
 	{
 	case GameState::adventure:
-		glPushMatrix();
-		glScalef(2, 2, 0);
-		m_pChara->Draw();
-		glPopMatrix();
+		m_pAdventure->Draw();
 		break;
 	case GameState::fight:
 		m_pFight->Draw();
-		//TestStuff
-		// TODO: remove
-		//m_pTESTFROGGITJUMPATTACK->Draw();
-		//m_pLOOXATTACK1->Draw();
 		break;
 	case GameState::infoScreen:
 		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });
 		break;
 
-	case GameState::startScreen:
-
-		break;
 	}
 
 }
@@ -123,15 +113,12 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 	switch (m_GameState)
 	{
 	case GameState::adventure:
-		
+		m_pAdventure->ButtonDownManager(e);
 		break;
 	case GameState::fight:
 		m_pFight->ButtonDownManager(e);
 		break;
 	case GameState::infoScreen:
-
-		break;
-	case GameState::startScreen:
 
 		break;
 
@@ -143,15 +130,12 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 	switch (m_GameState)
 	{
 	case GameState::adventure:
-		m_pChara->ButtonUpManager(e);
+		m_pAdventure->ButtonUpManager(e);
 		break;
 	case GameState::fight:
 		m_pFight->ButtonUpManager(e);
 		break;
 	case GameState::infoScreen:
-
-		break;
-	case GameState::startScreen:
 
 		break;
 
@@ -160,12 +144,14 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 	switch (e.keysym.sym)
 	{
 	case SDLK_i:
-		if (m_GameState == GameState::adventure)
+		m_SavePreviousState = m_GameState;
+		if (m_GameState == GameState::infoScreen)
 		{
+			m_GameState = m_SavePreviousState;
+		}  else
+		{
+			std::cout << "Controls:\nArrow Keys/wasd:movement\nz or enter: confirm\nX/Shift:Cancel\nDel:Activate Gravity Mode(In fight, this is not original undertale)\nSpace: Jump (in gravity mode)\n";
 			m_GameState = GameState::infoScreen;
-		} else
-		{
-			m_GameState = GameState::adventure;
 		}
 		break;
 	}

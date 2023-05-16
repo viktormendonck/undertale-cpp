@@ -8,7 +8,7 @@
 #include "FroggitFlyAttack.h"
 #include "ResourceManager.h"
 
-Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount,float headMovementSpeed, FightChara& player, CollisionBox collider)
+Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount,float headMovementSpeed, FightPlayer& player, CollisionBox collider)
 	:
 	Enemy(health, conversationAmount,pBaseTexture,pDeathTexture,false,player,collider,EnemyType::froggit),
 	m_pFroggitHead{pFroggitHead},

@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "Chara.h"
+#include "Player.h"
 #include "AnimatedSprite.h"
 #include "Inventory.h"
 
-Chara::Chara(AnimatedSprite* playerSprite,Inventory* pInv, float speed)
+Player::Player(AnimatedSprite* playerSprite,Inventory* pInv, float speed)
 	:m_pSprite{ playerSprite },
 	 m_pInventory{pInv},
 	 m_Speed{speed}
@@ -12,28 +12,34 @@ Chara::Chara(AnimatedSprite* playerSprite,Inventory* pInv, float speed)
 	m_CurrentRunStopDelay = m_RunStopDelay;
 }
 
-Chara::~Chara()
+Player::~Player()
 {
 	//delete m_pSprite;
 }
 
-void Chara::Update(float deltaTime)
+void Player::Update(float deltaTime)
 {
 	//TODO: collisions
 	UpdateMovement();
 	m_Pos += (m_Velocity * deltaTime);
 }
 
-void Chara::Draw()
+void Player::Draw()
 {
 	m_pSprite->Draw(m_Pos);
 }
 
-Vector2f Chara::GetPlayerPos() const
+Vector2f Player::GetPlayerPos() const
 {
 	return m_Pos;
 }
-void Chara::UpdateMovement()
+
+void Player::SetPlayerPos(Vector2f pos)
+{
+	m_Pos = pos;
+}
+
+void Player::UpdateMovement()
 {
 	const Uint8* state{ SDL_GetKeyboardState(nullptr) };
 
@@ -85,24 +91,21 @@ void Chara::UpdateMovement()
 
 	m_Velocity.x = xInputAxis * m_Speed;
 	m_Velocity.y = yInputAxis * m_Speed;
-
+	if (m_Velocity == Vector2f{ 0,0 })
+	{
+		m_pSprite->SetAnimation(m_CurrentIdleStateName);
+	}
 }
 
-void Chara::ButtonUpManager(const SDL_KeyboardEvent& e)
+
+Inventory* Player::GetInventory()
 {
-	switch(e.keysym.sym)
-	{
-	case (SDLK_w):
-	case (SDLK_UP):
-	case (SDLK_a):
-	case (SDLK_LEFT):
-	case (SDLK_s):
-	case (SDLK_DOWN):
-	case (SDLK_d):
-	case (SDLK_RIGHT):
-		m_pSprite->SetAnimation(m_CurrentIdleStateName);
-		break;
-	}
+	return m_pInventory;
+}
+
+Rectf Player::GetRect()
+{
+	return Rectf(m_Pos.ToPoint2f(), m_pSprite->GetWidth(), m_pSprite->GetHeight());
 }
 
 

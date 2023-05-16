@@ -5,7 +5,7 @@
 #include "ResourceManager.h"
 #include "utils.h"
 
-Loox::Loox(AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount, FightChara& player, CollisionBox collider)
+Loox::Loox(AnimatedSprite* pBaseTexture, Texture* pDeathTexture, int health, int conversationAmount, FightPlayer& player, CollisionBox collider)
 	: Enemy(health, conversationAmount, pBaseTexture, pDeathTexture, false, player,collider,EnemyType::loox)
 {
 }
