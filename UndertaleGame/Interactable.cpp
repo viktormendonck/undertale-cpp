@@ -14,7 +14,7 @@ CollisionBox Interactable::GetCollisionBox() const
 	return m_CollisionBox;
 }
 
-bool Interactable::GetSollidity() const
+bool Interactable::IsSollid() const
 {
 	return m_IsSollid;
 }

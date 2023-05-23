@@ -30,18 +30,30 @@ void Adventure::Draw() const
 	m_pCurrentRoom->Draw();
 	m_pPlayer->Draw();
 	glPopMatrix();
+	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+	{
+		m_pCurrentRoom->GetInteractables()[i]->Draw();
+	}
 	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
 	utils::FillRect(m_ViewPort);
 }
 
 void Adventure::Update(float deltaTime)
 {
-	m_pPlayer->Update(deltaTime,m_pCurrentRoom->GetWalls());
+	std::vector<CollisionBox> playerColliders{m_pCurrentRoom->GetWalls()};
+	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+		{
+			if(m_pCurrentRoom->GetInteractables()[i]->IsSollid())
+			{
+				playerColliders.push_back(m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox());
+			}
+		}
+	m_pPlayer->Update(deltaTime,playerColliders);
 	UpdateCameraPos();
 
 	for (int i{}; i < m_pCurrentRoom->GetDoors().size(); ++i)
 	{
-		if (!m_pCurrentRoom->GetDoors()[i].IsColliding(m_pPlayer->GetRect())) continue;
+		if (!m_pCurrentRoom->GetDoors()[i].IsColliding(m_pPlayer->GetPlayerCollisionRect())) continue;
 		m_SavedSpawnLocation = m_pCurrentRoom->GetDoors()[i].GetExitLocation();
 		m_SavedRoom = m_pCurrentRoom->GetDoors()[i].GetDestination();
 		m_IsTransitioning = true;

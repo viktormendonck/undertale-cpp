@@ -46,7 +46,7 @@ private:
 		fight
 	};
 
-	GameState m_GameState{ GameState::fight};
+	GameState m_GameState{ GameState::adventure};
 
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pInfoScreenTexture{};
@@ -64,11 +64,8 @@ private:
 
 	GameState m_SavePreviousState{}; // save state for when you're in the infoState
 
-	//TEST CLASSES
-	// TODO: remove
 
-
-		// FUNCTIONS
+	// FUNCTIONS
 	void Initialize();
 	void Cleanup();
 	void ClearBackground() const;

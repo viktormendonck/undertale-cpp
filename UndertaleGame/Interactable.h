@@ -15,9 +15,10 @@ public:
 	virtual void OnInteract() = 0;
 	virtual void Update(float deltaTime, Player* player) = 0;
 	virtual void Draw() const = 0;
+	
 
 	CollisionBox GetCollisionBox() const;
-	bool GetSollidity() const;
+	bool IsSollid() const;
 
 protected:
 	CollisionBox m_CollisionBox;

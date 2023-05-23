@@ -89,6 +89,19 @@ ResourceManager::ResourceManager(std::string playerName)
 
 	Texture*  holeTexture = new Texture{"map/tiles/hole.png"};
 
+	Texture* interactionBackgroundTexture = new Texture{ "text/interact/baseTextBox.png" };
+
+	Texture* froggitInteractionTexture1 = new Texture{ "text/interact/froggitText1.png" };
+	Texture* froggitInteractionTexture2 = new Texture{ "text/interact/froggitText2.png" };
+	Texture* froggitInteractionTexture3 = new Texture{ "text/interact/froggitText3.png" };
+	Texture* froggitInteractionTexture4 = new Texture{ "text/interact/froggitText4.png" };
+	Texture* froggitInteractionTexture5 = new Texture{ "text/interact/froggitText5.png" };
+	Texture* froggitInteractionTexture6 = new Texture{ "text/interact/froggitText6.png" };
+
+	Texture* scriptureInteractionTexture1 = new Texture{ "text/interact/scripture1.png" };
+	Texture* scriptureInteractionTexture2 = new Texture{ "text/interact/scripture2.png" };
+	Texture* scriptureInteractionTexture3 = new Texture{ "text/interact/scripture3.png" };
+	Texture* saveInteractionTexture = new Texture{ "text/interact/saveText.png" };
 
 
 	std::map<std::string, AnimationData> CharaData{
@@ -250,6 +263,20 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_ItemTextTextures.push_back(emptyTextTexture);
 
 	m_RoomCorrectionTiles.push_back(holeTexture);
+
+	m_InteractableTextTextures.push_back(interactionBackgroundTexture);
+
+	m_InteractableTextTextures.push_back(froggitInteractionTexture1);
+	m_InteractableTextTextures.push_back(froggitInteractionTexture2);
+	m_InteractableTextTextures.push_back(froggitInteractionTexture3);
+	m_InteractableTextTextures.push_back(froggitInteractionTexture4);
+	m_InteractableTextTextures.push_back(froggitInteractionTexture5);
+	m_InteractableTextTextures.push_back(froggitInteractionTexture6);
+
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture1);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture2);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture3);
+	m_InteractableTextTextures.push_back(saveInteractionTexture);
 }
 
 ResourceManager::~ResourceManager()

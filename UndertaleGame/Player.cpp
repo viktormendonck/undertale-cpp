@@ -12,7 +12,8 @@ Player::Player(AnimatedSprite* playerSprite,Inventory* pInv, float speed)
 	:m_pSprite{ playerSprite },
 	 m_pInventory{pInv},
 	 m_Speed{speed},
-	 m_PlayerCollisionRect{ GetRect().left,GetRect().bottom,GetRect().width,GetRect().height / 3 }
+	 m_PlayerCollisionRect{ GetRect().left,GetRect().bottom,GetRect().width,GetRect().height / 3 },
+	 m_InteractCollisionRect{ 0,0,GetRect().width,GetRect().height / 2 }
 {
 	m_RunStopDelay = 0.2f;
 	m_CurrentRunStopDelay = m_RunStopDelay;
@@ -25,9 +26,34 @@ Player::~Player()
 
 void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 {
-	
-	if (m_IsFalling)
+	UpdateCollisionSelection();
+	switch(m_PlayerState)
 	{
+	case(PlayerState::wandering):
+		{
+		UpdateMovement();
+		m_ChangedRoom = false;
+		const Vector2f nextPlayerPos = m_Pos + (m_Velocity * deltaTime);
+		Vector2f correctionTotal{};
+		m_PlayerCollisionRect = Rectf(GetRect().left, GetRect().bottom, GetRect().width, GetRect().height / 3);
+		for (int i{}; i < colliders.size(); ++i)
+		{
+
+			const std::pair<bool, Vector2f> collisionOutput{ CollisionBox::SideCollisions(colliders[i],m_PlayerCollisionRect ) };
+			if (collisionOutput.first)
+			{
+				correctionTotal += collisionOutput.second;
+			}
+			if (collisionOutput.second.y < 0)
+			{
+				m_Velocity.y = 0;
+			}
+		}
+		m_Pos = nextPlayerPos + correctionTotal;
+		}
+		break;
+	case(PlayerState::falling):
+		{
 		m_TimeIncrementor += deltaTime * m_SpinSpeed;
 		int saveSpinDirection{m_CurrentSpinDirection};
 		m_CurrentSpinDirection = static_cast<int>(m_TimeIncrementor) % 4;
@@ -38,39 +64,52 @@ void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 		m_Pos.y -= m_FallSpeed * deltaTime;
 		if (m_Pos.y <= m_FallStartLocation.y && m_ChangedRoom)
 		{
-			m_IsFalling = false;
+			m_PlayerState = PlayerState::wandering;
 			m_ChangedRoom = false;
 		}
-	} else
-	{
-		
-	UpdateMovement();
-	m_ChangedRoom = false;
-	const Vector2f nextPlayerPos = m_Pos + (m_Velocity * deltaTime);
-	Vector2f correctionTotal{};
-	m_PlayerCollisionRect = Rectf(GetRect().left, GetRect().bottom, GetRect().width, GetRect().height / 3);
-	for (int i{}; i < colliders.size(); ++i)
-	{
-
-		const std::pair<bool, Vector2f> collisionOutput{ CollisionBox::SideCollisions(colliders[i],m_PlayerCollisionRect ) };
-		if (collisionOutput.first)
-		{
-			correctionTotal += collisionOutput.second;
 		}
-		if (collisionOutput.second.y < 0)
+		break;
+	case(PlayerState::interacting):
 		{
-			m_Velocity.y = 0;
+			
 		}
+		break;
 	}
+	
+}
 
-	m_Pos = nextPlayerPos + correctionTotal;
-	//std::cout << "x:" << m_Pos.x<< " y top:" << m_Pos.y + GetRect().height / 3 << " y bottom:" << m_Pos.y<< "\n";
+void Player::UpdateCollisionSelection()
+{
+	std::string direction{ m_pSprite->GetCurrentAnimation() };
+
+	if (direction == "upIdle" || direction == "up")
+	{
+		m_InteractCollisionRect.left = m_Pos.x;
+		m_InteractCollisionRect.bottom = m_Pos.y + m_InteractCollisionRect.height;
+	}
+	if (direction == "downIdle" || direction == "down")
+	{
+		m_InteractCollisionRect.left = m_Pos.x;
+		m_InteractCollisionRect.bottom = m_Pos.y - m_InteractCollisionRect.height;
+	}
+	if (direction == "leftIdle" || direction == "left")
+	{
+		m_InteractCollisionRect.bottom = m_Pos.y;
+		m_InteractCollisionRect.left = m_Pos.x - m_InteractCollisionRect.width;
+	}
+	if (direction == "rightIdle" || direction == "right")
+	{
+		m_InteractCollisionRect.bottom = m_Pos.y;
+		m_InteractCollisionRect.left = m_Pos.x + m_InteractCollisionRect.width;
 	}
 }
 
 void Player::Draw()
 {
 	m_pSprite->Draw(m_Pos);
+#ifdef _DEBUG
+	utils::FillRect(m_InteractCollisionRect);
+#endif
 }
 
 Vector2f Player::GetPlayerPos() const
@@ -88,9 +127,25 @@ Rectf Player::GetPlayerCollisionRect()
 	return m_PlayerCollisionRect;
 }
 
+Rectf Player::GetInteractCollisionRect()
+{
+	return m_InteractCollisionRect;
+}
+
+void Player::SetPlayerState(PlayerState playerState)
+{
+	m_PlayerState = playerState;
+}
+
+Player::PlayerState Player::GetState()
+{
+	return m_PlayerState;
+}
+
 void Player::StartFalling(const std::string& destination)
 {
-	m_IsFalling = true;
+	
+	m_PlayerState = PlayerState::falling;
 	m_FallStartLocation = m_Pos;
 	m_FallDestination = destination;
 }
@@ -107,7 +162,7 @@ bool Player::HasChangedRoom()
 
 bool Player::IsFalling()
 {
-	return m_IsFalling;
+	return m_PlayerState == PlayerState::falling;
 }
 
 std::string Player::GetFallDestination()

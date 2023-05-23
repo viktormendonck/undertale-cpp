@@ -7,6 +7,7 @@
 #include "GroundFall.h"
 #include "ResourceManager.h"
 #include "Room.h"
+#include "TextInteract.h"
 #include "Vector2f.h"
 
 RoomManager::RoomManager(ResourceManager* pResourceManager)
@@ -108,7 +109,22 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		Rectf{278,44,80,99},
 		Rectf{278,224,80,99},
 	};
+
+	std::vector<Texture*> interactTextTextures1{
+		pResourceManager->m_InteractableTextTextures[1],
+		pResourceManager->m_InteractableTextTextures[2],
+		pResourceManager->m_InteractableTextTextures[3],
+		pResourceManager->m_InteractableTextTextures[4],
+		pResourceManager->m_InteractableTextTextures[5],
+		pResourceManager->m_InteractableTextTextures[6]
+	};
+	std::vector<Texture*> saveTextTextures{
+		pResourceManager->m_InteractableTextTextures[10]
+	};
+
 	std::vector<Interactable*> room1Interacts{
+		new TextInteract(Rectf(183,770,48,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures1),
+		new TextInteract(Rectf(441,639,30,30),pResourceManager->m_InteractableTextTextures[0],saveTextTextures)
 
 	};
 	std::vector<Interactable*> room1_5Interacts{
@@ -118,8 +134,14 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		new GroundFall{Rectf(355,77,50,150),"Room2.5"}
 	};
 	std::vector<Interactable*> room2_5Interacts{};
+	std::vector<Texture*> interactTextTextures2{
+		pResourceManager->m_InteractableTextTextures[7]
+	};
 	std::vector<Interactable*> room3Interacts{
-
+		new TextInteract(Rectf(296,334,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures2)
+	};
+	std::vector<Texture*> interactTextTextures3{
+		pResourceManager->m_InteractableTextTextures[8]
 	};
 	std::vector<Interactable*> room4Interacts{
 		new GroundFall{Rectf(480,130,144,300),"Room4.5"},
@@ -127,8 +149,14 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		new GroundFall{Rectf(855,130,7,100),"Room4.5"},
 		new GroundFall{Rectf(979,290,100,77),"Room4.5"},
 		new GroundFall{Rectf(979,170,40,121),"Room4.5"},
+		new TextInteract(Rectf(919,395,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures3)
 	};
-	std::vector<Interactable*> room4_5Interacts{};
+	std::vector<Texture*> interactTextTextures4{
+		pResourceManager->m_InteractableTextTextures[9]
+	};
+	std::vector<Interactable*> room4_5Interacts{
+		new TextInteract(Rectf(950,400,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures4)
+	};
 	std::vector<Interactable*> room5Interacts{};
 	
 	

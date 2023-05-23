@@ -32,6 +32,7 @@ public:
 	std::vector<Texture*> m_RoomTextures{};
 	std::vector<Texture*> m_RoomCorrectionTiles{};
 	std::vector<Texture*> m_ItemTextTextures{};
+	std::vector<Texture*> m_InteractableTextTextures{};
 
 private:
 	

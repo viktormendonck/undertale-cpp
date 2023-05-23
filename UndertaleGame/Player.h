@@ -1,10 +1,10 @@
 #pragma once
 #include <map>
 
+#include "CollisionBox.h"
 #include "Inventory.h"
 #include "Vector2f.h"
 
-class CollisionBox;
 class AnimatedSprite;
 
 class Player final
@@ -19,7 +19,15 @@ public:
 	Player(Player&& other) = delete; // Move constructor
 	Player& operator=(Player&& other) = delete; // Move assignment operator
 
+	enum class PlayerState
+	{
+		wandering,
+		falling,
+		interacting
+	};
+
 	void Update(float deltaTime, std::vector<CollisionBox> colliders);
+	void UpdateCollisionSelection();
 	void Draw();
 	void UpdateMovement();
 	Inventory* GetInventory();
@@ -28,6 +36,10 @@ public:
 	Vector2f GetPlayerPos() const;
 	void SetPlayerPos(const Vector2f& pos);
 	Rectf GetPlayerCollisionRect();
+	Rectf GetInteractCollisionRect();
+
+	void SetPlayerState(PlayerState playerState);
+	PlayerState GetState();
 
 	void StartFalling(const std::string& destination);
 	void SetChangedRoom(bool e);
@@ -37,18 +49,19 @@ public:
 	Vector2f GetFallStartLocation();
 
 private:
+	PlayerState m_PlayerState{PlayerState::wandering};
 	AnimatedSprite* m_pSprite;
 	Inventory* m_pInventory;
 	std::string m_CurrentIdleStateName{}; //gets held to remember what way to look when Player stops walking
 	float m_Speed{};
 	Vector2f m_Velocity{};
 	Rectf m_PlayerCollisionRect{};
+	Rectf m_InteractCollisionRect{};
 
 	float m_RunStopDelay{};
 	float m_CurrentRunStopDelay{};
 	Vector2f m_Pos;
 
-	bool m_IsFalling{};
 	bool m_ChangedRoom{};
 	float m_FallSpeed{ 400 };
 	Vector2f m_FallStartLocation{};
