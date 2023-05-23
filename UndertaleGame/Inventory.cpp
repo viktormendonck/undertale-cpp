@@ -6,12 +6,17 @@
 
 Inventory::Inventory(int size,ItemManager* itemManager)
 : m_MaxInvSize(size),
-  m_ItemManager(itemManager)
+  m_pItemManager(itemManager)
 {
 	for (int i {}; i < m_MaxInvSize; ++i)
 	{
-		m_PlayerInventory.push_back(m_ItemManager->m_Items["-"]);
+		m_PlayerInventory.push_back(m_pItemManager->m_Items["-"]);
 	}
+}
+
+Inventory::~Inventory()
+{
+	delete m_pItemManager;
 }
 
 void Inventory::DeleteItem(int itemNumber)
@@ -20,12 +25,12 @@ void Inventory::DeleteItem(int itemNumber)
 	{
 		if (m_PlayerInventory[i].GetItemType() == ItemType::empty) continue;
 		m_PlayerInventory[itemNumber] = m_PlayerInventory[i];
-		m_PlayerInventory[i] = m_ItemManager->m_Items["-"];
+		m_PlayerInventory[i] = m_pItemManager->m_Items["-"];
 		i = 0;
 	}
 }
 
-void Inventory::InputItem(std::string itemType)
+void Inventory::InputItem(const std::string& itemType)
 {
 	int firstSpot{};
 	bool notFull{false};
@@ -40,7 +45,7 @@ void Inventory::InputItem(std::string itemType)
 	}
 	if(notFull)
 	{
-		m_PlayerInventory[firstSpot] = m_ItemManager->m_Items[itemType];
+		m_PlayerInventory[firstSpot] = m_pItemManager->m_Items[itemType];
 	}
 
 }

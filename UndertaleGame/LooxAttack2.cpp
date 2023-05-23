@@ -6,7 +6,7 @@
 #include "Bullet.h"
 
 
-LooxAttack2::LooxAttack2(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider, bool negation, float delay, float timeToLive)
+LooxAttack2::LooxAttack2(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider, bool negation, float delay, float timeToLive)
 	: Bullet(pos, damage, pBulletTex, collider),
 	m_Delay{ delay },
 	m_TimeToLive{ timeToLive }

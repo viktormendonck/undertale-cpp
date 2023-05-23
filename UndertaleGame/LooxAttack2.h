@@ -8,7 +8,7 @@ class AnimatedSprite;
 class LooxAttack2 final : public Bullet
 {
 public:
-	LooxAttack2(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider, bool negation , float delay, float timeToLive);
+	LooxAttack2(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider, bool negation , float delay, float timeToLive);
 
 	virtual void Update(float deltaTime) override;
 	virtual	void Draw() const override;

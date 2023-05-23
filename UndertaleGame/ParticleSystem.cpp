@@ -62,7 +62,7 @@ void ParticleSystem::Update(float deltaTime)
 	}
 }
 
-void ParticleSystem::StartDissolve(Vector2f spritePos, Texture* pTexture)
+void ParticleSystem::StartDissolve(const Vector2f& spritePos, Texture* pTexture)
 {
 	const int textureAlphaDataSize = static_cast<int>(pTexture->GetHeight() * pTexture->GetWidth());
 	float* pTextureAlphaData = new float[textureAlphaDataSize];

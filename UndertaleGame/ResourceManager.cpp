@@ -87,6 +87,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* monsterCandyTexture = new Texture{ "* Monster Candy","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture*  emptyTextTexture = new Texture{ "  -","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 
+	Texture*  holeTexture = new Texture{"map/tiles/hole.png"};
 
 
 
@@ -247,6 +248,8 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_ItemTextTextures.push_back(fadedRibbonTextTexture);
 	m_ItemTextTextures.push_back(monsterCandyTexture);
 	m_ItemTextTextures.push_back(emptyTextTexture);
+
+	m_RoomCorrectionTiles.push_back(holeTexture);
 }
 
 ResourceManager::~ResourceManager()
@@ -292,11 +295,15 @@ ResourceManager::~ResourceManager()
 	{
 		delete m_LooxTextTextures[i];
 	}
-	for (int i{ 1 }; i < m_RoomTextures.size(); ++i)
+	for (int i{}; i < m_RoomTextures.size(); ++i)
 	{
 		delete m_RoomTextures[i];
 	}
-	for (int i{ 1 }; i < m_RoomCorrectionTiles.size(); ++i)
+	for (int i{}; i < m_ItemTextTextures.size(); ++i)
+	{
+		delete m_ItemTextTextures[i];
+	}
+	for (int i{}; i < m_RoomCorrectionTiles.size(); ++i)
 	{
 		delete m_RoomCorrectionTiles[i];
 	}

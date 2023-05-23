@@ -68,7 +68,7 @@ protected:
 	std::vector<Bullet*> m_Bullets;
 	CollisionBox m_Collider;
 	EnemyType m_EnemyType{};
-	bool m_IsMercyable;
+	bool m_IsMercyable{};
 	
 };
 

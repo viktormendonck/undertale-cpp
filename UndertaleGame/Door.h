@@ -7,7 +7,7 @@ public:
 	Door(Rectf doorCollider,std::string destination, Vector2f spawnLocation);
 
 	std::string GetDestination();
-	bool IsColliding(Rectf player) const;
+	bool IsColliding(const Rectf& player) const;
 	Vector2f GetExitLocation();
 private:
 	CollisionBox m_DoorCollider{};

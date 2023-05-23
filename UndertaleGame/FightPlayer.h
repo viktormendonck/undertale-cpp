@@ -32,10 +32,11 @@ public:
 	void SetFightPlayerState(FightPlayerState state);
 	Rectf GetLocationRect() const;
 	bool IsGravityMode() const;
-	void SetPos(Vector2f pos);
+	void SetPos(const Vector2f& pos);
 	float GetDamage() const;
 	int GetHealth() const;
 	int GetMaxHealth() const;
+	bool IsDead();
 	Inventory* GetInv() const;
 	void UpdateMovement(float deltaTime);
 

@@ -5,7 +5,7 @@ class LooxAttack1 final : public Bullet
 {
 public:
 	LooxAttack1() = delete;
-	LooxAttack1(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider, std::string size,Vector2f dir, float delay);
+	LooxAttack1(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider, const std::string& size,const Vector2f& dir, float delay);
 
 	virtual void Update(float deltaTime) override;
 	virtual	void Draw() const override;

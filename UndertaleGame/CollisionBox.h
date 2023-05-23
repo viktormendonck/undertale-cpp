@@ -22,7 +22,7 @@ public:
 	Linef GetRight() const;
 	Linef GetTop() const;
 	Vector2f GetLocation() const;
-	void SetLocation(Vector2f delta);
+	void SetLocation(const Vector2f& delta);
 
 	static std::pair<bool, Vector2f> SideCollisions(CollisionBox collider, Rectf player);
 

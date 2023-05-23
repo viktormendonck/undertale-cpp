@@ -8,6 +8,7 @@ class ItemManager
 {
 public:
 	ItemManager(ResourceManager* pResourceManager);
+	//~ItemManager();
 	std::map<std::string, Item> m_Items;
 };
 

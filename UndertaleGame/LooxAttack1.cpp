@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LooxAttack1.h"
 
-LooxAttack1::LooxAttack1(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider, std::string size, Vector2f dir,float delay)
+LooxAttack1::LooxAttack1(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider, const std::string& size, const Vector2f& dir,float delay)
 	:	Bullet(pos,damage,pBulletTex ,collider),
 		m_Direction{ dir },
 		m_CurrentState{size},

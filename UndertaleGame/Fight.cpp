@@ -25,7 +25,7 @@ Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManage
 	m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_box_bottom_offset,m_FightSquareDimentions, m_FightSquareDimentions));
 	m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_box_bottom_offset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimentions);
 
-	//fight vars
+	//enemyAttack vars
 	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
 	m_pPlayer->SetPos(pos);
 	const Vector2f platformSize{ 20,5 };
@@ -38,7 +38,7 @@ Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManage
 	m_AttackBarStartLocation = Vector2f(m_TextBox.left, m_TextBox.bottom + 10);
 	m_AttackBarLocation = m_AttackBarStartLocation;
 
-	//make collisions for the fight
+	//make collisions for the enemyAttack
 	const float collisionBoxWidth{ 5 };
 	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetBottom().point1.x, m_FightBoundary.GetBottom().point1.y - collisionBoxWidth, m_FightSquareDimentions, collisionBoxWidth)));
 	m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetTop().point1, m_FightSquareDimentions, collisionBoxWidth)));
@@ -76,10 +76,10 @@ Fight::~Fight()
 void Fight::StartFightSegment()
 {
 	m_MenuSelectedState = UiState::idle;
-	m_FightState = FightState::fight;
+	m_PreviousFightState = m_FightState;
+	m_FightState = FightState::transition;
 	Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
 	m_pPlayer->SetPos(pos);
-	m_pEnemy->SpawnBullet(m_pResourceManager);
 }
 
 //Drawing functions
@@ -99,8 +99,8 @@ void Fight::Draw() const
 	case (FightState::menu):
 		DrawMenu();
 		break;
-	case (FightState::fight):
-		DrawFight();
+	case (FightState::enemyAttack):
+		DrawEnemyAttack();
 		break;
 	case(FightState::menuSelected):
 		DrawMenuSelected();
@@ -116,7 +116,7 @@ void Fight::DrawMenu() const
 {
 	utils::DrawRect(m_TextBox, m_BoxLineWidth);
 }
-void Fight::DrawFight() const
+void Fight::DrawEnemyAttack() const
 {
 	utils::SetColor(Color4f(1, 1, 1, 1));
 	m_pPlayer->Draw();
@@ -171,7 +171,6 @@ void Fight::DrawMenuSelected() const
 	}
 	utils::DrawRect(m_TextBox, m_BoxLineWidth);
 }
-
 void Fight::DrawTransition() const
 {
 	utils::DrawRect(m_CurrentTransitionRect, m_BoxLineWidth);
@@ -208,7 +207,7 @@ void Fight::DrawActMenuOptions() const
 	case (EnemyType::loox):
 		for (int i{}; i < m_AmountOfActOptions; ++i)
 		{
-			m_pResourceManager->m_FroggitTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());\
+			m_pResourceManager->m_LooxTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());\
 		}
 
 		break;
@@ -246,7 +245,7 @@ void Fight::Update(const float deltaTime)
 		case (FightState::menuSelected):
 			UpdateMenuSelected(deltaTime);
 			break;
-		case (FightState::fight):
+		case (FightState::enemyAttack):
 			UpdateFight(deltaTime);
 			break;
 		case (FightState::transition):
@@ -255,8 +254,8 @@ void Fight::Update(const float deltaTime)
 		}
 		m_pEnemy->Update(deltaTime);
 		UpdateUI(deltaTime);
-		m_FightEnded = m_pEnemy->IsDead();
-		if (m_FightEnded)
+		m_FightEnded = m_pEnemy->IsDead() || m_pPlayer->IsDead();
+		if (m_FightEnded && m_pEnemy->IsDead())
 		{
 			m_pParticleSystem->StartDissolve(m_pEnemy->GetPos(), m_pEnemy->GetDeathTexture());
 		}
@@ -277,7 +276,7 @@ void Fight::UpdateFight(float deltaTime)
 	if (!m_pEnemy->AreBulletsActive())
 	{
 		m_FightState = FightState::transition;
-		m_PreviousFightState = FightState::fight;
+		m_PreviousFightState = FightState::enemyAttack;
 		m_CurrentTransitionRect = m_FightBoundary.GetRect();
 		m_pEnemy->DeleteBullets();
 	}
@@ -366,7 +365,7 @@ void Fight::UpdateMenuSelected(float deltaTime)
 void Fight::UpdateTransition(float deltaTime)
 {
 	float distance{};
-	if (m_PreviousFightState == FightState::fight)
+	if (m_PreviousFightState == FightState::enemyAttack)
 	{
 		distance = m_TextBox.left - m_FightBoundary.GetRect().left;
 	}
@@ -384,7 +383,7 @@ void Fight::UpdateTransition(float deltaTime)
 	else
 	{
 		m_BoxTransitionIncrementor = 0;
-		if (m_PreviousFightState == FightState::fight)
+		if (m_PreviousFightState == FightState::enemyAttack)
 		{
 			m_FightState = FightState::menu;
 			m_UiState = UiState::fightSelected;
@@ -392,7 +391,7 @@ void Fight::UpdateTransition(float deltaTime)
 		else
 		{
 			m_pEnemy->SpawnBullet(m_pResourceManager);
-			m_FightState = FightState::fight;
+			m_FightState = FightState::enemyAttack;
 			m_UiState = UiState::idle;
 		}
 	}
@@ -446,7 +445,7 @@ void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
 	case (FightState::menuSelected):
 		ButtonUpMenuSelectedManager(e);
 		break;
-	case (FightState::fight):
+	case (FightState::enemyAttack):
 		ButtonUpFightManager(e);
 		break;
 	}
@@ -650,6 +649,33 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 			m_FightState = FightState::menu;
 			m_MenuSelectedState = UiState::idle;
 			m_UiState = UiState::fightSelected;
+			break;
+		case (SDLK_RETURN):
+	case(SDLK_z):
+
+		if (m_CurrentSelectedOption == 2) 
+		{
+			if (utils::RandInRange(0, 2) == 2)
+			{
+				m_FightEnded = true;
+				m_UpdateTimeAfterDeath = 0.5f;
+			}
+			else
+			{
+				StartFightSegment();
+			}
+		} else if(m_CurrentSelectedOption == 0)
+		{
+			if (m_pEnemy->GetMercyAble())
+			{
+				m_FightEnded = true;
+				m_UpdateTimeAfterDeath = 0.5f;
+			}
+			else
+			{
+				StartFightSegment();
+			}
+		}
 			break;
 		}
 		break;

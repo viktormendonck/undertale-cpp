@@ -11,13 +11,6 @@ class EnemyManager;
 class FightPlayer;
 class ParticleSystem;
 
-enum class FightState
-{
-	menu,
-	menuSelected,
-	fight,
-	transition
-};
 
 class Fight final
 {
@@ -41,6 +34,22 @@ public:
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
 
 private:
+	//UI
+	enum class UiState
+	{
+		fightSelected,
+		actSelected,
+		itemSelected,
+		mercySelected,
+		idle
+	};
+	enum class FightState
+	{
+		menu,
+		menuSelected,
+		enemyAttack,
+		transition
+	};
 	FightPlayer* m_pPlayer;
 
 	Enemy* m_pEnemy;
@@ -63,7 +72,7 @@ private:
 
 	Vector2f m_MiddleLocation{};
 
-	FightState m_FightState{ FightState::fight };
+	FightState m_FightState{ FightState::enemyAttack };
 	FightState m_PreviousFightState{ m_FightState };
 
 
@@ -78,15 +87,6 @@ private:
 	const float m_PlatformTimer{ 5 };
 	float m_CurrentPlatformTimer{ 0 };
 
-	//UI
-	enum class UiState
-	{
-		fightSelected,
-		actSelected,
-		itemSelected,
-		mercySelected,
-		idle
-	};
 	Vector2f m_ButtonLocations[4]{ Vector2f{16,5},Vector2f{16 + 110 + 56,5},Vector2f{16 + 110 * 2 + 56 + 57,5},Vector2f{16 + 110 * 3 + 56 * 2 + 57,5} };
 	int  m_ButtonsAmount{ 4 };
 	UiState m_UiState{ UiState::idle };
@@ -97,7 +97,7 @@ private:
 	Vector2f m_AttackBarLocation{ Vector2f(m_TextBox.left,m_TextBox.bottom) };
 	Vector2f m_AttackBarStartLocation{};
 
-	//fight menu variables
+	//enemyAttack menu variables
 	float m_DistanceFromWall{};
 	bool m_BarStopped{};
 	int m_BarDirectionMulti{ 1 };
@@ -127,10 +127,13 @@ private:
 	int m_AmountOfItemPages{};
 	int m_CurrentItemPage{};
 
+	//MercyMenu Vars
+	//int m_SelectedMenuOption{};
+
 
 	//Draw cleanup functions
 	void DrawMenu() const;
-	void DrawFight() const;
+	void DrawEnemyAttack() const;
 	void DrawMenuSelected() const;
 	void DrawTransition() const;
 	void DrawUI() const;

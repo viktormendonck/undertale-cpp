@@ -17,7 +17,7 @@ public:
 
 	void Draw();
 	void Update(float deltaTime);
-	void StartDissolve(Vector2f spritePos, Texture* pTexture);
+	void StartDissolve(const Vector2f& spritePos, Texture* pTexture);
 	
 	
 

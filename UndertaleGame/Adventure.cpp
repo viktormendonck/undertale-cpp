@@ -4,19 +4,23 @@
 #include <iostream>
 
 #include "Door.h"
+#include "Interactable.h"
+#include "GroundFall.h"
 #include "Player.h"
 #include "Room.h"
 #include "RoomManager.h"
 #include "Texture.h"
+#include "utils.h"
 
-Adventure::Adventure(Player* pPlayer, RoomManager* pRoomManager, Rectf ViewPort)
+Adventure::Adventure(Player* pPlayer, RoomManager* pRoomManager, const Rectf& viewPort)
 	:
 	m_pPlayer(pPlayer),
 	m_pRoomManager(pRoomManager),
 	m_pCurrentRoom(m_pRoomManager->m_pRooms["Room1"]),
-	m_ViewPort(ViewPort)
+	m_ViewPort(viewPort)
 {
 	m_pPlayer->SetPlayerPos(Vector2f(96,726));
+	m_SavedRoom = m_pCurrentRoom->GetName();
 }
 
 void Adventure::Draw() const
@@ -25,22 +29,61 @@ void Adventure::Draw() const
 	glTranslatef(-m_CameraPos.x, -m_CameraPos.y, 0);
 	m_pCurrentRoom->Draw();
 	m_pPlayer->Draw();
-
-
 	glPopMatrix();
+	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
+	utils::FillRect(m_ViewPort);
 }
 
 void Adventure::Update(float deltaTime)
 {
-	m_pPlayer->Update(deltaTime);
+	m_pPlayer->Update(deltaTime,m_pCurrentRoom->GetWalls());
 	UpdateCameraPos();
 
-	for(int i{}; i< m_pCurrentRoom->GetDoors().size();++i)
+	for (int i{}; i < m_pCurrentRoom->GetDoors().size(); ++i)
 	{
 		if (!m_pCurrentRoom->GetDoors()[i].IsColliding(m_pPlayer->GetRect())) continue;
-		m_pPlayer->SetPlayerPos(m_pCurrentRoom->GetDoors()[i].GetExitLocation());
-		m_pCurrentRoom = m_pRoomManager->m_pRooms[m_pCurrentRoom->GetDoors()[i].GetDestination()];
+		m_SavedSpawnLocation = m_pCurrentRoom->GetDoors()[i].GetExitLocation();
+		m_SavedRoom = m_pCurrentRoom->GetDoors()[i].GetDestination();
+		m_IsTransitioning = true;
 	}
+	if (!m_IsTransitioning) {
+		for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+		{
+			m_pCurrentRoom->GetInteractables()[i]->Update(deltaTime, m_pPlayer);
+		}
+		if (m_pPlayer->IsFalling() && m_pPlayer->HasChangedRoom() == false)
+		{
+			m_pCurrentRoom->AddHole(m_pPlayer->GetFallStartLocation());
+			m_SavedRoom = m_pPlayer->GetFallDestination();
+			m_SavedSpawnLocation = Vector2f(m_pPlayer->GetPlayerPos().x, m_pRoomManager->m_pRooms[m_SavedRoom]->GetTexture()->GetHeight());
+			m_IsTransitioning = true;
+		}
+	} else
+	{
+		if (m_CurrentScreenFadingTime <= 0)
+		{
+			m_IsTransitioning = false;
+			m_CurrentScreenFadingTime = m_MaxScreenFadingTime;
+		}
+		if (m_CurrentScreenFadingTime <= 1 && m_pCurrentRoom->GetName() != m_SavedRoom )
+		{
+			m_pCurrentRoom = m_pRoomManager->m_pRooms[m_SavedRoom];
+			m_pPlayer->SetPlayerPos(m_SavedSpawnLocation);
+			m_pPlayer->SetChangedRoom(true);
+		} else if (m_CurrentScreenFadingTime <=1)
+		{
+			m_ScreenTrancparancy = abs(abs(m_CurrentScreenFadingTime - m_MaxScreenFadingTime/2)-m_MaxScreenFadingTime / 2);
+		}
+		else
+		{
+			m_ScreenTrancparancy = abs(m_CurrentScreenFadingTime -m_MaxScreenFadingTime);
+		}
+		m_CurrentScreenFadingTime -= deltaTime;
+
+			
+	}
+
+
 }
 
 void Adventure::ButtonDownManager(const SDL_KeyboardEvent& e)

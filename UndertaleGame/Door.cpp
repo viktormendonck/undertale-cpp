@@ -15,7 +15,7 @@ std::string Door::GetDestination()
 	return m_Destination;
 }
 
-bool Door::IsColliding(Rectf player) const
+bool Door::IsColliding(const Rectf& player) const
 {
 	return utils::IsOverlapping(player, m_DoorCollider.GetRect());
 }

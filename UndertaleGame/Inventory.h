@@ -9,9 +9,10 @@ class Inventory final
 {
 public:
 	Inventory(int size, ItemManager* itemManager);
+	~Inventory();
 
 	void DeleteItem(int itemNumber) ;
-	void InputItem(std::string itemType);
+	void InputItem(const std::string& itemType);
 	ItemType GetItemType(int itemNumber);
 	int GetItemValue(int itemNumber);
 	std::string GetItemName(int itemNumber);
@@ -21,6 +22,6 @@ public:
 private:
 	std::vector<Item> m_PlayerInventory;
 	int m_MaxInvSize;
-	ItemManager* m_ItemManager;
+	ItemManager* m_pItemManager;
 };
 

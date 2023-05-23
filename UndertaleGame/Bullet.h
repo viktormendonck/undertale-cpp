@@ -9,7 +9,7 @@ class FightPlayer;
 class Bullet
 {
 public:
-	Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider);
+	Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider);
 	virtual ~Bullet();
 
 	virtual void Update(float deltaTime) = 0;

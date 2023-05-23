@@ -2,7 +2,7 @@
 #include "FroggitJumpAttack.h"
 
 
-FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, CollisionBox collider)
+FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, const CollisionBox& collider)
 	:
 	Bullet(Vector2f(350,75),damage,pBulletTex, collider)
 {

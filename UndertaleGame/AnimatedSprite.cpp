@@ -20,7 +20,7 @@ AnimatedSprite::~AnimatedSprite()
 	delete m_pTexture;
 }
 
-void AnimatedSprite::Draw(Vector2f pos)
+void AnimatedSprite::Draw(const Vector2f& pos)
 {
 	Rectf srcRect
 	{

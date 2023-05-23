@@ -45,18 +45,20 @@ private:
 		adventure,
 		fight
 	};
-	GameState m_GameState{ GameState::adventure };
+
+	GameState m_GameState{ GameState::fight};
 
 	ParticleSystem* m_pParticleSystem{};
 	Texture* m_pInfoScreenTexture{};
-	Vector2f m_EnemyPos{};
 	ResourceManager* m_pResourceManager{};
+
 	Player* m_pPlayer{};
 	FightPlayer* m_pFightChara{};
 	Inventory* m_pInventory{};
 
 	Fight* m_pFight{};
 	Adventure* m_pAdventure{};
+
 	RoomManager* m_pRoomManager{};
 	Rectf m_ViewPort{};
 

@@ -78,7 +78,7 @@ Vector2f CollisionBox::GetLocation() const
 	return Vector2f(m_Rect.left, m_Rect.bottom);
 }
 
-void CollisionBox::SetLocation(Vector2f delta)
+void CollisionBox::SetLocation(const Vector2f& delta)
 {
 	m_Rect.left = delta.x;
 	m_Rect.bottom = delta.y;
@@ -91,6 +91,42 @@ std::pair<bool, Vector2f> CollisionBox::SideCollisions(CollisionBox collider, Re
 	Vector2f closestCorrection{ 10000,10000 };
 	bool collided{};
 	if (utils::IsOverlapping(collider.GetBottom(), player))
+	{
+		float tempDistance{ collider.GetBottom().point1.y - (player.bottom + player.height) };
+		if (abs(closestCorrection.y) > abs(tempDistance) || abs(closestCorrection.x) > abs(tempDistance))
+		{
+			closestCorrection = Vector2f(0, tempDistance * offsetMultiplier);
+		}
+		collided = true;
+	}
+	if (utils::IsOverlapping(collider.GetTop(), player))
+	{
+		float tempDistance{ collider.GetTop().point1.y - player.bottom };
+		if (abs(closestCorrection.y) > abs(tempDistance) || abs(closestCorrection.x) > abs(tempDistance))
+		{
+			closestCorrection = Vector2f(0, tempDistance * offsetMultiplier);
+		}
+		collided = true;
+	}
+	if (utils::IsOverlapping(collider.GetLeft(), player))
+	{
+		float tempDistance{ collider.GetLeft().point1.x - (player.left + player.width) };
+		if (abs(closestCorrection.x) > abs(tempDistance) || abs(closestCorrection.y) > abs(tempDistance))
+		{
+			closestCorrection = Vector2f(tempDistance * offsetMultiplier, 0);
+		}
+		collided = true;
+	}
+	if (utils::IsOverlapping(collider.GetRight(), player))
+	{
+		float tempDistance{ collider.GetRight().point1.x - player.left };
+		if (abs(closestCorrection.x) > abs(tempDistance) || abs(closestCorrection.y) > abs(tempDistance))
+		{
+			closestCorrection = Vector2f(tempDistance * offsetMultiplier, 0);
+		}
+		collided = true;
+	}
+	/*if (utils::IsOverlapping(collider.GetBottom(), player))
 	{
 		float tempDistance{ collider.GetBottom().point1.y - (player.bottom + player.height) };
 		if (abs(closestCorrection.y) >abs(tempDistance) && closestCorrection.y != 0)
@@ -125,7 +161,7 @@ std::pair<bool, Vector2f> CollisionBox::SideCollisions(CollisionBox collider, Re
 			closestCorrection = Vector2f(tempDistance * offsetMultiplier, 0);
 		}
 		collided = true;
-	}
+	}*/
 	return { collided,closestCorrection };
 }
 

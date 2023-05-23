@@ -3,7 +3,7 @@
 
 #include "FightPlayer.h"
 
-FroggitFlyAttack::FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage, Vector2f startPos, FightPlayer* pPlayer, int bulletIteration, CollisionBox collider)
+FroggitFlyAttack::FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage, const Vector2f& startPos, FightPlayer* pPlayer, int bulletIteration, const CollisionBox& collider)
 	:
 	Bullet(startPos, damage, pBulletTex, collider),
 	m_pPlayer{ pPlayer },

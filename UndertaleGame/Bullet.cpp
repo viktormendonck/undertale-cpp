@@ -5,7 +5,7 @@
 
 #include "utils.h"
 
-Bullet::Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBox collider)
+Bullet::Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider)
 	:
 	m_Pos{pos},
 	m_Damage{damage},
@@ -14,6 +14,8 @@ Bullet::Bullet(Vector2f pos, int damage, AnimatedSprite* pBulletTex, CollisionBo
 {
 
 }
+
+
 
 Bullet::~Bullet()
 {

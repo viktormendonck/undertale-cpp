@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "Interactable.h"
 
-Interactable::Interactable(CollisionBox collision, bool isSollid)
+Interactable::Interactable(const CollisionBox& collision, bool isSollid)
 	:
-	m_Collision(collision),
+	m_CollisionBox(collision),
 	m_IsSollid(isSollid)
 {
 }
 
+
 CollisionBox Interactable::GetCollisionBox() const
 {
-	return m_Collision;
+	return m_CollisionBox;
 }
 
 bool Interactable::GetSollidity() const

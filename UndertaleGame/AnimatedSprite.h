@@ -25,7 +25,7 @@ public:
 	AnimatedSprite(AnimatedSprite&& other) = delete; // Move constructor
 	AnimatedSprite& operator=(AnimatedSprite&& other) = delete; // Move assignment operator
 
-	void Draw(Vector2f pos);
+	void Draw(const Vector2f& pos);
 	void Update(float deltaTime);
 
 	void SetAnimation(const std::string& animationName);

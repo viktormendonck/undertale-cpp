@@ -111,7 +111,7 @@ bool FightPlayer::IsGravityMode() const
 	return m_IsGravityMode;
 }
 
-void FightPlayer::SetPos(Vector2f pos)
+void FightPlayer::SetPos(const Vector2f& pos)
 {
 	m_Pos = pos;
 }
@@ -129,6 +129,11 @@ int FightPlayer::GetHealth() const
 int FightPlayer::GetMaxHealth() const
 {
 	return m_MaxHp;
+}
+
+bool FightPlayer::IsDead()
+{
+	return m_Hp <= 0;
 }
 
 Inventory* FightPlayer::GetInv() const

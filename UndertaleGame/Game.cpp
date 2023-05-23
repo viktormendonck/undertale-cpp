@@ -46,7 +46,7 @@ void Game::Initialize()
 	m_pAdventure = new Adventure(m_pPlayer,m_pRoomManager,m_ViewPort);
 	//TESTSTUFF
 	//TODO > remove
-	
+	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, static_cast<EnemyType>(utils::RandInRange(0, 1)), false);
 }
 
 void Game::Cleanup()
@@ -55,9 +55,11 @@ void Game::Cleanup()
 	delete m_pPlayer;
 	delete m_pFightChara;
 	delete m_pFight;
+	delete m_pAdventure;
+	delete m_pRoomManager;
+	delete m_pInventory;
 	delete m_pInfoScreenTexture;
 	delete m_pResourceManager;
-	delete m_pInventory;
 }
 
 void Game::Update(float deltaTime)
@@ -144,13 +146,14 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 	switch (e.keysym.sym)
 	{
 	case SDLK_i:
-		m_SavePreviousState = m_GameState;
 		if (m_GameState == GameState::infoScreen)
 		{
 			m_GameState = m_SavePreviousState;
 		}  else
 		{
-			std::cout << "Controls:\nArrow Keys/wasd:movement\nz or enter: confirm\nX/Shift:Cancel\nDel:Activate Gravity Mode(In fight, this is not original undertale)\nSpace: Jump (in gravity mode)\n";
+			m_SavePreviousState = m_GameState;
+			system("CLS");
+			std::cout << "Controls:\nArrow Keys/wasd:movement\nz or enter: confirm\nX/Shift:Cancel\nDel:Activate Gravity Mode(In enemyAttack, this is not original undertale)\nSpace: Jump (in gravity mode)\n";
 			m_GameState = GameState::infoScreen;
 		}
 		break;

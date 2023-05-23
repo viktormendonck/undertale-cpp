@@ -57,7 +57,7 @@ void Enemy::Update(float deltaTime)
 		}
 	}
 	UpdateEnemy(deltaTime);
-	if (m_Hp <= (m_MaxHp/5) || m_ConversationAmount <=0)
+	if (m_Hp <= (m_MaxHp/5) || m_ConversationAmount <= 0)
 	{
 		m_IsMercyable = true;
 	}
