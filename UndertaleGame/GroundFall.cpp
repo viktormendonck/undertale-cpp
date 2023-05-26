@@ -13,7 +13,7 @@ GroundFall::GroundFall(const CollisionBox& collision, const std::string& destina
 
 void GroundFall::Update(float deltaTime, Player* player)
 {
-	if (utils::IsOverlapping(player->GetPlayerCollisionRect(),m_CollisionBox.GetRect()))
+	if (utils::IsOverlapping(player->GetPlayerCollisionRect(),m_CollisionBoxes[0].GetRect()))
 	{
 		player->StartFalling(m_destinationRoom);
 	}
@@ -24,7 +24,11 @@ void GroundFall::OnInteract()
 
 }
 
-void GroundFall::Draw() const
+void GroundFall::Draw(const Vector2f& camera) const
+{
+}
+
+void GroundFall::ButtonUpManager(const SDL_KeyboardEvent& e)
 {
 }
 

@@ -132,6 +132,11 @@ Rectf Player::GetInteractCollisionRect()
 	return m_InteractCollisionRect;
 }
 
+Rectf Player::GetFullPlayerRect()
+{
+	return Rectf(m_Pos.x, m_Pos.y, m_pSprite->GetWidth(), m_pSprite->GetHeight());
+}
+
 void Player::SetPlayerState(PlayerState playerState)
 {
 	m_PlayerState = playerState;
@@ -144,7 +149,6 @@ Player::PlayerState Player::GetState()
 
 void Player::StartFalling(const std::string& destination)
 {
-	
 	m_PlayerState = PlayerState::falling;
 	m_FallStartLocation = m_Pos;
 	m_FallDestination = destination;
@@ -173,6 +177,11 @@ std::string Player::GetFallDestination()
 Vector2f Player::GetFallStartLocation()
 {
 	return m_FallStartLocation;
+}
+
+void Player::ButtonUpManager(const SDL_KeyboardEvent& e)
+{
+	
 }
 
 void Player::UpdateMovement()

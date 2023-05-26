@@ -3,15 +3,15 @@
 
 Interactable::Interactable(const CollisionBox& collision, bool isSollid)
 	:
-	m_CollisionBox(collision),
 	m_IsSollid(isSollid)
 {
+	m_CollisionBoxes.push_back(collision);
 }
 
 
-CollisionBox Interactable::GetCollisionBox() const
+std::vector<CollisionBox> Interactable::GetCollisionBox() const
 {
-	return m_CollisionBox;
+	return m_CollisionBoxes;
 }
 
 bool Interactable::IsSollid() const

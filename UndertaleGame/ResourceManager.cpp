@@ -88,6 +88,8 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture*  emptyTextTexture = new Texture{ "  -","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 
 	Texture*  holeTexture = new Texture{"map/tiles/hole.png"};
+	Texture*  rockTexture = new Texture{"map/tiles/rock.png"};
+	Texture*  room3SpikesTexture = new Texture{"map/tiles/room3spikes.png"};
 
 	Texture* interactionBackgroundTexture = new Texture{ "text/interact/baseTextBox.png" };
 
@@ -102,6 +104,10 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* scriptureInteractionTexture2 = new Texture{ "text/interact/scripture2.png" };
 	Texture* scriptureInteractionTexture3 = new Texture{ "text/interact/scripture3.png" };
 	Texture* saveInteractionTexture = new Texture{ "text/interact/saveText.png" };
+
+	Texture* itemYesInteractionTexture = new Texture{ "text/interact/yes.png" };
+	Texture* itemNoInteractionTexture = new Texture{ "text/interact/no.png" };
+	Texture* itemInteractionTexture1 = new Texture{ "text/interact/itemText1.png" };
 
 
 	std::map<std::string, AnimationData> CharaData{
@@ -263,6 +269,8 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_ItemTextTextures.push_back(emptyTextTexture);
 
 	m_RoomCorrectionTiles.push_back(holeTexture);
+	m_RoomCorrectionTiles.push_back(rockTexture);
+	m_RoomCorrectionTiles.push_back(room3SpikesTexture);
 
 	m_InteractableTextTextures.push_back(interactionBackgroundTexture);
 
@@ -277,6 +285,10 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture2);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture3);
 	m_InteractableTextTextures.push_back(saveInteractionTexture);
+
+	m_InteractableTextTextures.push_back(itemYesInteractionTexture);
+	m_InteractableTextTextures.push_back(itemNoInteractionTexture);
+	m_InteractableTextTextures.push_back(itemInteractionTexture1);
 }
 
 ResourceManager::~ResourceManager()

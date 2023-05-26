@@ -24,21 +24,10 @@ void TextInteract::Update(float deltaTime, Player* player)
 	{
 		player->SetPlayerState(Player::PlayerState::wandering);
 	}
-	if (m_CurrentTextReadTime <=0)
-	{
-		const Uint8* state{ SDL_GetKeyboardState(nullptr) };
-		if ((state[SDL_SCANCODE_RETURN] ||state[SDL_SCANCODE_C])&& utils::IsOverlapping(m_CollisionBox.GetRect(),player->GetInteractCollisionRect()))
-		{
-			m_CurrentTextReadTime = m_MinimumTextReadTime;
-			OnInteract();
-		}
-	} else
-	{
-		m_CurrentTextReadTime -= deltaTime;
-	}
+	m_IsColliding = utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), player->GetInteractCollisionRect());
 }
 
-void TextInteract::Draw() const
+void TextInteract::Draw(const Vector2f& camera) const
 {
 	if (m_CurrentTextPage >=0)
 	{
@@ -46,6 +35,15 @@ void TextInteract::Draw() const
 		m_pTextTextures[m_CurrentTextPage]->Draw(Point2f(0,0));
 	}
 
+}
+
+void TextInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
+{
+	
+	if ((e.keysym.sym == SDLK_RETURN || e.keysym.sym == SDLK_z ) && m_IsColliding)
+	{
+		OnInteract();
+	}
 }
 
 void TextInteract::OnInteract()

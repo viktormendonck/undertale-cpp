@@ -21,8 +21,8 @@ public:
 	Linef GetLeft() const;
 	Linef GetRight() const;
 	Linef GetTop() const;
-	Vector2f GetLocation() const;
-	void SetLocation(const Vector2f& delta);
+	Vector2f GetPos() const;
+	void SetLocation(const Vector2f& pos);
 
 	static std::pair<bool, Vector2f> SideCollisions(CollisionBox collider, Rectf player);
 

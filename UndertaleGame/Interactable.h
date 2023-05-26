@@ -12,16 +12,16 @@ public:
 	virtual ~Interactable() =default;
 
 
-	virtual void OnInteract() = 0;
 	virtual void Update(float deltaTime, Player* player) = 0;
-	virtual void Draw() const = 0;
-	
+	virtual void Draw(const Vector2f& camera) const = 0;
+	virtual void ButtonUpManager(const SDL_KeyboardEvent& e) = 0;
 
-	CollisionBox GetCollisionBox() const;
+	std::vector<CollisionBox> GetCollisionBox() const;
 	bool IsSollid() const;
 
 protected:
-	CollisionBox m_CollisionBox;
+	virtual void OnInteract() = 0;
+	std::vector<CollisionBox> m_CollisionBoxes;
 	bool m_IsSollid{};
 };
 

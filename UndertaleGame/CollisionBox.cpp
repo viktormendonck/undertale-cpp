@@ -73,15 +73,15 @@ Linef CollisionBox::GetTop() const
 	return Linef(Point2f(m_Rect.left, m_Rect.bottom + m_Rect.height), Point2f(m_Rect.left + m_Rect.width, m_Rect.bottom + m_Rect.height));
 }
 
-Vector2f CollisionBox::GetLocation() const
+Vector2f CollisionBox::GetPos() const
 {
 	return Vector2f(m_Rect.left, m_Rect.bottom);
 }
 
-void CollisionBox::SetLocation(const Vector2f& delta)
+void CollisionBox::SetLocation(const Vector2f& pos)
 {
-	m_Rect.left = delta.x;
-	m_Rect.bottom = delta.y;
+	m_Rect.left = pos.x;
+	m_Rect.bottom = pos.y;
 }
 
 

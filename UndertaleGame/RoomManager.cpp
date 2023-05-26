@@ -5,7 +5,9 @@
 #include "Door.h"
 #include "Interactable.h"
 #include "GroundFall.h"
+#include "ItemInteract.h"
 #include "ResourceManager.h"
+#include "RockInteract.h"
 #include "Room.h"
 #include "TextInteract.h"
 #include "Vector2f.h"
@@ -127,8 +129,13 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		new TextInteract(Rectf(441,639,30,30),pResourceManager->m_InteractableTextTextures[0],saveTextTextures)
 
 	};
+	std::vector<Texture*> itemInteractTextTextures1{
+		pResourceManager->m_InteractableTextTextures[13],
+		pResourceManager->m_InteractableTextTextures[11],
+		pResourceManager->m_InteractableTextTextures[12]
+	};
 	std::vector<Interactable*> room1_5Interacts{
-
+		new ItemInteract(Rectf(309,228,40,55),pResourceManager->m_InteractableTextTextures[0],itemInteractTextTextures1,pResourceManager->m_StaticTextures[0],"Monster candy",5)
 	};
 	std::vector<Interactable*> room2Interacts{
 		new GroundFall{Rectf(355,77,50,150),"Room2.5"}
@@ -138,7 +145,8 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		pResourceManager->m_InteractableTextTextures[7]
 	};
 	std::vector<Interactable*> room3Interacts{
-		new TextInteract(Rectf(296,334,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures2)
+		new TextInteract(Rectf(296,334,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures2),
+		new RockInteract(Rectf(339,137,40,36),pResourceManager->m_RoomCorrectionTiles[1],Rectf(462,135,43,43),Rectf(587,52,41,250),pResourceManager->m_RoomCorrectionTiles[2])
 	};
 	std::vector<Texture*> interactTextTextures3{
 		pResourceManager->m_InteractableTextTextures[8]

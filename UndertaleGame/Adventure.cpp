@@ -5,7 +5,6 @@
 
 #include "Door.h"
 #include "Interactable.h"
-#include "GroundFall.h"
 #include "Player.h"
 #include "Room.h"
 #include "RoomManager.h"
@@ -32,7 +31,7 @@ void Adventure::Draw() const
 	glPopMatrix();
 	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
 	{
-		m_pCurrentRoom->GetInteractables()[i]->Draw();
+		m_pCurrentRoom->GetInteractables()[i]->Draw(m_CameraPos);
 	}
 	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
 	utils::FillRect(m_ViewPort);
@@ -42,12 +41,13 @@ void Adventure::Update(float deltaTime)
 {
 	std::vector<CollisionBox> playerColliders{m_pCurrentRoom->GetWalls()};
 	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+	{
+		if(m_pCurrentRoom->GetInteractables()[i]->IsSollid())
 		{
-			if(m_pCurrentRoom->GetInteractables()[i]->IsSollid())
-			{
-				playerColliders.push_back(m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox());
-			}
+			for (CollisionBox coll :m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox())
+			playerColliders.push_back(coll);
 		}
+	}
 	m_pPlayer->Update(deltaTime,playerColliders);
 	UpdateCameraPos();
 
@@ -103,6 +103,10 @@ void Adventure::ButtonDownManager(const SDL_KeyboardEvent& e)
 }
 void Adventure::ButtonUpManager(const SDL_KeyboardEvent& e)
 {
+	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+	{
+		m_pCurrentRoom->GetInteractables()[i]->ButtonUpManager(e);
+	}
 }
 
 bool Adventure::GetAdventureEnd()

@@ -35,8 +35,10 @@ public:
 	Rectf GetRect();
 	Vector2f GetPlayerPos() const;
 	void SetPlayerPos(const Vector2f& pos);
+
 	Rectf GetPlayerCollisionRect();
 	Rectf GetInteractCollisionRect();
+	Rectf GetFullPlayerRect();
 
 	void SetPlayerState(PlayerState playerState);
 	PlayerState GetState();
@@ -47,6 +49,9 @@ public:
 	bool IsFalling();
 	std::string GetFallDestination();
 	Vector2f GetFallStartLocation();
+
+	void ButtonUpManager(const SDL_KeyboardEvent& e);
+
 
 private:
 	PlayerState m_PlayerState{PlayerState::wandering};
