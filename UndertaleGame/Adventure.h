@@ -1,4 +1,5 @@
 #pragma once
+#include "Texture.h"
 #include "Vector2f.h"
 
 class RoomManager;
@@ -8,7 +9,7 @@ class Player;
 class Adventure final
 {
 public:
-	Adventure(Player* pPlayer,RoomManager* pRoomManager, const Rectf& viewPort);
+	Adventure(Player* pPlayer,RoomManager* pRoomManager, const Rectf& viewPort,Texture* paralax);
 	void Draw() const;
 	void Update(float deltaTime);
 	void ButtonDownManager(const SDL_KeyboardEvent& e);
@@ -17,6 +18,7 @@ public:
 private:
 	Vector2f m_CameraPos{};
 	Player* m_pPlayer{};
+	Texture* m_pParalax{};
 	RoomManager* m_pRoomManager{};
 	Room* m_pCurrentRoom{};
 	Rectf m_ViewPort{};

@@ -79,6 +79,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* room4Tex = new Texture{ "map/Room4.png" };
 	Texture* room4_5Tex = new Texture{ "map/Room4.5.png" };
 	Texture* room5Tex = new Texture{ "map/Room5.png" };
+	Texture* paralax = new Texture{ "map/paralax.png" };
 
 	Texture* stickTextTexture = new Texture{ "* Stick","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* toyKnifeTextTexture = new Texture{ "* Toy Knife","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
@@ -108,6 +109,8 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* itemYesInteractionTexture = new Texture{ "text/interact/yes.png" };
 	Texture* itemNoInteractionTexture = new Texture{ "text/interact/no.png" };
 	Texture* itemInteractionTexture1 = new Texture{ "text/interact/itemText1.png" };
+
+
 
 
 	std::map<std::string, AnimationData> CharaData{
@@ -260,6 +263,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_RoomTextures.push_back(room4Tex);
 	m_RoomTextures.push_back(room4_5Tex);
 	m_RoomTextures.push_back(room5Tex);
+	m_RoomTextures.push_back(paralax);
 
 	m_ItemTextTextures.push_back(stickTextTexture);
 	m_ItemTextTextures.push_back(toyKnifeTextTexture);

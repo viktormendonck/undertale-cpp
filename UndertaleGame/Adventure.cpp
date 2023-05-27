@@ -11,12 +11,13 @@
 #include "Texture.h"
 #include "utils.h"
 
-Adventure::Adventure(Player* pPlayer, RoomManager* pRoomManager, const Rectf& viewPort)
+Adventure::Adventure(Player* pPlayer, RoomManager* pRoomManager, const Rectf& viewPort, Texture* paralax)
 	:
 	m_pPlayer(pPlayer),
+	m_pParalax(paralax),
 	m_pRoomManager(pRoomManager),
 	m_pCurrentRoom(m_pRoomManager->m_pRooms["Room1"]),
-	m_ViewPort(viewPort)
+	m_ViewPort(viewPort) 
 {
 	m_pPlayer->SetPlayerPos(Vector2f(96,726));
 	m_SavedRoom = m_pCurrentRoom->GetName();
@@ -26,6 +27,9 @@ void Adventure::Draw() const
 {
 	glPushMatrix();
 	glTranslatef(-m_CameraPos.x, -m_CameraPos.y, 0);
+	glTranslatef(m_CameraPos.x/4, m_CameraPos.y/2, 0);
+	m_pParalax->Draw();
+	glTranslatef(-m_CameraPos.x/4, -m_CameraPos.y/2, 0);
 	m_pCurrentRoom->Draw();
 	m_pPlayer->Draw();
 	glPopMatrix();

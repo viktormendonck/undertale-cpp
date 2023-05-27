@@ -43,7 +43,7 @@ void Game::Initialize()
 	m_pPlayer = new Player{ m_pResourceManager->m_AnimatedSprites[0],m_pInventory,200 };
 	m_pFightChara = new FightPlayer(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
 	m_pRoomManager = new RoomManager(m_pResourceManager);
-	m_pAdventure = new Adventure(m_pPlayer,m_pRoomManager,m_ViewPort);
+	m_pAdventure = new Adventure(m_pPlayer,m_pRoomManager,m_ViewPort,m_pResourceManager->m_RoomTextures[8]);
 	//TESTSTUFF
 	//TODO > remove
 	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, static_cast<EnemyType>(utils::RandInRange(0, 1)), false);
