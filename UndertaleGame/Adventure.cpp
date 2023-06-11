@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Door.h"
+#include "Fight.h"
 #include "Interactable.h"
 #include "Player.h"
 #include "Room.h"
@@ -31,12 +32,15 @@ void Adventure::Draw() const
 	m_pParalax->Draw();
 	glTranslatef(-m_CameraPos.x/4, -m_CameraPos.y/2, 0);
 	m_pCurrentRoom->Draw();
-	m_pPlayer->Draw();
 	glPopMatrix();
 	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
 	{
 		m_pCurrentRoom->GetInteractables()[i]->Draw(m_CameraPos);
 	}
+	glPushMatrix();
+	glTranslatef(-m_CameraPos.x, -m_CameraPos.y, 0);
+	m_pPlayer->Draw();
+	glPopMatrix();
 	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
 	utils::FillRect(m_ViewPort);
 }
@@ -48,13 +52,29 @@ void Adventure::Update(float deltaTime)
 	{
 		if(m_pCurrentRoom->GetInteractables()[i]->IsSollid())
 		{
-			for (CollisionBox coll :m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox())
-			playerColliders.push_back(coll);
+			for (CollisionBox coll :m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox())playerColliders.push_back(coll);
 		}
+
 	}
 	m_pPlayer->Update(deltaTime,playerColliders);
-	UpdateCameraPos();
+	if (m_CurrentSpawnCheckDelay <=0)
+	{
+		if (m_pPlayer->GetVelocity() != Vector2f(0,0) && utils::RandInRange(0,100) <= 1 && m_pCurrentRoom->GetSpawnable())
+		{
+			m_AdventureEnd = true;
+		}
 
+		m_CurrentSpawnCheckDelay = m_maxSpawnCheckDelay;
+	}
+	m_CurrentSpawnCheckDelay -= deltaTime;
+
+	if (m_pPlayer->GetInteractedwithBoss())
+	{
+		m_AdventureEnd = true;
+		m_IsBossFight = true;
+	}
+
+	UpdateCameraPos();
 	for (int i{}; i < m_pCurrentRoom->GetDoors().size(); ++i)
 	{
 		if (!m_pCurrentRoom->GetDoors()[i].IsColliding(m_pPlayer->GetPlayerCollisionRect())) continue;
@@ -74,7 +94,8 @@ void Adventure::Update(float deltaTime)
 			m_SavedSpawnLocation = Vector2f(m_pPlayer->GetPlayerPos().x, m_pRoomManager->m_pRooms[m_SavedRoom]->GetTexture()->GetHeight());
 			m_IsTransitioning = true;
 		}
-	} else
+	}
+	else
 	{
 		if (m_CurrentScreenFadingTime <= 0)
 		{
@@ -95,10 +116,7 @@ void Adventure::Update(float deltaTime)
 			m_ScreenTrancparancy = abs(m_CurrentScreenFadingTime -m_MaxScreenFadingTime);
 		}
 		m_CurrentScreenFadingTime -= deltaTime;
-
-			
 	}
-
 
 }
 
@@ -117,6 +135,17 @@ bool Adventure::GetAdventureEnd()
 {
 	return m_AdventureEnd;
 }
+
+void Adventure::SetAdventureEnd(bool b)
+{
+	m_AdventureEnd = b;
+}
+
+bool Adventure::IsBossFight()
+{
+	return m_IsBossFight;
+}
+
 
 void Adventure::UpdateCameraPos()
 {

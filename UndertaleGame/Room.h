@@ -18,6 +18,7 @@ public:
 	std::vector<CollisionBox> GetWalls();
 	std::vector<Interactable*> GetInteractables();
 	std::string GetName();
+	bool GetSpawnable();
 	void AddHole(const Vector2f& location);
 
 	void Draw() const;

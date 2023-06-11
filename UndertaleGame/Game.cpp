@@ -17,6 +17,7 @@
 #include "FightPlayer.h"
 #include "ItemManager.h"
 #include "RoomManager.h"
+#include "SoundManager.h"
 //TESTCLASSES
 // TODO: remove
 //#include "LooxAttack1.h"
@@ -27,7 +28,6 @@ Game::Game(const Window& window)
 	, m_pInfoScreenTexture{ new Texture{"Static_Screens/Controls.png"}}
 	, m_ViewPort{ GetViewPort() }
 {
-	
 	Initialize();
 }
 
@@ -44,9 +44,8 @@ void Game::Initialize()
 	m_pFightChara = new FightPlayer(m_pResourceManager->m_StaticTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
 	m_pRoomManager = new RoomManager(m_pResourceManager);
 	m_pAdventure = new Adventure(m_pPlayer,m_pRoomManager,m_ViewPort,m_pResourceManager->m_RoomTextures[8]);
-	//TESTSTUFF
-	//TODO > remove
-	m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, static_cast<EnemyType>(utils::RandInRange(0, 1)), false);
+	SoundManager::GetInstance().Initialize();
+	SoundManager::GetInstance().SetMusic("ruins");
 }
 
 void Game::Cleanup()
@@ -60,6 +59,7 @@ void Game::Cleanup()
 	delete m_pInventory;
 	delete m_pInfoScreenTexture;
 	delete m_pResourceManager;
+	
 }
 
 void Game::Update(float deltaTime)
@@ -74,7 +74,14 @@ void Game::Update(float deltaTime)
 		if (m_pAdventure->GetAdventureEnd())
 		{
 			m_GameState = GameState::fight;
-			m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem,static_cast<EnemyType>(utils::RandInRange(0,1)),false);
+			if (m_pAdventure->IsBossFight())
+			{
+				m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, EnemyType::napstablook);
+			} else
+			{
+				m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, static_cast<EnemyType>(utils::RandInRange(0, 1)));
+			}
+			m_pAdventure->SetAdventureEnd(false);
 		}
 		break;
 	case GameState::fight:
@@ -82,6 +89,7 @@ void Game::Update(float deltaTime)
 		if (m_pFight->IsFightOver())
 		{
 			m_GameState = GameState::adventure;
+			SoundManager::GetInstance().SetMusic("ruins");
 		}
 		break;
 	case GameState::infoScreen:
@@ -105,7 +113,6 @@ void Game::Draw() const
 	case GameState::infoScreen:
 		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });
 		break;
-
 	}
 
 }

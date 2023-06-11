@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Loox.h"
-#include "LooxAttack1.h"
-#include "LooxAttack2.h"
+#include "LooxSinAttack.h"
+#include "LooxBounceAttack.h"
 #include "ResourceManager.h"
 #include "utils.h"
 
@@ -26,11 +26,11 @@ void Loox::SpawnBullet(ResourceManager* pResourceManager)
 	{
 		for (int i{}; i <= 6; ++i) {
 			int randLocation{ utils::RandInRange(0,locationArrayEnd) };
-			float angle{ (atan2f(m_Collider.GetRect().GetMiddle().y - spawnLocations[randLocation].y, m_Collider.GetRect().GetMiddle().x - spawnLocations[randLocation].x) + (static_cast<float>(utils::RandInRange(-15,15)* utils::g_Pi / 180)))};
+			float angle{ (atan2f(m_FightRectCollider.GetRect().GetMiddle().y - spawnLocations[randLocation].y, m_FightRectCollider.GetRect().GetMiddle().x - spawnLocations[randLocation].x) + (static_cast<float>(utils::RandInRange(-15,15)* utils::g_Pi / 180)))};
 			Vector2f angleVector{cosf(angle),sinf(angle)};
-			m_Bullets.push_back(new LooxAttack1(spawnLocations[randLocation], 5, pResourceManager->m_BulletAnimatedSprites[2],m_Collider, "big", angleVector, 0.0f + i * m_DelayBetweenBullets));
-			m_Bullets.push_back(new LooxAttack1(spawnLocations[randLocation], 3, pResourceManager->m_BulletAnimatedSprites[2],m_Collider, "med", angleVector, 0.2f + i * m_DelayBetweenBullets));
-			m_Bullets.push_back(new LooxAttack1(spawnLocations[randLocation], 2, pResourceManager->m_BulletAnimatedSprites[2],m_Collider, "small", angleVector, 0.4f + i * m_DelayBetweenBullets));
+			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 5, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "big", angleVector, 0.0f + i * m_DelayBetweenBullets));
+			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 3, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "med", angleVector, 0.2f + i * m_DelayBetweenBullets));
+			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 2, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "small", angleVector, 0.4f + i * m_DelayBetweenBullets));
 		}
 	}
 	else
@@ -39,7 +39,7 @@ void Loox::SpawnBullet(ResourceManager* pResourceManager)
 		{
 			const int nonCornerBegin{ 4 };
 			int randLocation{ utils::RandInRange(nonCornerBegin, locationArrayEnd) };
-			m_Bullets.push_back(new LooxAttack2(spawnLocations[randLocation], 2, pResourceManager->m_BulletAnimatedSprites[2], m_Collider, utils::RandBool(), i * 0.5, 5));
+			m_Bullets.push_back(new LooxBounceAttack(spawnLocations[randLocation], 2, pResourceManager->m_BulletAnimatedSprites[2], m_FightRectCollider, utils::RandBool(), i * 0.5, 5));
 		}
 	}
 }

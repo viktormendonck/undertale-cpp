@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseGame.h"
+#include "SoundManager.h"
 #include "Vector2f.h"
 
 class RoomManager;

@@ -5,12 +5,13 @@
 
 #include "utils.h"
 
-Bullet::Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider)
+Bullet::Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& bulletCollider, const CollisionBox& fightRectCollider)
 	:
 	m_Pos{pos},
 	m_Damage{damage},
 	m_pBulletTexture{pBulletTex},
-	m_Collider{collider}
+	m_BulletCollider{bulletCollider},
+	m_FightRectCollider(fightRectCollider)
 {
 
 }
@@ -33,7 +34,7 @@ void Bullet::SetActivity(bool active)
 
 Rectf Bullet::GetRect()
 {
-	return Rectf(m_Pos.ToPoint2f(), m_pBulletTexture->GetWidth(), m_pBulletTexture->GetHeight());
+	return Rectf(m_Pos.ToPoint2f(), m_BulletCollider.GetRect().width, m_BulletCollider.GetRect().height);
 }
 
 int Bullet::GetDamage()

@@ -32,6 +32,8 @@ public:
 	std::string GetCurrentAnimation();
 	float GetWidth();
 	float GetHeight();
+	Rectf GetRect();
+	void ResetAnim();
 
 
 private:

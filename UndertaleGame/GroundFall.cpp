@@ -2,6 +2,7 @@
 #include "GroundFall.h"
 
 #include "Player.h"
+#include "SoundManager.h"
 #include "utils.h"
 
 GroundFall::GroundFall(const CollisionBox& collision, const std::string& destinationRoom)
@@ -16,6 +17,7 @@ void GroundFall::Update(float deltaTime, Player* player)
 	if (utils::IsOverlapping(player->GetPlayerCollisionRect(),m_CollisionBoxes[0].GetRect()))
 	{
 		player->StartFalling(m_destinationRoom);
+		SoundManager::GetInstance().PlaySoundEffect("fall");
 	}
 }
 

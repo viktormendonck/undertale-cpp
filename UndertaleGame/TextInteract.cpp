@@ -2,6 +2,7 @@
 #include "TextInteract.h"
 
 #include "Player.h"
+#include "SoundManager.h"
 #include "Texture.h"
 #include "utils.h"
 
@@ -43,6 +44,7 @@ void TextInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
 	if ((e.keysym.sym == SDLK_RETURN || e.keysym.sym == SDLK_z ) && m_IsColliding)
 	{
 		OnInteract();
+		SoundManager::GetInstance().PlaySoundEffect("select");
 	}
 }
 

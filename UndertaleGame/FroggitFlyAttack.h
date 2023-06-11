@@ -7,7 +7,7 @@ class FroggitFlyAttack final : public Bullet
 {
 public:
 
-	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,const Vector2f& startPos, FightPlayer* pPlayer, int bulletIteration, const CollisionBox& collider);
+	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,const Vector2f& startPos, FightPlayer* pPlayer, int bulletIteration, const CollisionBox& fightRectCollider);
 
 	virtual void Update(float deltaTime) override;
 	virtual	void Draw() const override;
@@ -19,11 +19,10 @@ private:
 	};
 	AttackState m_AttackState{ AttackState::waiting };
 	FightPlayer* m_pPlayer{};
-	Vector2f m_velocity{ -125,200 };
 	Vector2f m_TargetLocation{};
 	int m_MaxAttackDelay{1};
 	float m_CurrentAttackDelay{};
-	float m_Speed{ 1 };
+	float m_Speed{ 100 };
 	int m_CyclesTillDeath{ 2 };
 	int m_CurrentCycle{};
 

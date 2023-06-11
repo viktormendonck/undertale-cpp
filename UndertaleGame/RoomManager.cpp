@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "RoomManager.h"
 
+#include "BossFight.h"
 #include "CollisionBox.h"
 #include "Door.h"
 #include "Interactable.h"
@@ -145,8 +146,8 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		pResourceManager->m_InteractableTextTextures[7]
 	};
 	std::vector<Interactable*> room3Interacts{
+		new RockInteract(Rectf(339,137,40,36),pResourceManager->m_RoomCorrectionTiles[1],Rectf(462,135,43,43),Rectf(587,52,41,250),pResourceManager->m_RoomCorrectionTiles[2]),
 		new TextInteract(Rectf(296,334,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures2),
-		new RockInteract(Rectf(339,137,40,36),pResourceManager->m_RoomCorrectionTiles[1],Rectf(462,135,43,43),Rectf(587,52,41,250),pResourceManager->m_RoomCorrectionTiles[2])
 	};
 	std::vector<Texture*> interactTextTextures3{
 		pResourceManager->m_InteractableTextTextures[8]
@@ -165,7 +166,9 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 	std::vector<Interactable*> room4_5Interacts{
 		new TextInteract(Rectf(950,400,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures4)
 	};
-	std::vector<Interactable*> room5Interacts{};
+	std::vector<Interactable*> room5Interacts{
+		new BossFight{Rectf{279,141,76,84},true,pResourceManager->m_RoomCorrectionTiles[3]}
+	};
 	
 	
 	m_pRooms.emplace("Room1", new Room("Room1", pResourceManager->m_RoomTextures[0], pResourceManager->m_RoomCorrectionTiles[0], Room1Doors, Room1Walls, room1Interacts, true));

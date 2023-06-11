@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "AnimatedSprite.h"
 #include "Bullet.h"
+#include "SoundManager.h"
 #include "utils.h"
 
 
@@ -19,7 +20,7 @@ Enemy::Enemy(const int health, const int conversationAmount, AnimatedSprite* bas
 	m_pEnemyDeathTexture{deathTexture},
 	m_IsFlying{isFlying},
 	m_Player{player},
-	m_Collider{collider},
+	m_FightRectCollider{collider},
 	m_EnemyType{type}
 {
 	m_Pos = m_PossibleSpawnLocations[utils::RandInRange(0, 5)];
@@ -33,15 +34,14 @@ Enemy::~Enemy()
 
 void Enemy::Draw()
 {
-	
+	m_pTexture->Draw(m_Pos);
+	DrawEnemy();
 	for (Bullet* bullet : m_Bullets)
 	{
 		if (bullet->IsActive()) {
 			bullet->Draw();
 		}
 	}
-	m_pTexture->Draw(m_Pos);
-	DrawEnemy();
 }
 
 void Enemy::Update(float deltaTime)
@@ -50,6 +50,7 @@ void Enemy::Update(float deltaTime)
 	{
 		if (bullet->IsActive() && utils::IsOverlapping(bullet->GetRect(),m_Player.GetLocationRect())) {
 			m_Player.DamageChara(bullet->GetDamage());
+			SoundManager::GetInstance().PlaySoundEffect("hit");
 			bullet->SetActivity(false);
 		}
 		if (bullet->IsActive()) {
@@ -117,4 +118,18 @@ Vector2f Enemy::GetPos()
 bool Enemy::GetMercyAble()
 {
 	return m_IsMercyable;
+}
+
+void Enemy::ReduceConversationAmount()
+{
+	m_ConversationAmount--;
+}
+
+int Enemy::GetMaxHealth()
+{
+	return m_MaxHp;
+}
+int Enemy::GetHealth()
+{
+	return m_Hp;
 }

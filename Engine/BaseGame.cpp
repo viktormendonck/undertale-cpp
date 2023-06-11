@@ -30,7 +30,7 @@ void BaseGame::InitializeGameEngine()
 #endif
 
 	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO /*| SDL_INIT_AUDIO*/) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		std::cerr << "BaseGame::Initialize( ), error when calling SDL_Init: " << SDL_GetError() << std::endl;
 		return;
@@ -114,13 +114,13 @@ void BaseGame::InitializeGameEngine()
 	}
 
 	//Initialize SDL_mixer
-	/*
+	
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		std::cerr << "BaseGame::Initialize( ), error when calling Mix_OpenAudio: " << Mix_GetError() << std::endl;
 		return;
 	}
-	*/
+	
 
 	m_Initialized = true;
 }

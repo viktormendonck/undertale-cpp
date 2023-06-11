@@ -28,6 +28,7 @@ void AnimatedSprite::Draw(const Vector2f& pos)
 		static_cast<float>(m_AnimationData[m_CurrentAnimation].rowIndex * m_height),
 		static_cast<float>(m_width),static_cast<float>(m_height)
 	};
+
 	m_pTexture->Draw(pos.ToPoint2f(), srcRect);
 
 }
@@ -71,6 +72,16 @@ float AnimatedSprite::GetWidth()
 float AnimatedSprite::GetHeight()
 {
 	return m_height;
+}
+
+Rectf AnimatedSprite::GetRect()
+{
+	return Rectf(0, 0, m_width, m_height);
+}
+
+void AnimatedSprite::ResetAnim()
+{
+	m_CurrentFrame = 0;
 }
 
 

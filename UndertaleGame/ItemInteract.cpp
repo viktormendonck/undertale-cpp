@@ -2,6 +2,7 @@
 #include "ItemInteract.h"
 
 #include "Player.h"
+#include "SoundManager.h"
 #include "Texture.h"
 #include "utils.h"
 
@@ -61,6 +62,7 @@ void ItemInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
 			if (m_IsActivated)
 			{
 				OnInteract();
+				SoundManager::GetInstance().PlaySoundEffect("select");
 			}
 			else
 			{
@@ -73,6 +75,7 @@ void ItemInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
 			if (m_IsActivated && m_CurrentSelectedOption == 1)
 			{
 				--m_CurrentSelectedOption;
+				SoundManager::GetInstance().PlaySoundEffect("changeSelection");
 			}
 			break;
 		case(SDLK_RIGHT):
@@ -80,6 +83,7 @@ void ItemInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
 			if (m_IsActivated && m_CurrentSelectedOption == 0)
 			{
 				++m_CurrentSelectedOption;
+				SoundManager::GetInstance().PlaySoundEffect("changeSelection");
 			}
 			break;
 		}

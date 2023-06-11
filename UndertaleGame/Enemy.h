@@ -13,13 +13,13 @@ class ResourceManager;
 enum class EnemyType
 {
 	froggit,
-	loox
-	
-	/*,
+	loox,
+	/*
 	migosp,
 	moldsmal,
 	vegetoid,
 	whimsum*/
+	napstablook
 };
 
 class Enemy
@@ -52,6 +52,9 @@ public:
 	Texture* GetDeathTexture();
 	Vector2f GetPos();
 	bool GetMercyAble();
+	void ReduceConversationAmount();
+	int GetMaxHealth();
+	int GetHealth();
 
 protected:
 	int m_Hp;
@@ -66,7 +69,7 @@ protected:
 	Point2f m_PossibleSpawnLocations[6]{ Point2f(19,244),Point2f(119,244) ,Point2f(222,244) ,Point2f(321,244) ,Point2f(424,244),Point2f(527,244)};
 	FightPlayer& m_Player;
 	std::vector<Bullet*> m_Bullets;
-	CollisionBox m_Collider;
+	CollisionBox m_FightRectCollider;
 	EnemyType m_EnemyType{};
 	bool m_IsMercyable{};
 	

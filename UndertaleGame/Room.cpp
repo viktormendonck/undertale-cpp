@@ -54,6 +54,11 @@ std::string Room::GetName()
 	return m_RoomName;
 }
 
+bool Room::GetSpawnable()
+{
+	return m_CanSpawnEnemies;
+}
+
 void Room::AddHole(const Vector2f& location)
 {
 	m_HoleLocations.push_back(location);

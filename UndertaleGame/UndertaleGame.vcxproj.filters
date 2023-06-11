@@ -12,9 +12,6 @@
     <Filter Include="Source\classes">
       <UniqueIdentifier>{a02cfd22-e5c6-4047-8652-38642c31dfb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\classes\sprites">
-      <UniqueIdentifier>{e33e8a9c-fd96-4cb4-af21-1369c4e88cab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\classes\player">
       <UniqueIdentifier>{3935f41c-1f0b-46e8-a664-5a960b77e98e}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,12 @@
     <Filter Include="Source\classes\AdventureManager\Room\RoomExtras">
       <UniqueIdentifier>{d6e87e90-61f4-4c21-9dd5-0e3cb351b7a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\classes\Fight\Enemies\bullets\napstablook">
+      <UniqueIdentifier>{4ade0e13-2e97-468a-9889-4063547684b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\classes\Resources">
+      <UniqueIdentifier>{e33e8a9c-fd96-4cb4-af21-1369c4e88cab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -66,10 +69,10 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedSprite.cpp">
-      <Filter>Source\classes\sprites</Filter>
+      <Filter>Source\classes\Resources</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source\classes\sprites</Filter>
+      <Filter>Source\classes\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source\classes\player</Filter>
@@ -104,10 +107,10 @@
     <ClCompile Include="Loox.cpp">
       <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
     </ClCompile>
-    <ClCompile Include="LooxAttack1.cpp">
+    <ClCompile Include="LooxSinAttack.cpp">
       <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClCompile>
-    <ClCompile Include="LooxAttack2.cpp">
+    <ClCompile Include="LooxBounceAttack.cpp">
       <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
@@ -146,6 +149,21 @@
     <ClCompile Include="Door.cpp">
       <Filter>Source\classes\AdventureManager\Room\RoomExtras</Filter>
     </ClCompile>
+    <ClCompile Include="BossFight.cpp">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Napstablook.cpp">
+      <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="NapstaNotUpToIt.cpp">
+      <Filter>Source\classes\Fight\Enemies\bullets\napstablook</Filter>
+    </ClCompile>
+    <ClCompile Include="NapstaCryAttack.cpp">
+      <Filter>Source\classes\Fight\Enemies\bullets\napstablook</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source\classes\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -155,10 +173,10 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="AnimatedSprite.h">
-      <Filter>Source\classes\sprites</Filter>
+      <Filter>Source\classes\Resources</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Source\classes\sprites</Filter>
+      <Filter>Source\classes\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Source\classes\player</Filter>
@@ -193,10 +211,10 @@
     <ClInclude Include="Loox.h">
       <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
     </ClInclude>
-    <ClInclude Include="LooxAttack1.h">
+    <ClInclude Include="LooxSinAttack.h">
       <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClInclude>
-    <ClInclude Include="LooxAttack2.h">
+    <ClInclude Include="LooxBounceAttack.h">
       <Filter>Source\classes\Fight\Enemies\bullets\Loox</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
@@ -234,6 +252,21 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>Source\classes\AdventureManager\Room\RoomExtras</Filter>
+    </ClInclude>
+    <ClInclude Include="BossFight.h">
+      <Filter>Source\classes\AdventureManager\Room\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="Napstablook.h">
+      <Filter>Source\classes\Fight\Enemies\enemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="NapstaNotUpToIt.h">
+      <Filter>Source\classes\Fight\Enemies\bullets\napstablook</Filter>
+    </ClInclude>
+    <ClInclude Include="NapstaCryAttack.h">
+      <Filter>Source\classes\Fight\Enemies\bullets\napstablook</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Source\classes\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

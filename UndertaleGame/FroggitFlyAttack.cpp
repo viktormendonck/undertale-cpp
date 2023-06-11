@@ -3,9 +3,9 @@
 
 #include "FightPlayer.h"
 
-FroggitFlyAttack::FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage, const Vector2f& startPos, FightPlayer* pPlayer, int bulletIteration, const CollisionBox& collider)
+FroggitFlyAttack::FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage, const Vector2f& startPos, FightPlayer* pPlayer, int bulletIteration, const CollisionBox& fightRectCollider)
 	:
-	Bullet(startPos, damage, pBulletTex, collider),
+	Bullet(startPos, damage, pBulletTex,pBulletTex->GetRect(), fightRectCollider),
 	m_pPlayer{ pPlayer },
 	m_CurrentAttackDelay{ static_cast<float>(m_MaxAttackDelay * bulletIteration + static_cast<float>(utils::RandFloatInRange(1,3,2))) }
 {
@@ -32,7 +32,7 @@ void FroggitFlyAttack::Update(float deltaTime)
 		if (m_CurrentBulletFlyTime <= 0)
 		{
 			m_CurrentCycle++;
-			if (m_CurrentCycle > m_CyclesTillDeath)
+			if (m_CurrentCycle > m_CyclesTillDeath) 
 			{
 				m_IsActive = false;
 			}
@@ -45,8 +45,8 @@ void FroggitFlyAttack::Update(float deltaTime)
 			float distance = sqrt(pow(m_TargetLocation.x - m_Pos.x, 2) + pow(m_TargetLocation.y - m_Pos.y, 2));
 			float dx = (m_TargetLocation.x - m_Pos.x) / distance;
 			float dy = (m_TargetLocation.y - m_Pos.y) / distance;
-			m_Pos.x += dx * m_Speed;
-			m_Pos.y += dy * m_Speed;
+			m_Pos.x += dx * m_Speed*deltaTime;
+			m_Pos.y += dy * m_Speed*deltaTime;
 		}
 			break;
 		}

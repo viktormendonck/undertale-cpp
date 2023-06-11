@@ -54,6 +54,7 @@ void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 		break;
 	case(PlayerState::falling):
 		{
+		m_Velocity = Vector2f();
 		m_TimeIncrementor += deltaTime * m_SpinSpeed;
 		int saveSpinDirection{m_CurrentSpinDirection};
 		m_CurrentSpinDirection = static_cast<int>(m_TimeIncrementor) % 4;
@@ -179,9 +180,20 @@ Vector2f Player::GetFallStartLocation()
 	return m_FallStartLocation;
 }
 
-void Player::ButtonUpManager(const SDL_KeyboardEvent& e)
+Vector2f Player::GetVelocity()
 {
-	
+	return m_Velocity;
+}
+
+
+void Player::SetInteractedwithBoss(bool b)
+{
+	m_HasInteractedWithBoss = b;
+}
+
+bool Player::GetInteractedwithBoss()
+{
+	return m_HasInteractedWithBoss;
 }
 
 void Player::UpdateMovement()

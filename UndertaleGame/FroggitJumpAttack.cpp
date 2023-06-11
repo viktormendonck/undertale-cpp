@@ -2,12 +2,13 @@
 #include "FroggitJumpAttack.h"
 
 
-FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, const CollisionBox& collider)
+FroggitJumpAttack::FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, const CollisionBox& fightRectCollider)
 	:
-	Bullet(Vector2f(350,75),damage,pBulletTex, collider)
+	Bullet(Vector2f(350,75),damage,pBulletTex, pBulletTex->GetRect(),fightRectCollider)
 {
 	m_CountDownTimer = static_cast<float>(rand() % 3 + 1);
 }
+
 
 void FroggitJumpAttack::Update(float deltaTime)
 {

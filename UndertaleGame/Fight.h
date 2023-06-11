@@ -16,7 +16,7 @@ class Fight final
 {
 public:
 	Fight() = delete;
-	Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem, EnemyType enemy, bool isBossFight);
+	Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem, EnemyType enemy);
 	~Fight();
 
 	Fight(const Fight& other) = delete; // Copy constructor
@@ -58,6 +58,13 @@ private:
 
 	ParticleSystem* m_pParticleSystem;
 	ResourceManager* m_pResourceManager;
+
+	//enemy health bar vars
+
+	Rectf m_HealthBarRemaining{0,0,0,5};
+	Rectf m_HealthBar{0,0,150,5};
+	float m_PreviousHealthBarWidth{};
+
 
 	bool m_IsBossFight{};
 	int m_BackGroundsAmount{ 2 };
@@ -101,8 +108,8 @@ private:
 	float m_DistanceFromWall{};
 	bool m_BarStopped{};
 	int m_BarDirectionMulti{ 1 };
-	float m_BarStoppedMaxCountDown{ 1 };
-	float m_CurrentBarStoppedCountDown{ m_BarStoppedMaxCountDown };
+	float m_MaxBarStoppedCooldown{ 1.3f };
+	float m_CurrentBarStoppedCooldown{ m_MaxBarStoppedCooldown };
 	float m_BarSpeed{ 250 };
 	float m_MaxPlayerDamageMulti{ 2.5f };
 	bool m_FightEnded{};
@@ -127,8 +134,6 @@ private:
 	int m_AmountOfItemPages{};
 	int m_CurrentItemPage{};
 
-	//MercyMenu Vars
-	//int m_SelectedMenuOption{};
 
 
 	//Draw cleanup functions

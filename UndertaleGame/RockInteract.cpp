@@ -18,8 +18,8 @@ RockInteract::RockInteract(const Rectf& collisionRect, Texture* pRockTexture, co
 
 void RockInteract::Update(float deltaTime, Player* player)
 {
-	m_PlayerPushRect = player->GetFullPlayerRect();
-	if (player->GetFullPlayerRect().left>player->GetInteractCollisionRect().left)
+	m_PlayerPushRect = player->GetPlayerCollisionRect();
+	if (player->GetFullPlayerRect().left > player->GetInteractCollisionRect().left)
 	{
 		m_PlayerPushRect.left -= 1;
 	} else
@@ -27,7 +27,7 @@ void RockInteract::Update(float deltaTime, Player* player)
 		m_PlayerPushRect.left += 1;
 	}
 	//check whether the barrier should be opened 
-	m_DeactivateBarrier = (utils::IsOverlapping(player->GetPlayerCollisionRect(), m_buttonRect) || utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), m_buttonRect));
+	m_DeactivateBarrier = (utils::IsOverlapping(m_PlayerPushRect, m_buttonRect) || utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), m_buttonRect));
 	if (m_DeactivateBarrier && m_CollisionBoxes.size() == 2)
 	{
 		m_CollisionBoxes.pop_back();
@@ -37,10 +37,10 @@ void RockInteract::Update(float deltaTime, Player* player)
 	}
 	if (utils::IsOverlapping(m_PlayerPushRect,m_CollisionBoxes[0].GetRect()))
 	{
-		if (player->GetPlayerCollisionRect().left > player->GetInteractCollisionRect().left && m_RockMinX < m_CollisionBoxes[0].GetPos().x)
+		if (m_PlayerPushRect.left > player->GetInteractCollisionRect().left && m_RockMinX < m_CollisionBoxes[0].GetPos().x)
 		{
 			m_CollisionBoxes[0].SetLocation(m_CollisionBoxes[0].GetPos() - Vector2f(m_RockPushSpeed * deltaTime, 0));
-		} else if (player->GetPlayerCollisionRect().left < player->GetInteractCollisionRect().left && m_RockMaxX > m_CollisionBoxes[0].GetPos().x+m_CollisionBoxes[0].GetRect().width)
+		} else if (m_PlayerPushRect.left < player->GetInteractCollisionRect().left && m_RockMaxX > m_CollisionBoxes[0].GetPos().x+m_CollisionBoxes[0].GetRect().width)
 		{
 			m_CollisionBoxes[0].SetLocation(m_CollisionBoxes[0].GetPos() + Vector2f(m_RockPushSpeed * deltaTime, 0));
 		}

@@ -9,7 +9,7 @@ class FightPlayer;
 class Bullet
 {
 public:
-	Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& collider);
+	Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& buletCollider, const CollisionBox& fightRectCollider);
 	virtual ~Bullet();
 
 	virtual void Update(float deltaTime) = 0;
@@ -24,6 +24,7 @@ protected:
 	int m_Damage{};
 	AnimatedSprite* m_pBulletTexture{};
 	bool m_IsActive{true};
-	CollisionBox m_Collider{};
+	CollisionBox m_BulletCollider{};
+	CollisionBox m_FightRectCollider{};
 };
 

@@ -20,25 +20,13 @@ ResourceManager::ResourceManager(std::string playerName)
 	//loox
 	Texture* loox = new Texture{ "Sprites/Loox/loox.png" };
 	Texture* looxDeath = new Texture{ "Sprites/loox/death.png" };
-	Texture* looxAttackBig = new Texture{ "Sprites/loox/bullet.png" };
-	//migosp
-	//Texture* migosp = new Texture{ "Sprites/migosp/migosp.png"};
-	//Texture* migospDeath = new Texture{ "Sprites/migosp/death.png"};
-	//Texture* migospAttack1 = new Texture{ "Sprites/migosp/bullet1.png"};
-	//Texture* migospAttack2 = new Texture{ "Sprites/migosp/bullet2.png"};
-	////moldsmal
-	//Texture* moldsmal = new Texture{ "Sprites/Moldsmal/moldsmal.png" };
-	//Texture* moldsmalDeath = new Texture{ "Sprites/Moldsmal/moldsmal.png" };
-	//Texture* moldsmalAttack = new Texture{ "Sprites/Moldsmal/bullet.png" };
-	////Vegetoid
-	//Texture* vegetoid = new Texture{ "Sprites/Vegetoid/vegetoid.png" };
-	//Texture* vegetoidDeath = new Texture{ "Sprites/Vegetoid/death.png" };
-	//Texture* vegetoidAttack = new Texture{ "Sprites/Vegetoid/bullet.png" };
-	//Texture* vegetoidHeal = new Texture{ "Sprites/Vegetoid/heal.png" };
-	////Whimsun
-	//Texture* whimsun = new Texture{ "Sprites/Whimsun/whimsun.png" };
-	//Texture* whimsunDeath = new Texture{ "Sprites/Whimsun/death.png" };
-	//Texture* whimsunAttack = new Texture{ "Sprites/Whimsun/bullet.png" };
+	Texture* looxAttack = new Texture{ "Sprites/loox/bullet.png" };
+	//napstablook
+	Texture* napsta = new Texture{ "Sprites/napstablook/napstablook.png" };
+	Texture* napstaDeath = new Texture{ "Sprites/napstablook/death.png" };
+	Texture* napstaAttack = new Texture{ "Sprites/napstablook/tear.png" };
+	Texture* napstaAttack1 = new Texture{ "Sprites/napstablook/notUpToIt.png" };
+
 	Texture* fightButtonTexture = new Texture{ "UI/fightButton.png" };
 	Texture* actButtonTexture = new Texture{ "UI/actButton.png" };
 	Texture* itemButtonTexture = new Texture{ "UI/itemButton.png" };
@@ -91,6 +79,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture*  holeTexture = new Texture{"map/tiles/hole.png"};
 	Texture*  rockTexture = new Texture{"map/tiles/rock.png"};
 	Texture*  room3SpikesTexture = new Texture{"map/tiles/room3spikes.png"};
+	Texture*  napstaTexture = new Texture{"map/tiles/napstablook.png"};
 
 	Texture* interactionBackgroundTexture = new Texture{ "text/interact/baseTextBox.png" };
 
@@ -130,7 +119,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	std::map<std::string, AnimationData> froggitAnimData{
 		{"live",AnimationData{1,2}}
 	};
-	std::map<std::string, AnimationData> LooxAnimData{
+	std::map<std::string, AnimationData> looxAnimData{
 		{"live",AnimationData{1,5}}
 	};
 	/*std::map<std::string, AnimationData> migospAnimData{
@@ -145,11 +134,15 @@ ResourceManager::ResourceManager(std::string playerName)
 	std::map<std::string, AnimationData> whimsunAnimData{
 		{"live",AnimationData{1,2}}
 	};*/
+	std::map<std::string, AnimationData> napstaAnimData{
+		{"live", AnimationData{ 1,2 }}
+	};
 
 	m_AnimatedSprites.push_back(new AnimatedSprite{ charaTexture,CharaData,38,58,"downIdle",0.2f});
 	m_AnimatedSprites.push_back(new AnimatedSprite{ playerHeartAnimTexture,playerHeartAnimData,20,24,"",0.2f});
 	m_AnimatedSprites.push_back(new AnimatedSprite{ froggitBody,froggitAnimData,92,48,"live",0.5f });
-	m_AnimatedSprites.push_back(new AnimatedSprite(loox, LooxAnimData, 100, 116, "live", 0.2f));
+	m_AnimatedSprites.push_back(new AnimatedSprite(loox, looxAnimData, 100, 116, "live", 0.2f));
+	m_AnimatedSprites.push_back(new AnimatedSprite(napsta, napstaAnimData, 104, 166, "live", 0.2f));
 	//m_AnimatedSprites.push_back(new AnimatedSprite(migosp, migospAnimData,72, 96, "live", 0.2f));
 	//m_AnimatedSprites.push_back(new AnimatedSprite(moldsmal, moldsmalAnimData,102, 84, "live", FLT_MAX));
 	//m_AnimatedSprites.push_back(new AnimatedSprite(vegetoid, vegetoidAnimData,72, 104, "live", 0.2f));
@@ -165,6 +158,9 @@ ResourceManager::ResourceManager(std::string playerName)
 		{"big",AnimationData{1,1}},
 		{"med",AnimationData{2,1}},
 		{"small",AnimationData{3,1}}
+	};
+	std::map<std::string, AnimationData> napstaAttackAnimData{
+		{"std", AnimationData{ 1,1 }}
 	};
 	/*std::map<std::string, AnimationData> migospAttackAnimData{
 		{"fly",AnimationData{1,2}}
@@ -195,7 +191,9 @@ ResourceManager::ResourceManager(std::string playerName)
 
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ froggitLeapAttackTexture,froggitLeapAttackAnimData,40,38,"charging", FLT_MAX});
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ froggitFlyAttackTexture,froggitFlyAttackAnimData,8,6,"fly",0.075f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ looxAttackBig, looxAttackAnimData ,14 ,14 , "big", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ looxAttack, looxAttackAnimData ,14 ,14 , "big", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ napstaAttack, napstaAttackAnimData ,12 ,13 , "std", FLT_MAX });
+	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ napstaAttack1, napstaAttackAnimData ,98 ,41 , "std", FLT_MAX });
 	/*m_BulletAnimatedSprites.push_back(new AnimatedSprite{ migospAttack1, migospAttackAnimData ,16 ,16 , "fly", 0.5f });
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ migospAttack2, migospAttack2AnimData ,32 ,32 , "live", 0.5f });
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ moldsmalAttack, moldsmalAttackAnimData ,12 ,12 , "big", FLT_MAX });
@@ -222,7 +220,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	};
 
 	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ fightMenuPlayerBarTexture,playerAttackBarAnimData,8,124,"active",FLT_MAX });
-	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ playerAttackTexture,playerAttackAnimData,26,110,"swing",0.15f });
+	m_MiscAnimatedSprites.push_back(new AnimatedSprite{ playerAttackTexture,playerAttackAnimData,26,110,"swing",0.3f });
 
 	m_StaticEnemyTextures.push_back(froggitHead);
 	m_StaticEnemyTextures.push_back(froggitDeath);
@@ -231,6 +229,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_StaticEnemyTextures.push_back(moldsmalDeath);
 	m_StaticEnemyTextures.push_back(vegetoidDeath);
 	m_StaticEnemyTextures.push_back(whimsunDeath);*/
+	m_StaticEnemyTextures.push_back(napstaDeath);
 
 	m_StaticTextures.push_back(playerHeartTexture);
 	m_StaticTextures.push_back(fightBackGrounds);
@@ -275,6 +274,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_RoomCorrectionTiles.push_back(holeTexture);
 	m_RoomCorrectionTiles.push_back(rockTexture);
 	m_RoomCorrectionTiles.push_back(room3SpikesTexture);
+	m_RoomCorrectionTiles.push_back(napstaTexture);
 
 	m_InteractableTextTextures.push_back(interactionBackgroundTexture);
 
@@ -349,6 +349,10 @@ ResourceManager::~ResourceManager()
 	for (int i{}; i < m_RoomCorrectionTiles.size(); ++i)
 	{
 		delete m_RoomCorrectionTiles[i];
+	}
+	for (int i{}; i < m_InteractableTextTextures.size(); ++i)
+	{
+		delete m_InteractableTextTextures[i];
 	}
 }
 

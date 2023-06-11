@@ -49,8 +49,11 @@ public:
 	bool IsFalling();
 	std::string GetFallDestination();
 	Vector2f GetFallStartLocation();
+	Vector2f GetVelocity();
 
-	void ButtonUpManager(const SDL_KeyboardEvent& e);
+	void SetInteractedwithBoss(bool b);
+	bool GetInteractedwithBoss();
+
 
 
 private:
@@ -76,6 +79,8 @@ private:
 	int m_CurrentSpinDirection{};
 	float m_SpinSpeed{ 12 };
 	std::string m_SpinAnimation[4]{ "upIdle","rightIdle", "downIdle","leftIdle" };
+
+	bool m_HasInteractedWithBoss{};
 
 };
 

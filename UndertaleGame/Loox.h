@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-class Loox : public Enemy
+class Loox final : public Enemy
 {
 public:
 	Loox() = delete;

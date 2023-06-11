@@ -6,7 +6,7 @@ class FroggitJumpAttack final: public Bullet
 {
 public:
 
-	FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, const CollisionBox& collider);
+	FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, const CollisionBox& fightRectCollider);
 
 	virtual void Update(float deltaTime) override;
 	virtual	void Draw() const override;

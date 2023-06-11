@@ -40,11 +40,11 @@ void Froggit::SpawnBullet(ResourceManager* resourceManager)
 	m_Bullets.clear();
 	if (utils::RandBool())
 	{
-		m_Bullets.push_back(new FroggitJumpAttack{ resourceManager->m_BulletAnimatedSprites[0],6,m_Collider });
+		m_Bullets.push_back(new FroggitJumpAttack{ resourceManager->m_BulletAnimatedSprites[0],6,m_FightRectCollider });
 	} else
 	{
 		for (int i{}; i < 6; ++i) {
-			m_Bullets.push_back(new FroggitFlyAttack{ resourceManager->m_BulletAnimatedSprites[1],3,Vector2f{static_cast<float>(utils::RandInRange(240,390)),230}, &m_Player, i,m_Collider }); 
+			m_Bullets.push_back(new FroggitFlyAttack{ resourceManager->m_BulletAnimatedSprites[1],3,Vector2f{static_cast<float>(utils::RandInRange(240,390)),230}, &m_Player, i,m_FightRectCollider }); 
 		}
 	}
 

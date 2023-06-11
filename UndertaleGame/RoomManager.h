@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+class Adventure;
 class Room;
 class ResourceManager;
 class Door;
