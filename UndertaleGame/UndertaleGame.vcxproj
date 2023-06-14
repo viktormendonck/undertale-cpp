@@ -162,6 +162,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     <ClCompile Include="BossFight.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="AdventureMenu.cpp" />
     <ClCompile Include="NapstaNotUpToIt.cpp" />
     <ClCompile Include="NapstaCryAttack.cpp" />
     <ClCompile Include="Napstablook.cpp" />
@@ -192,6 +193,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="StartMenuManager.cpp" />
     <ClCompile Include="TextInteract.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +201,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     <ClInclude Include="BossFight.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="AdventureMenu.h" />
     <ClInclude Include="NapstaNotUpToIt.h" />
     <ClInclude Include="NapstaCryAttack.h" />
     <ClInclude Include="Napstablook.h" />
@@ -228,6 +231,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="StartMenuManager.h" />
     <ClInclude Include="TextInteract.h" />
   </ItemGroup>
   <ItemGroup>

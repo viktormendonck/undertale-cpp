@@ -19,7 +19,7 @@
 
 Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManager, ParticleSystem* pParticleSystem,EnemyType enemy)
     : m_pPlayer{pChara},
-      m_pBackgroundTexture{pResourceManager->m_StaticTextures[1]},
+      m_pBackgroundTexture{pResourceManager->m_MiscTextures[1]},
       m_pParticleSystem{pParticleSystem},
       m_pResourceManager{pResourceManager}
 {
@@ -146,7 +146,7 @@ void Fight::DrawMenuSelected() const
 {switch (m_MenuSelectedState)
     {
     case(UiState::fightSelected):
-        m_pResourceManager->m_StaticTextures[2]->Draw(m_TextBox);
+        m_pResourceManager->m_MiscTextures[2]->Draw(m_TextBox);
         m_pResourceManager->m_MiscAnimatedSprites[0]->Draw(m_AttackBarLocation);
         if (m_BarStopped)
         {
@@ -179,14 +179,14 @@ void Fight::DrawMenuSelected() const
             int pageStartIndex = m_CurrentItemPage * m_AmountOfTextLocations;
             m_pPlayer->GetInv()->GetItemText(pageStartIndex + y)->Draw(m_TextLocations[y].ToPoint2f());
         }
-        m_pResourceManager->m_StaticTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
+        m_pResourceManager->m_MiscTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
 
 
         break;
     case (UiState::mercySelected):
         m_pResourceManager->m_TextTextures[2]->Draw(m_TextLocations[0].ToPoint2f());
         m_pResourceManager->m_TextTextures[3]->Draw(m_TextLocations[2].ToPoint2f());
-        m_pResourceManager->m_StaticTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
+        m_pResourceManager->m_MiscTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
         break;
     }
     utils::DrawRect(m_TextBox, m_BoxLineWidth);
@@ -233,7 +233,7 @@ void Fight::DrawActMenuOptions() const
         break;
     }
     //draw the heart in front of the selected tex
-    m_pResourceManager->m_StaticTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
+    m_pResourceManager->m_MiscTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
 }
 void Fight::DrawActMenuResponses() const
 {
@@ -309,6 +309,7 @@ void Fight::UpdateFight(float deltaTime)
         hpStringStream << playerHealth << "/" << m_pPlayer->GetMaxHealth() << "HP";
         delete m_pResourceManager->m_TextTextures[1];
         m_pResourceManager->m_TextTextures[1] = new Texture{ hpStringStream.str(),"UI/determinationFont.ttf",30,Color4f(1,1,1,1) };
+        m_PreviousHealth = m_pPlayer->GetHealth();
     }
 }
 void Fight::UpdateMenuSelected(float deltaTime)
@@ -630,7 +631,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
 
         case (SDLK_w):
         case (SDLK_UP):
-            if (m_CurrentSelectedOption <= 2)
+            if (m_CurrentSelectedOption >= 2)
             {
                 m_CurrentSelectedOption -= 2;
 
@@ -639,7 +640,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
             break;
         case (SDLK_s):
         case (SDLK_DOWN):
-            if (m_CurrentSelectedOption >= 2)
+            if (m_CurrentSelectedOption <= 1)
             {
                 m_CurrentSelectedOption += 2;
 
@@ -687,7 +688,11 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
         case(SDLK_z):
             if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth()) {
                 const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
-                m_pPlayer->DamageChara(-(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration)));
+                m_pPlayer->Damage(-(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration)));
+                if (m_pPlayer->GetHealth() >m_pPlayer->GetMaxHealth())
+                {
+                    m_pPlayer->Damage(m_pPlayer->GetMaxHealth() - m_pPlayer->GetHealth());
+                }
                 m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
                 SoundManager::GetInstance().PlaySoundEffect("heal");
                 StartFightSegment();

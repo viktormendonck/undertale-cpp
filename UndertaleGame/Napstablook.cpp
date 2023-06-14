@@ -16,6 +16,7 @@ Napstablook::Napstablook(AnimatedSprite* pBaseTexture, Texture* pDeathTexture, i
 
 void Napstablook::UpdateEnemy(float deltaTime)
 {
+	
 }
 
 void Napstablook::DrawEnemy()

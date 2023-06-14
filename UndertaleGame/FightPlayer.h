@@ -28,7 +28,7 @@ public:
 	void Draw();
 	void Update(float deltaTime, Fight* fight, std::vector<CollisionBox> colliders);
 
-	void DamageChara(int damage);
+	void Damage(int damage);
 	void SetFightPlayerState(FightPlayerState state);
 	Rectf GetLocationRect() const;
 	bool IsGravityMode() const;
@@ -40,7 +40,9 @@ public:
 	Inventory* GetInv() const;
 	void UpdateMovement(float deltaTime);
 
+
 	void OnButtonUp(const SDL_KeyboardEvent& e);
+
 
 private:
 	FightPlayerState m_State{ FightPlayerState::base };

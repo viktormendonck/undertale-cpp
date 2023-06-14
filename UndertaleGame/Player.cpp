@@ -29,27 +29,27 @@ void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 	UpdateCollisionSelection();
 	switch(m_PlayerState)
 	{
-	case(PlayerState::wandering):
+		case(PlayerState::wandering):
 		{
-		UpdateMovement();
-		m_ChangedRoom = false;
-		const Vector2f nextPlayerPos = m_Pos + (m_Velocity * deltaTime);
-		Vector2f correctionTotal{};
-		m_PlayerCollisionRect = Rectf(GetRect().left, GetRect().bottom, GetRect().width, GetRect().height / 3);
-		for (int i{}; i < colliders.size(); ++i)
-		{
+			UpdateMovement();
+			m_ChangedRoom = false;
+			const Vector2f nextPlayerPos = m_Pos + (m_Velocity * deltaTime);
+			Vector2f correctionTotal{};
+			m_PlayerCollisionRect = Rectf(GetRect().left, GetRect().bottom, GetRect().width, GetRect().height / 3);
+			for (int i{}; i < colliders.size(); ++i)
+			{
 
-			const std::pair<bool, Vector2f> collisionOutput{ CollisionBox::SideCollisions(colliders[i],m_PlayerCollisionRect ) };
-			if (collisionOutput.first)
-			{
-				correctionTotal += collisionOutput.second;
+				const std::pair<bool, Vector2f> collisionOutput{ CollisionBox::SideCollisions(colliders[i],m_PlayerCollisionRect ) };
+				if (collisionOutput.first)
+				{
+					correctionTotal += collisionOutput.second;
+				}
+				if (collisionOutput.second.y < 0)
+				{
+					m_Velocity.y = 0;
+				}
 			}
-			if (collisionOutput.second.y < 0)
-			{
-				m_Velocity.y = 0;
-			}
-		}
-		m_Pos = nextPlayerPos + correctionTotal;
+			m_Pos = nextPlayerPos + correctionTotal;
 		}
 		break;
 	case(PlayerState::falling):
@@ -138,7 +138,7 @@ Rectf Player::GetFullPlayerRect()
 	return Rectf(m_Pos.x, m_Pos.y, m_pSprite->GetWidth(), m_pSprite->GetHeight());
 }
 
-void Player::SetPlayerState(PlayerState playerState)
+void Player::SetState(PlayerState playerState)
 {
 	m_PlayerState = playerState;
 }
@@ -186,12 +186,12 @@ Vector2f Player::GetVelocity()
 }
 
 
-void Player::SetInteractedwithBoss(bool b)
+void Player::SetInteractedWithBoss(bool b)
 {
 	m_HasInteractedWithBoss = b;
 }
 
-bool Player::GetInteractedwithBoss()
+bool Player::GetInteractedWithBoss()
 {
 	return m_HasInteractedWithBoss;
 }

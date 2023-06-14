@@ -18,13 +18,6 @@ TextInteract::TextInteract(const Rectf& collisionRect, Texture* pBaseTextTexture
 
 void TextInteract::Update(float deltaTime, Player* player)
 {
-	if (m_CurrentTextPage != -1)
-	{
-		player->SetPlayerState(Player::PlayerState::interacting);
-	} else if(player->GetState() != Player::PlayerState::falling)
-	{
-		player->SetPlayerState(Player::PlayerState::wandering);
-	}
 	m_IsColliding = utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), player->GetInteractCollisionRect());
 }
 
@@ -43,6 +36,7 @@ void TextInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
 	
 	if ((e.keysym.sym == SDLK_RETURN || e.keysym.sym == SDLK_z ) && m_IsColliding)
 	{
+		m_IsActivated = true;
 		OnInteract();
 		SoundManager::GetInstance().PlaySoundEffect("select");
 	}
@@ -56,6 +50,7 @@ void TextInteract::OnInteract()
 	}
 	else if (m_CurrentTextPage == m_AmountOfTextPages - 1)
 	{
+		m_IsActivated = false;
 		m_CurrentTextPage = -1;
 	}
 }

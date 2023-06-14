@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ParticleSystem.h"
 
+// this entire class was made together with Patrick Nellessen
 
 ParticleSystem::ParticleSystem(int dissolveParticlesPerSecond, float dissolveParticleLifetime)
 	: m_DissolveParticlesPerSecond{dissolveParticlesPerSecond},

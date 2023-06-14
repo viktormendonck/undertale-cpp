@@ -49,7 +49,7 @@ void Enemy::Update(float deltaTime)
 	for (Bullet* bullet : m_Bullets)
 	{
 		if (bullet->IsActive() && utils::IsOverlapping(bullet->GetRect(),m_Player.GetLocationRect())) {
-			m_Player.DamageChara(bullet->GetDamage());
+			m_Player.Damage(bullet->GetDamage());
 			SoundManager::GetInstance().PlaySoundEffect("hit");
 			bullet->SetActivity(false);
 		}

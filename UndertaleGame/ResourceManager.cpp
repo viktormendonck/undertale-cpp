@@ -39,7 +39,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	//text Textures
 
 	Texture* playerNameTexture = new Texture{ playerName,"UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
-	Texture* playerHealthTexture = new Texture{ "20/20 Hp","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* playerHealthTexture = new Texture{ "20/20HP","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 
 	Texture* actCheckTexture = new Texture{ "* Check","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* froggitActTexture1 = new Texture{ "* Compliment","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
@@ -82,6 +82,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture*  napstaTexture = new Texture{"map/tiles/napstablook.png"};
 
 	Texture* interactionBackgroundTexture = new Texture{ "text/interact/baseTextBox.png" };
+	Texture* menuBackgroundTexture = new Texture{ "text/menu/menuTextBox.png" };
 
 	Texture* froggitInteractionTexture1 = new Texture{ "text/interact/froggitText1.png" };
 	Texture* froggitInteractionTexture2 = new Texture{ "text/interact/froggitText2.png" };
@@ -231,9 +232,10 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_StaticEnemyTextures.push_back(whimsunDeath);*/
 	m_StaticEnemyTextures.push_back(napstaDeath);
 
-	m_StaticTextures.push_back(playerHeartTexture);
-	m_StaticTextures.push_back(fightBackGrounds);
-	m_StaticTextures.push_back(fightMenuScreenTexture);
+	m_MiscTextures.push_back(playerHeartTexture);
+	m_MiscTextures.push_back(fightBackGrounds);
+	m_MiscTextures.push_back(fightMenuScreenTexture);
+	m_MiscTextures.push_back(menuBackgroundTexture);
 
 	m_TextTextures.push_back(playerNameTexture);
 	m_TextTextures.push_back(playerHealthTexture);
@@ -293,6 +295,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_InteractableTextTextures.push_back(itemYesInteractionTexture);
 	m_InteractableTextTextures.push_back(itemNoInteractionTexture);
 	m_InteractableTextTextures.push_back(itemInteractionTexture1);
+
 }
 
 ResourceManager::~ResourceManager()
@@ -321,9 +324,9 @@ ResourceManager::~ResourceManager()
 		delete m_StaticEnemyTextures[i];
 	}
 
-	for (int i{}; i < m_StaticTextures.size(); ++i)
+	for (int i{}; i < m_MiscTextures.size(); ++i)
 	{
-		delete m_StaticTextures[i];
+		delete m_MiscTextures[i];
 	}
 
 	for (int i{}; i < m_TextTextures.size(); ++i)

@@ -27,9 +27,7 @@ public:
 	};
 
 	void Update(float deltaTime, std::vector<CollisionBox> colliders);
-	void UpdateCollisionSelection();
 	void Draw();
-	void UpdateMovement();
 	Inventory* GetInventory();
 
 	Rectf GetRect();
@@ -40,7 +38,7 @@ public:
 	Rectf GetInteractCollisionRect();
 	Rectf GetFullPlayerRect();
 
-	void SetPlayerState(PlayerState playerState);
+	void SetState(PlayerState playerState);
 	PlayerState GetState();
 
 	void StartFalling(const std::string& destination);
@@ -51,12 +49,14 @@ public:
 	Vector2f GetFallStartLocation();
 	Vector2f GetVelocity();
 
-	void SetInteractedwithBoss(bool b);
-	bool GetInteractedwithBoss();
+	void SetInteractedWithBoss(bool b);
+	bool GetInteractedWithBoss();
 
 
 
 private:
+	void UpdateMovement();
+	void UpdateCollisionSelection();
 	PlayerState m_PlayerState{PlayerState::wandering};
 	AnimatedSprite* m_pSprite;
 	Inventory* m_pInventory;

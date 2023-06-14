@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "Vector2f.h"
 
+// this entire class was made together with Patrick Nellessen
+
 class ParticleSystem final
 {
 public:

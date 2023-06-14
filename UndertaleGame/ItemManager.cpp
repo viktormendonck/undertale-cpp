@@ -16,7 +16,9 @@ ItemManager::ItemManager(ResourceManager* pResourceManager)
 	}
 {
 }
-//
-//ItemManager::~ItemManager()
-//{
-//}
+
+ItemManager::~ItemManager()
+{
+}
+
+

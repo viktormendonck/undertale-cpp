@@ -6,14 +6,16 @@
 #include "Door.h"
 #include "Fight.h"
 #include "Interactable.h"
+#include "AdventureMenu.h"
 #include "Player.h"
 #include "Room.h"
 #include "RoomManager.h"
 #include "Texture.h"
 #include "utils.h"
 
-Adventure::Adventure(Player* pPlayer, RoomManager* pRoomManager, const Rectf& viewPort, Texture* paralax)
+Adventure::Adventure(Player* pPlayer, FightPlayer* pFightPlayer,ResourceManager* pResourceManager, RoomManager* pRoomManager, const Rectf& viewPort, Texture* paralax)
 	:
+	m_pMenu(new AdventureMenu(pFightPlayer,pResourceManager)),
 	m_pPlayer(pPlayer),
 	m_pParalax(paralax),
 	m_pRoomManager(pRoomManager),
@@ -22,6 +24,11 @@ Adventure::Adventure(Player* pPlayer, RoomManager* pRoomManager, const Rectf& vi
 {
 	m_pPlayer->SetPlayerPos(Vector2f(96,726));
 	m_SavedRoom = m_pCurrentRoom->GetName();
+}
+
+Adventure::~Adventure()
+{
+	delete m_pMenu;
 }
 
 void Adventure::Draw() const
@@ -43,10 +50,17 @@ void Adventure::Draw() const
 	glPopMatrix();
 	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
 	utils::FillRect(m_ViewPort);
+
+	if (m_InMenu)
+	{
+		m_pMenu->Draw();
+	}
+
 }
 
 void Adventure::Update(float deltaTime)
 {
+	bool interactActivated{};
 	std::vector<CollisionBox> playerColliders{m_pCurrentRoom->GetWalls()};
 	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
 	{
@@ -54,8 +68,21 @@ void Adventure::Update(float deltaTime)
 		{
 			for (CollisionBox coll :m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox())playerColliders.push_back(coll);
 		}
-
+		interactActivated = interactActivated || m_pCurrentRoom->GetInteractables()[i]->IsActivated();
 	}
+
+	if (interactActivated || m_InMenu)
+	{
+		m_pPlayer->SetState(Player::PlayerState::interacting);
+	}
+	else if (m_pPlayer->GetState() != Player::PlayerState::falling)
+	{
+		m_pPlayer->SetState(Player::PlayerState::wandering);
+	}
+
+
+
+
 	m_pPlayer->Update(deltaTime,playerColliders);
 	if (m_CurrentSpawnCheckDelay <=0)
 	{
@@ -68,10 +95,13 @@ void Adventure::Update(float deltaTime)
 	}
 	m_CurrentSpawnCheckDelay -= deltaTime;
 
-	if (m_pPlayer->GetInteractedwithBoss())
+	if (m_pPlayer->GetInteractedWithBoss())
 	{
-		m_AdventureEnd = true;
-		m_IsBossFight = true;
+		if (!m_IsBossFight)
+		{
+			m_AdventureEnd = true;
+			m_IsBossFight = true;
+		}
 	}
 
 	UpdateCameraPos();
@@ -125,9 +155,23 @@ void Adventure::ButtonDownManager(const SDL_KeyboardEvent& e)
 }
 void Adventure::ButtonUpManager(const SDL_KeyboardEvent& e)
 {
-	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+	if (m_InMenu)
 	{
-		m_pCurrentRoom->GetInteractables()[i]->ButtonUpManager(e);
+		m_pMenu->OnButtonUp(e);
+		if (m_pMenu->GetMenuState() == MenuState::menu && (e.keysym.sym == SDLK_ESCAPE || e.keysym.sym == SDLK_x))
+		{
+			m_InMenu = false;
+		}
+	} else
+	{
+		for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
+		{
+			m_pCurrentRoom->GetInteractables()[i]->ButtonUpManager(e);
+		}
+		if ((e.keysym.sym == SDLK_RCTRL || e.keysym.sym == SDLK_c)&& m_pPlayer->GetState() == Player::PlayerState::wandering)
+		{
+			m_InMenu = true;
+		}
 	}
 }
 

@@ -26,14 +26,6 @@ void ItemInteract::Update(float deltaTime, Player* player)
 		m_InitializeInventoryFlag = true;
 		m_pPlayerInventory = player->GetInventory();
 	}
-	if (m_IsActivated)
-	{
-		player->SetPlayerState(Player::PlayerState::interacting);
-	}
-	else if (player->GetState() != Player::PlayerState::falling)
-	{
-		player->SetPlayerState(Player::PlayerState::wandering);
-	}
 	
 	m_IsColliding = utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), player->GetInteractCollisionRect());
 }
@@ -53,7 +45,7 @@ void ItemInteract::Draw(const Vector2f& camera) const
 
 void ItemInteract::ButtonUpManager(const SDL_KeyboardEvent& e)
 {
-	if (m_IsColliding)
+	if (m_IsColliding && m_AmountOfItems > 0)
 	{
 		switch(e.keysym.sym)
 		{
@@ -96,6 +88,7 @@ void ItemInteract::OnInteract()
 	{
 		m_pPlayerInventory->InputItem(m_ItemName);
 		--m_AmountOfItems;
+		
 	}
 	m_IsActivated = false;
 }

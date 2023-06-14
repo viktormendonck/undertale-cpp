@@ -90,7 +90,7 @@ void FightPlayer::Update(float deltaTime,Fight* fight, std::vector<CollisionBox>
 	}
 }
 
-void FightPlayer::DamageChara(int damage)
+void FightPlayer::Damage(int damage)
 {
 	m_Hp -= damage;
 }
@@ -168,6 +168,8 @@ void FightPlayer::UpdateMovement(float deltaTime)
 
 	}
 }
+
+
 void FightPlayer::OnButtonUp(const SDL_KeyboardEvent& e)
 {
 	if (e.keysym.sym == SDLK_DELETE) m_IsGravityMode = !m_IsGravityMode;

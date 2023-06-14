@@ -9,6 +9,11 @@ Interactable::Interactable(const CollisionBox& collision, bool isSollid)
 }
 
 
+bool Interactable::IsActivated()
+{
+	return m_IsActivated;
+}
+
 std::vector<CollisionBox> Interactable::GetCollisionBox() const
 {
 	return m_CollisionBoxes;

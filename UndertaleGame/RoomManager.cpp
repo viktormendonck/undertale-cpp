@@ -136,7 +136,7 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		pResourceManager->m_InteractableTextTextures[12]
 	};
 	std::vector<Interactable*> room1_5Interacts{
-		new ItemInteract(Rectf(309,228,40,55),pResourceManager->m_InteractableTextTextures[0],itemInteractTextTextures1,pResourceManager->m_StaticTextures[0],"Monster candy",5)
+		new ItemInteract(Rectf(309,228,40,55),pResourceManager->m_InteractableTextTextures[0],itemInteractTextTextures1,pResourceManager->m_MiscTextures[0],"Monster candy",5)
 	};
 	std::vector<Interactable*> room2Interacts{
 		new GroundFall{Rectf(355,77,50,150),"Room2.5"}

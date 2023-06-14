@@ -117,7 +117,7 @@ private:
 
 	Vector2f m_UIInformationLocations[2]{ Vector2f{16,47},Vector2f{116,47} };
 	const int m_AmountOfUITextTextures{ 2 };
-	float m_PreviousHealth{};
+	int m_PreviousHealth{};
 
 	//ActMenu variables
 	const int m_AmountOfActOptions{ 3 };

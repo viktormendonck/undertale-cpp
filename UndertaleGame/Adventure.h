@@ -8,11 +8,13 @@ class ParticleSystem;
 class RoomManager;
 class Room;
 class Player;
+class AdventureMenu;
 
 class Adventure final
 {
 public:
-	Adventure(Player* pPlayer,RoomManager* pRoomManager, const Rectf& viewPort,Texture* paralax);
+	Adventure(Player* pPlayer,FightPlayer* pFightPlayer, ResourceManager* pResourceManager,RoomManager* pRoomManager, const Rectf& viewPort,Texture* paralax);
+	~Adventure();
 	void Draw() const;
 	void Update(float deltaTime);
 	void ButtonDownManager(const SDL_KeyboardEvent& e);
@@ -21,6 +23,9 @@ public:
 	void SetAdventureEnd(bool b);
 	bool IsBossFight();
 private:
+
+
+	AdventureMenu* m_pMenu;
 	Vector2f m_CameraPos{};
 	Player* m_pPlayer{};
 	Texture* m_pParalax{};
@@ -43,6 +48,8 @@ private:
 	float m_CurrentSpawnCheckDelay{m_maxSpawnCheckDelay};
 
 	bool m_IsBossFight{};
+
+	bool m_InMenu{};
 
 	void UpdateCameraPos();
 

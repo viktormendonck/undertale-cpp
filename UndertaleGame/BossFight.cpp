@@ -18,7 +18,12 @@ void BossFight::Update(float deltaTime, Player* player)
 		m_IsColliding = utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), player->GetInteractCollisionRect());
 	} else if (!m_HasTransmitted)
 	{
-		player->SetInteractedwithBoss(true);
+		if (player->GetInteractedWithBoss())
+		{
+			player->SetInteractedWithBoss(false);
+			m_IsSollid = false;
+		}
+		player->SetInteractedWithBoss(true);
 	}
 }
 
