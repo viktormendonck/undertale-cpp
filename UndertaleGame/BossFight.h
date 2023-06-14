@@ -6,7 +6,7 @@ class Texture;
 class BossFight final : public Interactable
 {
 public:
-	BossFight(const CollisionBox& collision, bool isSollid,Texture* texture);
+	BossFight(const CollisionBox& collision, bool isSolid,Texture* texture);
 
 	void Update(float deltaTime, Player* player);
 	void Draw(const Vector2f& camera) const;

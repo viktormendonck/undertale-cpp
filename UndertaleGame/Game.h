@@ -3,6 +3,7 @@
 #include "SoundManager.h"
 #include "Vector2f.h"
 
+class StartMenuManager;
 class RoomManager;
 class Adventure;
 class Inventory;
@@ -14,11 +15,10 @@ class Player;
 class FightPlayer;
 class Fight;
 
-//test classes
-// TODO: remove
 
 
-class Game : public BaseGame
+
+class Game final : public BaseGame
 {
 public:
 	explicit Game(const Window& window);
@@ -42,19 +42,21 @@ public:
 private:
 	enum class GameState
 	{
+		menu,
 		infoScreen,
 		adventure,
 		fight
 	};
 
-	GameState m_GameState{ GameState::adventure};
+	GameState m_GameState{};
 
 	ParticleSystem* m_pParticleSystem{};
-	Texture* m_pInfoScreenTexture{};
 	ResourceManager* m_pResourceManager{};
+	StartMenuManager* m_pMenu{};
+
 
 	Player* m_pPlayer{};
-	FightPlayer* m_pFightChara{};
+	FightPlayer* m_pFightPlayer{};
 	Inventory* m_pInventory{};
 
 	Fight* m_pFight{};
@@ -65,7 +67,7 @@ private:
 
 	GameState m_SavePreviousState{}; // save state for when you're in the infoState
 
-
+	bool m_IsResetting{};
 	// FUNCTIONS
 	void Initialize();
 	void Cleanup();

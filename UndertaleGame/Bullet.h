@@ -10,7 +10,12 @@ class Bullet
 {
 public:
 	Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, const CollisionBox& buletCollider, const CollisionBox& fightRectCollider);
-	virtual ~Bullet();
+	virtual ~Bullet() = default;
+
+	Bullet(const Bullet& other) = delete;
+	Bullet& operator=(const Bullet& other) = delete;
+	Bullet(Bullet&& other) = delete;
+	Bullet& operator=(Bullet&& other) = delete;
 
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() const = 0;

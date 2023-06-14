@@ -16,12 +16,6 @@ Bullet::Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, cons
 
 }
 
-
-
-Bullet::~Bullet()
-{
-}
-
 bool Bullet::IsActive()
 {
 	return m_IsActive;

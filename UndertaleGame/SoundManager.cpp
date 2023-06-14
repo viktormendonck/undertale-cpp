@@ -16,12 +16,21 @@ void SoundManager::SetMusic(const std::string& songName)
 	{
 		music.second->Stop();
 	}
+	m_Music[songName]->SetVolume(m_AudioVolume);
 	m_Music[songName]->Play(true);
+	m_CurrentSong = songName;
 }
 
 void SoundManager::PlaySoundEffect(const std::string& name)
 {
+	
+	m_SFX[name]->SetVolume(m_AudioVolume);
 	m_SFX[name]->Play(0);
+}
+
+void SoundManager::UpdateAudioLevel()
+{
+	m_Music[m_CurrentSong]->SetVolume(m_AudioVolume);
 }
 
 void SoundManager::CleanUp()
@@ -34,7 +43,16 @@ void SoundManager::CleanUp()
 	{
 		delete sfx.second;
 	}
+	m_HasInitialized = false;
 }
+
+
+int& SoundManager::GetAudioVolumeRef()
+{
+	return m_AudioVolume;
+}
+
+
 
 void SoundManager::Initialize()
 {
@@ -43,7 +61,10 @@ void SoundManager::Initialize()
 		m_HasInitialized = !m_HasInitialized;
 
 		m_Music["ruins"] = new SoundStream("sound/music/ruins.wav");
-		m_Music["battle"] = new SoundStream("sound/music/battle.wav");
+		m_Music["death"] = new SoundStream("sound/music/ruins.wav");
+		m_Music["menu"] = new SoundStream("sound/music/menu.wav");
+		m_Music["settings"] = new SoundStream("sound/music/settings.wav");
+		m_Music["battle"] = new SoundStream("sound/music/death.wav");
 		m_Music["ghostFight"] = new SoundStream("sound/music/ghostFight.wav");
 
 		m_SFX["damage"] = new SoundEffect("sound/sfx/damage.wav");
@@ -57,10 +78,4 @@ void SoundManager::Initialize()
 	}
 }
 
-SoundManager::SoundManager()
-{
-}
 
-SoundManager::~SoundManager()
-{
-}

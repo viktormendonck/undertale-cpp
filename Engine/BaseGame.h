@@ -65,6 +65,7 @@ private:
 	bool m_Initialized;
 	// Prevent timing jumps when debugging
 	const float m_MaxElapsedSeconds;
+
 	
 	// FUNCTIONS
 	void InitializeGameEngine( );

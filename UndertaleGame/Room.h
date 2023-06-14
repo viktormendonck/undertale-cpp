@@ -13,6 +13,12 @@ class Room final
 public:
 	explicit Room(const std::string& roomName, Texture* pRoomTex, Texture* pHoleTexture, const std::vector<Door>& doors, const std::vector<CollisionBox>& walls, const std::vector<Interactable*>& interactables, bool spawnAble);
 	~Room();
+
+	Room(const Room& other) = delete;
+	Room& operator=(const Room& other) = delete;
+	Room(Room&& other) = delete;
+	Room& operator=(Room&& other) = delete;
+
 	Texture* GetTexture();
 	std::vector<Door> GetDoors();
 	std::vector<CollisionBox> GetWalls();

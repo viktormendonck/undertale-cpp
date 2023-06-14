@@ -8,11 +8,10 @@
 		inventory
 	};
 
-class AdventureMenu
+class AdventureMenu final
 {
 public:
 	AdventureMenu(FightPlayer* pFightPlayer, ResourceManager* pResourceManager);
-	~AdventureMenu();
 	void Draw();
 
 	MenuState GetMenuState();

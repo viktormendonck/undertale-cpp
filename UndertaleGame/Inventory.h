@@ -11,6 +11,11 @@ public:
 	Inventory(int size, ItemManager* itemManager);
 	~Inventory();
 
+	Inventory(const Inventory& other) = delete;
+	Inventory& operator=(const Inventory& other) = delete;
+	Inventory(Inventory&& other) = delete;
+	Inventory& operator=(Inventory&& other) = delete;
+
 	void DeleteItem(int itemNumber) ;
 	void InputItem(const std::string& itemType);
 	ItemType GetItemType(int itemNumber);

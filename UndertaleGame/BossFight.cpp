@@ -4,9 +4,9 @@
 #include "Texture.h"
 #include "utils.h"
 
-BossFight::BossFight(const CollisionBox& collision, bool isSollid, Texture* texture)
+BossFight::BossFight(const CollisionBox& collision, bool isSolid, Texture* texture)
 	:
-	Interactable(collision,isSollid),
+	Interactable(collision,isSolid),
 	m_pTexture(texture)
 {
 }
@@ -21,7 +21,7 @@ void BossFight::Update(float deltaTime, Player* player)
 		if (player->GetInteractedWithBoss())
 		{
 			player->SetInteractedWithBoss(false);
-			m_IsSollid = false;
+			m_IsSolid = false;
 		}
 		player->SetInteractedWithBoss(true);
 	}

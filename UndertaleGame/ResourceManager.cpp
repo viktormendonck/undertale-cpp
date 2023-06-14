@@ -8,9 +8,15 @@ ResourceManager::ResourceManager(std::string playerName)
 {
 	//player
 	Texture* charaTexture = new Texture{ "Sprites/chara.png" };
-	Texture* playerHeartTexture = new Texture{ "Sprites/PLayerHeart.png" };
+	Texture* playerHeartTexture = new Texture{ "Sprites/PlayerHeart.png" };
 	Texture* playerHeartAnimTexture = new Texture{ "Sprites/PlayerHeartAnims.png" };
 	Texture* fightBackGrounds = new Texture{ "Static_Screens/FightBackGrounds.png" };
+	//menu
+	Texture* controlMenuBackGroundTexture = new Texture{ "Static_Screens/Controls.png" };
+	Texture* nameMenuBackGroundTexture = new Texture{ "Static_Screens/menu/NamingMenu.png" };
+	Texture* optionsMenuBackGroundTexture = new Texture{ "Static_Screens/menu/optionsMenu.png" };
+	Texture* standardMenuBackGroundTexture = new Texture{ "Static_Screens/menu/baseStartMenuBackground.png" };
+
 	//froggit
 	Texture* froggitLeapAttackTexture = new Texture{ "Sprites/Froggit/JumpAttack.png" };
 	Texture* froggitFlyAttackTexture = new Texture{ "Sprites/Froggit/flyAttack.png" };
@@ -123,18 +129,6 @@ ResourceManager::ResourceManager(std::string playerName)
 	std::map<std::string, AnimationData> looxAnimData{
 		{"live",AnimationData{1,5}}
 	};
-	/*std::map<std::string, AnimationData> migospAnimData{
-		{"live",AnimationData{1,2}}
-	};
-	std::map<std::string, AnimationData> moldsmalAnimData{
-		{"live",AnimationData{1,1}}
-	};
-	std::map<std::string, AnimationData> vegetoidAnimData{
-		{"live",AnimationData{1,4}}
-	};
-	std::map<std::string, AnimationData> whimsunAnimData{
-		{"live",AnimationData{1,2}}
-	};*/
 	std::map<std::string, AnimationData> napstaAnimData{
 		{"live", AnimationData{ 1,2 }}
 	};
@@ -144,10 +138,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_AnimatedSprites.push_back(new AnimatedSprite{ froggitBody,froggitAnimData,92,48,"live",0.5f });
 	m_AnimatedSprites.push_back(new AnimatedSprite(loox, looxAnimData, 100, 116, "live", 0.2f));
 	m_AnimatedSprites.push_back(new AnimatedSprite(napsta, napstaAnimData, 104, 166, "live", 0.2f));
-	//m_AnimatedSprites.push_back(new AnimatedSprite(migosp, migospAnimData,72, 96, "live", 0.2f));
-	//m_AnimatedSprites.push_back(new AnimatedSprite(moldsmal, moldsmalAnimData,102, 84, "live", FLT_MAX));
-	//m_AnimatedSprites.push_back(new AnimatedSprite(vegetoid, vegetoidAnimData,72, 104, "live", 0.2f));
-	//m_AnimatedSprites.push_back(new AnimatedSprite(whimsun, whimsunAnimData,72, 104, "live", 0.2f));
+
 	std::map<std::string, AnimationData> froggitLeapAttackAnimData{
 		{"charging",AnimationData{1,1}},
 		{"jumping" ,AnimationData{2,1}}
@@ -163,44 +154,14 @@ ResourceManager::ResourceManager(std::string playerName)
 	std::map<std::string, AnimationData> napstaAttackAnimData{
 		{"std", AnimationData{ 1,1 }}
 	};
-	/*std::map<std::string, AnimationData> migospAttackAnimData{
-		{"fly",AnimationData{1,2}}
-	};
-	std::map<std::string, AnimationData> migospAttack2AnimData{
-		{"life",AnimationData{1,16}}
-	};
-	std::map<std::string, AnimationData> moldsmalAttackAnimData{
-		{"big",AnimationData{2,1}},
-		{"small",AnimationData{1,1}}
-	};
-	std::map<std::string, AnimationData> vegetoidAttackAnimData{
-		{"veg",AnimationData{1,1}},
-		{"veg1",AnimationData{2,1}},
-		{"veg2",AnimationData{3,1}},
-		{"veg3",AnimationData{4,1}},
-		{"veg4",AnimationData{5,1}},
-		{"veg5",AnimationData{6,1}},
-		{"veg6",AnimationData{7,1}}
 
-	};
-	std::map<std::string, AnimationData> vegetoidHealAnimData{
-		{"heal",AnimationData{1,7}}
-	};
-	std::map<std::string, AnimationData> whimsumAttackAnimData{
-		{"attack",AnimationData{1,2}}
-	};*/
 
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ froggitLeapAttackTexture,froggitLeapAttackAnimData,40,38,"charging", FLT_MAX});
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ froggitFlyAttackTexture,froggitFlyAttackAnimData,8,6,"fly",0.075f });
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ looxAttack, looxAttackAnimData ,14 ,14 , "big", FLT_MAX });
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ napstaAttack, napstaAttackAnimData ,12 ,13 , "std", FLT_MAX });
 	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ napstaAttack1, napstaAttackAnimData ,98 ,41 , "std", FLT_MAX });
-	/*m_BulletAnimatedSprites.push_back(new AnimatedSprite{ migospAttack1, migospAttackAnimData ,16 ,16 , "fly", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ migospAttack2, migospAttack2AnimData ,32 ,32 , "live", 0.5f });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ moldsmalAttack, moldsmalAttackAnimData ,12 ,12 , "big", FLT_MAX });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ vegetoidAttack, vegetoidAttackAnimData ,24 ,24 , "veg", FLT_MAX });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ vegetoidHeal, vegetoidHealAnimData ,24 ,24 , "heal", FLT_MAX });
-	m_BulletAnimatedSprites.push_back(new AnimatedSprite{ whimsunAttack, whimsumAttackAnimData ,15 ,15 , "attack", 0.5f });*/
+
 
 	std::map<std::string, AnimationData> buttonAnimData{
 		{"inactive",AnimationData{0,1}},
@@ -226,16 +187,17 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_StaticEnemyTextures.push_back(froggitHead);
 	m_StaticEnemyTextures.push_back(froggitDeath);
 	m_StaticEnemyTextures.push_back(looxDeath);
-	/*m_StaticEnemyTextures.push_back(migospDeath);
-	m_StaticEnemyTextures.push_back(moldsmalDeath);
-	m_StaticEnemyTextures.push_back(vegetoidDeath);
-	m_StaticEnemyTextures.push_back(whimsunDeath);*/
 	m_StaticEnemyTextures.push_back(napstaDeath);
 
 	m_MiscTextures.push_back(playerHeartTexture);
 	m_MiscTextures.push_back(fightBackGrounds);
 	m_MiscTextures.push_back(fightMenuScreenTexture);
 	m_MiscTextures.push_back(menuBackgroundTexture);
+	m_MiscTextures.push_back(standardMenuBackGroundTexture);
+	m_MiscTextures.push_back(controlMenuBackGroundTexture);
+	m_MiscTextures.push_back(nameMenuBackGroundTexture);
+	m_MiscTextures.push_back(optionsMenuBackGroundTexture);
+
 
 	m_TextTextures.push_back(playerNameTexture);
 	m_TextTextures.push_back(playerHealthTexture);

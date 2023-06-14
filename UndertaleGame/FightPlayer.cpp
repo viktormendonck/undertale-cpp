@@ -24,13 +24,6 @@ FightPlayer::FightPlayer(Texture* heartTexture, AnimatedSprite* heartAnims, Inve
 	m_LineCast = Linef(Point2f(m_Pos.x, m_Pos.y - 1), Point2f(m_Pos.x + m_pHeartTexture->GetWidth(), m_Pos.y - 1));
 }
 
-FightPlayer::~FightPlayer()
-{
-	//delete m_pHeartAnims;
-	//delete m_pHeartTexture;
-
-}
-
 void FightPlayer::Draw()
 {
 	switch (m_State)

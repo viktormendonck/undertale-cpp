@@ -17,13 +17,6 @@ class FightPlayer final
 {
 public:
 	FightPlayer(Texture* heartTexture, AnimatedSprite* heartAnims, Inventory* pInv, float speed, int startHealth);
-	~FightPlayer();
-
-	FightPlayer(const FightPlayer& other) = delete; // Copy constructor
-	FightPlayer& operator=(const FightPlayer& other) = delete; // Copy assignment operator
-
-	FightPlayer(FightPlayer&& other) = delete; // Move constructor
-	FightPlayer& operator=(FightPlayer&& other) = delete; // Move assignment operator
 
 	void Draw();
 	void Update(float deltaTime, Fight* fight, std::vector<CollisionBox> colliders);

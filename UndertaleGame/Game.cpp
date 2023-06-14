@@ -18,14 +18,13 @@
 #include "ItemManager.h"
 #include "RoomManager.h"
 #include "SoundManager.h"
+#include "StartMenuManager.h"
 //TESTCLASSES
 // TODO: remove
 //#include "LooxAttack1.h"
 
 Game::Game(const Window& window)
 	: BaseGame{ window }
-	, m_pParticleSystem{new ParticleSystem{ 20, 0.6f}}
-	, m_pInfoScreenTexture{ new Texture{"Static_Screens/Controls.png"}}
 	, m_ViewPort{ GetViewPort() }
 {
 	Initialize();
@@ -41,29 +40,33 @@ void Game::Initialize()
 	m_pResourceManager = new ResourceManager{"Viktor"};
 	m_pInventory = new Inventory{ 10,new ItemManager{m_pResourceManager} };
 	m_pPlayer = new Player{ m_pResourceManager->m_AnimatedSprites[0],m_pInventory,200 };
-	m_pFightChara = new FightPlayer(m_pResourceManager->m_MiscTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
+	m_pFightPlayer = new FightPlayer(m_pResourceManager->m_MiscTextures[0], m_pResourceManager->m_AnimatedSprites[1],m_pInventory, 100, 20);
 	m_pRoomManager = new RoomManager(m_pResourceManager);
-	m_pAdventure = new Adventure(m_pPlayer,m_pFightChara,m_pResourceManager,m_pRoomManager,m_ViewPort,m_pResourceManager->m_RoomTextures[8]);
+	m_pAdventure = new Adventure(m_pPlayer,m_pFightPlayer,m_pResourceManager,m_pRoomManager,m_ViewPort,m_pResourceManager->m_RoomTextures[8]);
+	m_pParticleSystem = new ParticleSystem{ 20, 0.6f};
+	m_pMenu = new StartMenuManager(m_pResourceManager);
+	m_GameState = GameState::menu;
 	SoundManager::GetInstance().Initialize();
-	SoundManager::GetInstance().SetMusic("ruins");
+	SoundManager::GetInstance().SetMusic("menu");
 }
 
 void Game::Cleanup()
 {
 	delete m_pParticleSystem;
 	delete m_pPlayer;
-	delete m_pFightChara;
+	delete m_pFightPlayer;
 	delete m_pFight;
 	delete m_pAdventure;
 	delete m_pRoomManager;
 	delete m_pInventory;
-	delete m_pInfoScreenTexture;
 	delete m_pResourceManager;
+	delete m_pMenu;
 	SoundManager::GetInstance().CleanUp();
 }
 
 void Game::Update(float deltaTime)
 {
+
 	m_pParticleSystem->Update(deltaTime);
 	m_pResourceManager->Update(deltaTime);
 
@@ -77,11 +80,11 @@ void Game::Update(float deltaTime)
 			if (m_pAdventure->IsBossFight())
 			{
 				delete m_pFight;
-				m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, EnemyType::napstablook);
+				m_pFight = new Fight(m_pFightPlayer, GetViewPort(), m_pResourceManager, m_pParticleSystem, EnemyType::napstablook);
 			} else
 			{
 				delete m_pFight;
-				m_pFight = new Fight(m_pFightChara, GetViewPort(), m_pResourceManager, m_pParticleSystem, static_cast<EnemyType>(utils::RandInRange(0, 1)));
+				m_pFight = new Fight(m_pFightPlayer, GetViewPort(), m_pResourceManager, m_pParticleSystem, static_cast<EnemyType>(utils::RandInRange(0, 1)));
 			}
 			m_pAdventure->SetAdventureEnd(false);
 		}
@@ -94,7 +97,11 @@ void Game::Update(float deltaTime)
 			SoundManager::GetInstance().SetMusic("ruins");
 		}
 		break;
-	case GameState::infoScreen:
+	case GameState::menu:
+		if (m_pMenu->GetMenuState() == MenuState::menuEnd)
+		{
+			m_GameState = GameState::adventure;
+		}
 		
 		break;
 
@@ -113,7 +120,10 @@ void Game::Draw() const
 		m_pFight->Draw();
 		break;
 	case GameState::infoScreen:
-		m_pInfoScreenTexture->Draw(Point2f{ 0,0 });
+		m_pResourceManager->m_MiscTextures[5]->Draw(Point2f{0,0});
+		break;
+	case GameState::menu:
+		m_pMenu->Draw();
 		break;
 	}
 
@@ -146,8 +156,8 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 	case GameState::fight:
 		m_pFight->ButtonUpManager(e);
 		break;
-	case GameState::infoScreen:
-
+	case GameState::menu:
+		m_pMenu->OnButtonUp(e);
 		break;
 
 	}
@@ -155,6 +165,7 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 	switch (e.keysym.sym)
 	{
 	case SDLK_i:
+		if (m_pMenu->GetMenuState() == MenuState::nameScreen){ return; }
 		if (m_GameState == GameState::infoScreen)
 		{
 			m_GameState = m_SavePreviousState;

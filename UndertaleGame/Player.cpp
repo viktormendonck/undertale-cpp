@@ -19,10 +19,6 @@ Player::Player(AnimatedSprite* playerSprite,Inventory* pInv, float speed)
 	m_CurrentRunStopDelay = m_RunStopDelay;
 }
 
-Player::~Player()
-{
-	//delete m_pSprite;
-}
 
 void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 {

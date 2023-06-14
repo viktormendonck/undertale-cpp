@@ -4,11 +4,11 @@
 class ResourceManager;
 class Item;
 
-class ItemManager
+class ItemManager final
 {
 public:
 	ItemManager(ResourceManager* pResourceManager);
-	~ItemManager();
+
 	std::map<std::string, Item> m_Items;
 };
 

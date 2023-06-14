@@ -12,10 +12,7 @@ AdventureMenu::AdventureMenu(FightPlayer* pFightPlayer, ResourceManager* pResour
 {
 }
 
-AdventureMenu::~AdventureMenu()
-{
 
-}
 
 
 void AdventureMenu::Draw()

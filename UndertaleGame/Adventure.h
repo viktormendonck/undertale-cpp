@@ -15,6 +15,12 @@ class Adventure final
 public:
 	Adventure(Player* pPlayer,FightPlayer* pFightPlayer, ResourceManager* pResourceManager,RoomManager* pRoomManager, const Rectf& viewPort,Texture* paralax);
 	~Adventure();
+
+	Adventure(const Adventure& other) = delete;
+	Adventure& operator=(const Adventure& other) = delete;
+	Adventure(Adventure&& other) = delete;
+	Adventure& operator=(Adventure&& other) = delete;
+
 	void Draw() const;
 	void Update(float deltaTime);
 	void ButtonDownManager(const SDL_KeyboardEvent& e);

@@ -64,7 +64,7 @@ void Adventure::Update(float deltaTime)
 	std::vector<CollisionBox> playerColliders{m_pCurrentRoom->GetWalls()};
 	for (int i{}; i < m_pCurrentRoom->GetInteractables().size(); ++i)
 	{
-		if(m_pCurrentRoom->GetInteractables()[i]->IsSollid())
+		if(m_pCurrentRoom->GetInteractables()[i]->IsSolid())
 		{
 			for (CollisionBox coll :m_pCurrentRoom->GetInteractables()[i]->GetCollisionBox())playerColliders.push_back(coll);
 		}

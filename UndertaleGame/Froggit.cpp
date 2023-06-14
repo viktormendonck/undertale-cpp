@@ -17,11 +17,6 @@ Froggit::Froggit(Texture* pFroggitHead,AnimatedSprite* pBaseTexture, Texture* pD
 {
 }
 
-Froggit::~Froggit()
-{
-
-}
-
 void Froggit::UpdateEnemy(float deltaTime)
 {
 	m_HeadMovingIncrementor = m_HeadMovingIncrementor + (deltaTime * m_HeadMovementSpeed);

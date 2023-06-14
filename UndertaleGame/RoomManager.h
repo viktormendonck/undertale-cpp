@@ -5,12 +5,17 @@ class Room;
 class ResourceManager;
 class Door;
 
-class RoomManager
+class RoomManager final
 {
 public:
-	RoomManager() = delete;
 	explicit RoomManager(ResourceManager* pResourceManager);
 	~RoomManager();
+
+	RoomManager(const RoomManager& other) = delete;
+	RoomManager& operator=(const RoomManager& other) = delete;
+	RoomManager(RoomManager&& other) = delete;
+	RoomManager& operator=(RoomManager&& other) = delete;
+
 	std::map<std::string, Room*> m_pRooms;
 };
 

@@ -14,11 +14,6 @@ enum class EnemyType
 {
 	froggit,
 	loox,
-	/*
-	migosp,
-	moldsmal,
-	vegetoid,
-	whimsum*/
 	napstablook
 };
 

@@ -194,6 +194,8 @@ void BaseGame::Run()
 			// Draw in the back buffer
 			this->Draw();
 
+			
+
 			// Update screen: swap back and front buffer
 			SDL_GL_SwapWindow(m_pWindow);
 		}

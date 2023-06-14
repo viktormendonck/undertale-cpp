@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Interactable.h"
 
-Interactable::Interactable(const CollisionBox& collision, bool isSollid)
+Interactable::Interactable(const CollisionBox& collision, bool isSolid)
 	:
-	m_IsSollid(isSollid)
+	m_IsSolid(isSolid)
 {
 	m_CollisionBoxes.push_back(collision);
 }
@@ -19,7 +19,7 @@ std::vector<CollisionBox> Interactable::GetCollisionBox() const
 	return m_CollisionBoxes;
 }
 
-bool Interactable::IsSollid() const
+bool Interactable::IsSolid() const
 {
-	return m_IsSollid;
+	return m_IsSolid;
 }

@@ -11,13 +11,6 @@ class Player final
 {
 public:
 	Player(AnimatedSprite* playerSprite, Inventory* pInv, float speed);
-	~Player();
-
-	Player(const Player& other) = delete; // Copy constructor
-	Player& operator=(const Player& other) = delete; // Copy assignment operator
-
-	Player(Player&& other) = delete; // Move constructor
-	Player& operator=(Player&& other) = delete; // Move assignment operator
 
 	enum class PlayerState
 	{

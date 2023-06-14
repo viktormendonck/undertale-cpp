@@ -1,7 +1,7 @@
 #pragma once
 #include "CollisionBox.h"
 
-class Door
+class Door final
 {
 public:
 	Door(Rectf doorCollider,std::string destination, Vector2f spawnLocation);

@@ -1,7 +1,7 @@
 #pragma once
 #include "Interactable.h"
 #include "Texture.h"
-//TODO:: cmon, finish this shit you dumbass
+
 class RockInteract final : public Interactable
 {
 public:

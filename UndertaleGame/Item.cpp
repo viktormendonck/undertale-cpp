@@ -20,18 +20,6 @@ Item::Item(ItemType itemType,Texture* pNameTex, bool equipable, std::string name
 {
 }
 
-Item& Item::operator=(const Item& other)
-{
-	if (this != &other) { // check for self-assignment
-		m_ItemType = other.m_ItemType;
-		m_pNameTex = other.m_pNameTex;
-		m_IsEquipable = other.m_IsEquipable;
-		m_Name = other.m_Name;
-		m_Value = other.m_Value;
-	}
-	return *this;
-
-}
 
 ItemType Item::GetItemType()
 {

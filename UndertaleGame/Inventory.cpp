@@ -78,7 +78,7 @@ Texture* Inventory::GetItemText(int itemNumber)
 int Inventory::GetCurrentItemAmount()
 {
 	int amount{};
-	for (Item item: m_PlayerInventory)
+	for (Item& item: m_PlayerInventory)
 	{
 		if (item.GetItemType() != ItemType::empty)
 		{
