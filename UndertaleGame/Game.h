@@ -45,7 +45,8 @@ private:
 		menu,
 		infoScreen,
 		adventure,
-		fight
+		fight,
+		death
 	};
 
 	GameState m_GameState{};
@@ -66,10 +67,16 @@ private:
 	Rectf m_ViewPort{};
 
 	GameState m_SavePreviousState{}; // save state for when you're in the infoState
+	GameState m_NextGameState{};
 
-	bool m_IsResetting{};
+	float m_ScreenTrancparancy{};
+	float m_MaxScreenFadingTime{ 2 };
+	float m_CurrentScreenFadingTime{ m_MaxScreenFadingTime };
+	bool m_IsTransitioning{};
 	// FUNCTIONS
 	void Initialize();
 	void Cleanup();
 	void ClearBackground() const;
+	void UpdateTransition(float deltaTime);
+
 };

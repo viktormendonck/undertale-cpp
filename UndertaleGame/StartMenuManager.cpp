@@ -40,6 +40,13 @@ void StartMenuManager::Draw()
 		m_pResourceManager->m_MiscTextures[4]->Draw();
 		m_pResourceManager->m_MiscTextures[0]->Draw(m_SelectionLocations[m_SelectedOption].ToPoint2f());
 		break;
+	case (MenuState::menuEnd):
+		m_pResourceManager->m_MiscTextures[6]->Draw();
+		if (!m_PlayerName.empty())
+		{
+			m_pResourceManager->m_TextTextures[0]->Draw(Point2f{ 260,275 });
+		}
+		break;
 	}
 }
 
@@ -73,6 +80,7 @@ void StartMenuManager::OnButtonUp(const SDL_KeyboardEvent& e)
 				m_pResourceManager->m_TextTextures[0] = new Texture{ m_PlayerName,"UI/determinationFont.ttf",30,Color4f(1,1,1,1) };
 				SoundManager::GetInstance().SetMusic("ruins");
 				m_MenuState = MenuState::menuEnd;
+				delete m_pTempName;
 			}
 			break;
 		case (SDLK_ESCAPE):

@@ -16,6 +16,7 @@ public:
 	void UpdateAudioLevel();
 	void CleanUp();
 	int& GetAudioVolumeRef();
+	std::string GetCurrentSong();
 private:
 	SoundManager() = default;
 	bool m_HasInitialized{ false };

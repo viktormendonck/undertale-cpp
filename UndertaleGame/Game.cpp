@@ -46,6 +46,7 @@ void Game::Initialize()
 	m_pParticleSystem = new ParticleSystem{ 20, 0.6f};
 	m_pMenu = new StartMenuManager(m_pResourceManager);
 	m_GameState = GameState::menu;
+	m_NextGameState = GameState::menu;
 	SoundManager::GetInstance().Initialize();
 	SoundManager::GetInstance().SetMusic("menu");
 }
@@ -66,7 +67,15 @@ void Game::Cleanup()
 
 void Game::Update(float deltaTime)
 {
-
+	if (m_pFightPlayer->GetHealth() <=0)
+	{
+		m_NextGameState = GameState::death;
+		if (SoundManager::GetInstance().GetCurrentSong() != "death")
+		{
+			SoundManager::GetInstance().SetMusic("death");
+		}
+	}
+	UpdateTransition(deltaTime);
 	m_pParticleSystem->Update(deltaTime);
 	m_pResourceManager->Update(deltaTime);
 
@@ -76,7 +85,7 @@ void Game::Update(float deltaTime)
 		m_pAdventure->Update(deltaTime);
 		if (m_pAdventure->GetAdventureEnd())
 		{
-			m_GameState = GameState::fight;
+			m_NextGameState = GameState::fight;
 			if (m_pAdventure->IsBossFight())
 			{
 				delete m_pFight;
@@ -93,14 +102,14 @@ void Game::Update(float deltaTime)
 		m_pFight->Update(deltaTime);
 		if (m_pFight->IsFightOver())
 		{
-			m_GameState = GameState::adventure;
+			m_NextGameState = GameState::adventure;
 			SoundManager::GetInstance().SetMusic("ruins");
 		}
 		break;
 	case GameState::menu:
 		if (m_pMenu->GetMenuState() == MenuState::menuEnd)
 		{
-			m_GameState = GameState::adventure;
+			m_NextGameState = GameState::adventure;
 		}
 		
 		break;
@@ -125,7 +134,12 @@ void Game::Draw() const
 	case GameState::menu:
 		m_pMenu->Draw();
 		break;
+	case GameState::death:
+		m_pResourceManager->m_MiscTextures[8]->Draw();
+		break;
 	}
+	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
+	utils::FillRect(GetViewPort());
 
 }
 
@@ -168,13 +182,13 @@ void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 		if (m_pMenu->GetMenuState() == MenuState::nameScreen){ return; }
 		if (m_GameState == GameState::infoScreen)
 		{
-			m_GameState = m_SavePreviousState;
+			m_NextGameState = m_SavePreviousState;
 		}  else
 		{
 			m_SavePreviousState = m_GameState;
 			system("CLS");
 			std::cout << "Controls:\nArrow Keys/wasd:movement\nz or enter: confirm\nX/Shift:Cancel\nDel:Activate Gravity Mode(In enemyAttack, this is not original undertale)\nSpace: Jump (in gravity mode)\n";
-			m_GameState = GameState::infoScreen;
+			m_NextGameState = GameState::infoScreen;
 		}
 		break;
 	}
@@ -224,4 +238,33 @@ void Game::ClearBackground() const
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Game::UpdateTransition(float deltaTime)
+{
+	if (m_GameState != m_NextGameState)
+	{
+		m_IsTransitioning = true;
+	}
+	if (m_IsTransitioning)
+	{
+		if (m_CurrentScreenFadingTime <= 0)
+		{
+			m_CurrentScreenFadingTime = m_MaxScreenFadingTime;
+			m_IsTransitioning = false;
+		}
+		if (m_CurrentScreenFadingTime <= 1 && m_GameState != m_NextGameState)
+		{
+			m_GameState = m_NextGameState;
+		}
+		else if (m_CurrentScreenFadingTime <= 1)
+		{
+			m_ScreenTrancparancy = abs(abs(m_CurrentScreenFadingTime - m_MaxScreenFadingTime / 2) - m_MaxScreenFadingTime / 2);
+		}
+		else
+		{
+			m_ScreenTrancparancy = abs(m_CurrentScreenFadingTime - m_MaxScreenFadingTime);
+		}
+		m_CurrentScreenFadingTime -= deltaTime;
+	}
 }

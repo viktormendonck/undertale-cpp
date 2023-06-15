@@ -57,18 +57,6 @@ Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManage
         m_pEnemy = new Loox(m_pResourceManager->m_AnimatedSprites[3], m_pResourceManager->m_StaticEnemyTextures[2], 50, 3, *m_pPlayer, m_FightBoundary);
         m_IsBossFight = false;
         break;
-    /*case (EnemyType::migosp):
-
-        break;
-    case (EnemyType::moldsmal):
-
-        break;
-    case (EnemyType::vegetoid):
-
-        break;
-    case (EnemyType::whimsum):
-
-        break;*/
     case(EnemyType::napstablook):
         m_pEnemy = new Napstablook(m_pResourceManager->m_AnimatedSprites[4],m_pResourceManager->m_StaticEnemyTextures[3], 100, 4, *m_pPlayer, m_FightBoundary);
         m_IsBossFight = true;
@@ -79,8 +67,10 @@ Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManage
     m_HealthBarRemaining.bottom = m_HealthBar.bottom;
     m_HealthBarRemaining.left = m_HealthBar.left;
     m_PreviousHealthBarWidth = m_HealthBar.width;
-
-    SoundManager::GetInstance().SetMusic("battle");
+    if (SoundManager::GetInstance().GetCurrentSong() != "ghostFight")
+    {
+		SoundManager::GetInstance().SetMusic("battle");
+    }
 }
 
 
@@ -129,6 +119,7 @@ void Fight::Draw() const
 
 void Fight::DrawMenu() const
 {
+    utils::SetColor(Color4f(1, 1, 1, 1));
     utils::DrawRect(m_TextBox, m_BoxLineWidth);
 }
 void Fight::DrawEnemyAttack() const
@@ -189,10 +180,12 @@ void Fight::DrawMenuSelected() const
         m_pResourceManager->m_MiscTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
         break;
     }
+	utils::SetColor(Color4f(1, 1, 1, 1));
     utils::DrawRect(m_TextBox, m_BoxLineWidth);
 }
 void Fight::DrawTransition() const
 {
+	utils::SetColor(Color4f(1, 1, 1, 1));
     utils::DrawRect(m_CurrentTransitionRect, m_BoxLineWidth);
 }
 void Fight::DrawPlatforms() const
@@ -229,6 +222,11 @@ void Fight::DrawActMenuOptions() const
         {
             m_pResourceManager->m_LooxTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());\
         }
+    case (EnemyType::napstablook):
+        for (int i{}; i < 4; ++i)
+        {
+            m_pResourceManager->m_NapstaTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f()); \
+        }
 
         break;
     }
@@ -244,6 +242,9 @@ void Fight::DrawActMenuResponses() const
         break;
     case (EnemyType::loox):
         m_pResourceManager->m_LooxTextTextures[m_CurrentSelectedOption + m_AmountOfActOptions]->Draw(m_ResponsePos.ToPoint2f());
+        break;
+    case (EnemyType::napstablook):
+        m_pResourceManager->m_NapstaTextTextures[m_CurrentSelectedOption + 4]->Draw(m_ResponsePos.ToPoint2f());
         break;
     }
 }
@@ -603,6 +604,9 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
                     break;
                 case (EnemyType::loox):
                     m_ResponsePos = m_ResponsePosOrigin - Vector2f{ 0,m_pResourceManager->m_LooxTextTextures[m_CurrentSelectedOption + m_AmountOfActOptions]->GetHeight() };
+                    break;
+                case (EnemyType::napstablook):
+                    m_ResponsePos = m_ResponsePosOrigin - Vector2f{ 0, m_pResourceManager->m_NapstaTextTextures[m_CurrentSelectedOption + 4]->GetHeight() };
                     break;
                 }
                 SoundManager::GetInstance().PlaySoundEffect("select");

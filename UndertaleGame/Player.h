@@ -64,11 +64,13 @@ private:
 	Vector2f m_Pos;
 
 	bool m_ChangedRoom{};
-	float m_FallSpeed{ 400 };
+	const float m_BaseFallSpeed{ 250 };
+	float m_FallSpeed{ m_BaseFallSpeed };
+	float m_FallGravity{ 300 };
 	Vector2f m_FallStartLocation{};
 	std::string m_FallDestination{};
 
-	float m_TimeIncrementor{};
+	float m_TimeIncrementer{};
 	int m_CurrentSpinDirection{};
 	float m_SpinSpeed{ 12 };
 	std::string m_SpinAnimation[4]{ "upIdle","rightIdle", "downIdle","leftIdle" };

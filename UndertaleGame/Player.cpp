@@ -50,20 +50,22 @@ void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 		break;
 	case(PlayerState::falling):
 		{
-		m_Velocity = Vector2f();
-		m_TimeIncrementor += deltaTime * m_SpinSpeed;
-		int saveSpinDirection{m_CurrentSpinDirection};
-		m_CurrentSpinDirection = static_cast<int>(m_TimeIncrementor) % 4;
-		if (saveSpinDirection != m_CurrentSpinDirection)
-		{
-			m_pSprite->SetAnimation(m_SpinAnimation[m_CurrentSpinDirection]);
-		}
-		m_Pos.y -= m_FallSpeed * deltaTime;
-		if (m_Pos.y <= m_FallStartLocation.y && m_ChangedRoom)
-		{
-			m_PlayerState = PlayerState::wandering;
-			m_ChangedRoom = false;
-		}
+			m_FallSpeed += m_FallGravity * deltaTime;
+			m_Velocity = Vector2f();
+			m_TimeIncrementer += deltaTime * m_SpinSpeed;
+			int saveSpinDirection{m_CurrentSpinDirection};
+			m_CurrentSpinDirection = static_cast<int>(m_TimeIncrementer) % 4;
+			if (saveSpinDirection != m_CurrentSpinDirection)
+			{
+				m_pSprite->SetAnimation(m_SpinAnimation[m_CurrentSpinDirection]);
+			}
+			m_Pos.y -= m_FallSpeed * deltaTime;
+			if (m_Pos.y <= m_FallStartLocation.y && m_ChangedRoom)
+			{
+				m_PlayerState = PlayerState::wandering;
+				m_ChangedRoom = false;
+				m_FallSpeed = m_BaseFallSpeed;
+			}
 		}
 		break;
 	case(PlayerState::interacting):

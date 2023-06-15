@@ -52,6 +52,10 @@ int& SoundManager::GetAudioVolumeRef()
 	return m_AudioVolume;
 }
 
+std::string SoundManager::GetCurrentSong()
+{
+	return m_CurrentSong;
+}
 
 
 void SoundManager::Initialize()
@@ -61,10 +65,10 @@ void SoundManager::Initialize()
 		m_HasInitialized = !m_HasInitialized;
 
 		m_Music["ruins"] = new SoundStream("sound/music/ruins.wav");
-		m_Music["death"] = new SoundStream("sound/music/ruins.wav");
+		m_Music["death"] = new SoundStream("sound/music/death.wav");
 		m_Music["menu"] = new SoundStream("sound/music/menu.wav");
 		m_Music["settings"] = new SoundStream("sound/music/settings.wav");
-		m_Music["battle"] = new SoundStream("sound/music/death.wav");
+		m_Music["battle"] = new SoundStream("sound/music/battle.wav");
 		m_Music["ghostFight"] = new SoundStream("sound/music/ghostFight.wav");
 
 		m_SFX["damage"] = new SoundEffect("sound/sfx/damage.wav");

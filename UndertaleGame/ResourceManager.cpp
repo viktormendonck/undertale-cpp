@@ -10,12 +10,14 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* charaTexture = new Texture{ "Sprites/chara.png" };
 	Texture* playerHeartTexture = new Texture{ "Sprites/PlayerHeart.png" };
 	Texture* playerHeartAnimTexture = new Texture{ "Sprites/PlayerHeartAnims.png" };
-	Texture* fightBackGrounds = new Texture{ "Static_Screens/FightBackGrounds.png" };
 	//menu
 	Texture* controlMenuBackGroundTexture = new Texture{ "Static_Screens/Controls.png" };
 	Texture* nameMenuBackGroundTexture = new Texture{ "Static_Screens/menu/NamingMenu.png" };
 	Texture* optionsMenuBackGroundTexture = new Texture{ "Static_Screens/menu/optionsMenu.png" };
 	Texture* standardMenuBackGroundTexture = new Texture{ "Static_Screens/menu/baseStartMenuBackground.png" };
+	//extras
+	Texture* fightBackGrounds = new Texture{ "Static_Screens/FightBackGrounds.png" };
+	Texture* deathBackGround = new Texture{ "Static_Screens/death.png" };
 
 	//froggit
 	Texture* froggitLeapAttackTexture = new Texture{ "Sprites/Froggit/JumpAttack.png" };
@@ -61,6 +63,14 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* looxResponseTexture1 = new Texture{ "You rude little snipe","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* looxResponseTexture2 = new Texture{ "Finaly, someone gets it","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 
+	Texture* napstaActTexture1 = new Texture{ "* Flirt","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaActTexture2 = new Texture{ "* Threat","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaActTexture3 = new Texture{ "* Cheer","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaCheckResponseTexture0 = new Texture{ "text/napsta/checkResponse.png" };
+	Texture* napstaResponseTexture1 = new Texture{ "Napstablook tries to blush but can't.(he's a ghost)","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaResponseTexture2 = new Texture{ "Napstablook pretends to be scared, but he isn't","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaResponseTexture3 = new Texture{ "YAY :D","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+
 	Texture* mercyTextTexture = new Texture{ "* Mercy","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* fleeTextTexture = new Texture{ "* Flee","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 
@@ -100,6 +110,12 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* scriptureInteractionTexture1 = new Texture{ "text/interact/scripture1.png" };
 	Texture* scriptureInteractionTexture2 = new Texture{ "text/interact/scripture2.png" };
 	Texture* scriptureInteractionTexture3 = new Texture{ "text/interact/scripture3.png" };
+	Texture* scriptureInteractionTexture4 = new Texture{ "text/interact/scripture4.png" };
+	Texture* scriptureInteractionTexture5 = new Texture{ "text/interact/scripture5.png" };
+	Texture* scriptureInteractionTexture6 = new Texture{ "text/interact/scripture6.png" };
+	Texture* scriptureInteractionTexture7 = new Texture{ "text/interact/scripture7.png" };
+	Texture* scriptureInteractionTexture8 = new Texture{ "text/interact/scripture8.png" };
+
 	Texture* saveInteractionTexture = new Texture{ "text/interact/saveText.png" };
 
 	Texture* itemYesInteractionTexture = new Texture{ "text/interact/yes.png" };
@@ -197,6 +213,7 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_MiscTextures.push_back(controlMenuBackGroundTexture);
 	m_MiscTextures.push_back(nameMenuBackGroundTexture);
 	m_MiscTextures.push_back(optionsMenuBackGroundTexture);
+	m_MiscTextures.push_back(deathBackGround);
 
 
 	m_TextTextures.push_back(playerNameTexture);
@@ -217,6 +234,15 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_LooxTextTextures.push_back(looxCheckResponseTexture0);
 	m_LooxTextTextures.push_back(looxResponseTexture1);
 	m_LooxTextTextures.push_back(looxResponseTexture2);
+
+	m_NapstaTextTextures.push_back(actCheckTexture);
+	m_NapstaTextTextures.push_back(napstaActTexture1);
+	m_NapstaTextTextures.push_back(napstaActTexture2);
+	m_NapstaTextTextures.push_back(napstaActTexture3);
+	m_NapstaTextTextures.push_back(napstaCheckResponseTexture0);
+	m_NapstaTextTextures.push_back(napstaResponseTexture1);
+	m_NapstaTextTextures.push_back(napstaResponseTexture2);
+	m_NapstaTextTextures.push_back(napstaResponseTexture3);
 
 	m_RoomTextures.push_back(room1Tex);
 	m_RoomTextures.push_back(room1_5Tex);
@@ -253,6 +279,11 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture2);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture3);
 	m_InteractableTextTextures.push_back(saveInteractionTexture);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture4);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture5);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture6);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture7);
+	m_InteractableTextTextures.push_back(scriptureInteractionTexture8);
 
 	m_InteractableTextTextures.push_back(itemYesInteractionTexture);
 	m_InteractableTextTextures.push_back(itemNoInteractionTexture);
@@ -302,6 +333,10 @@ ResourceManager::~ResourceManager()
 	for (int i{1}; i < m_LooxTextTextures.size(); ++i)
 	{
 		delete m_LooxTextTextures[i];
+	}
+	for (int i{ 1 }; i < m_NapstaTextTextures.size(); ++i)
+	{
+		delete m_NapstaTextTextures[i];
 	}
 	for (int i{}; i < m_RoomTextures.size(); ++i)
 	{
