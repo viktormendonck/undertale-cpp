@@ -209,27 +209,28 @@ void Fight::DrawUI() const
 }
 void Fight::DrawActMenuOptions() const
 {
-    switch (m_pEnemy->GetEnemyType())
+    if (m_pEnemy->GetEnemyType() == EnemyType::froggit)
     {
-    case(EnemyType::froggit):
         for (int i{}; i < m_AmountOfActOptions; ++i)
         {
             m_pResourceManager->m_FroggitTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());
         }
-        break;
-    case (EnemyType::loox):
+    }
+	else if (m_pEnemy->GetEnemyType() == EnemyType::loox)
+    {
         for (int i{}; i < m_AmountOfActOptions; ++i)
         {
-            m_pResourceManager->m_LooxTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());\
+            m_pResourceManager->m_LooxTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());
         }
-    case (EnemyType::napstablook):
+    }
+    else if (m_pEnemy->GetEnemyType() == EnemyType::napstablook)
+    {
         for (int i{}; i < 4; ++i)
         {
-            m_pResourceManager->m_NapstaTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f()); \
+            m_pResourceManager->m_NapstaTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());
         }
-
-        break;
     }
+    else
     //draw the heart in front of the selected tex
     m_pResourceManager->m_MiscTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
 }
@@ -628,7 +629,6 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
             m_UiState = UiState::fightSelected;
             SoundManager::GetInstance().PlaySoundEffect("select");
             break;
-
         case (SDLK_w):
         case (SDLK_UP):
             if (m_CurrentSelectedOption >= 2)
@@ -686,13 +686,16 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
             break;
         case (SDLK_RETURN):
         case(SDLK_z):
-            if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth()) {
-                const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
-                m_pPlayer->Damage(-(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration)));
-                if (m_pPlayer->GetHealth() >m_pPlayer->GetMaxHealth())
-                {
-                    m_pPlayer->Damage(m_pPlayer->GetMaxHealth() - m_pPlayer->GetHealth());
-                }
+        	const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
+            if (m_pPlayer->GetHealth()+ m_pPlayer->GetInv()->GetItemValue(selectedItemItteration) <=   m_pPlayer->GetMaxHealth()) 
+            {
+                m_pPlayer->Damage(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration));
+                m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
+                SoundManager::GetInstance().PlaySoundEffect("heal");
+                StartFightSegment();
+            } else if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth())
+            {
+                m_pPlayer->Damage(m_pPlayer->GetHealth() - m_pPlayer->GetMaxHealth());
                 m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
                 SoundManager::GetInstance().PlaySoundEffect("heal");
                 StartFightSegment();
