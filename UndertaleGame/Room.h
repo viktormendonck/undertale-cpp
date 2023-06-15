@@ -19,12 +19,12 @@ public:
 	Room(Room&& other) = delete;
 	Room& operator=(Room&& other) = delete;
 
-	Texture* GetTexture();
-	std::vector<Door> GetDoors();
-	std::vector<CollisionBox> GetWalls();
-	std::vector<Interactable*> GetInteractables();
-	std::string GetName();
-	bool GetSpawnable();
+	Texture* GetTexture() const;
+	std::vector<Door> GetDoors() const;
+	std::vector<CollisionBox> GetWalls() const;
+	std::vector<Interactable*> GetInteractables() const;
+	const std::string& GetName() const;
+	bool GetSpawnable() const;
 	void AddHole(const Vector2f& location);
 
 	void Draw() const;
@@ -37,6 +37,5 @@ private:
 	std::vector<Interactable*> m_Interactables;
 	std::vector<Vector2f> m_HoleLocations{};
 	bool m_CanSpawnEnemies{};
-
 };
 

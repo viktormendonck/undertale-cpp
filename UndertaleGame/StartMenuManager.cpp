@@ -17,7 +17,7 @@ StartMenuManager::StartMenuManager(ResourceManager* pResourceManager)
 
 
 
-void StartMenuManager::Draw()
+void StartMenuManager::Draw() const
 {
 	switch (m_MenuState) {
 	case (MenuState::nameScreen):
@@ -163,7 +163,7 @@ void StartMenuManager::OnButtonUp(const SDL_KeyboardEvent& e)
 	}
 }
 
-MenuState StartMenuManager::GetMenuState()
+MenuState StartMenuManager::GetMenuState() const 
 {
 	return m_MenuState;
 }

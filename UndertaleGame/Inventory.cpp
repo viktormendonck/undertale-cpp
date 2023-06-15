@@ -50,35 +50,35 @@ void Inventory::InputItem(const std::string& itemType)
 
 }
 
-ItemType Inventory::GetItemType(int itemNumber)
+ItemType Inventory::GetItemType(int itemNumber) const
 {
 	return m_PlayerInventory[itemNumber].GetItemType();
 }
 
-int Inventory::GetItemValue(int itemNumber)
+int Inventory::GetItemValue(int itemNumber) const
 {
 	return m_PlayerInventory[itemNumber].GetValue();
 }
 
-std::string Inventory::GetItemName(int itemNumber)
+std::string Inventory::GetItemName(int itemNumber) const
 {
 	return m_PlayerInventory[itemNumber].GetName();
 }
 
-int Inventory::GetInvSize()
+int Inventory::GetInvSize() const
 {
 	return m_MaxInvSize;
 }
 
-Texture* Inventory::GetItemText(int itemNumber)
+Texture* Inventory::GetItemText(int itemNumber) const
 {
 	return m_PlayerInventory[itemNumber].GetItemTexture();
 }
 
-int Inventory::GetCurrentItemAmount()
+int Inventory::GetCurrentItemAmount() const
 {
 	int amount{};
-	for (Item& item: m_PlayerInventory)
+	for (const Item& item: m_PlayerInventory)
 	{
 		if (item.GetItemType() != ItemType::empty)
 		{

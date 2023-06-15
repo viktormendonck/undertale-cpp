@@ -14,12 +14,12 @@ public:
 
 
 private:
-	Texture* m_pFroggitHead;
+	const Texture* m_pFroggitHead;
 
 	float m_HeadMovingIncrementor{};
-	float m_HeadMovementSpeed;
+	const float m_HeadMovementSpeed;
 
-	Vector2f m_BaseHeadOffset;
+	const Vector2f m_BaseHeadOffset;
 	Vector2f m_CurrentHeadOffset;
 };
 

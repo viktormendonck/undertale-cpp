@@ -4,16 +4,17 @@
 #include "Player.h"
 #include "utils.h"
 
-RockInteract::RockInteract(const Rectf& collisionRect, Texture* pRockTexture, const Rectf& buttonRect,const CollisionBox& barrierRect, Texture* pBarierTexture)
+RockInteract::RockInteract(const Rectf& collisionRect, Texture* pRockTexture, const Rectf& buttonRect, const CollisionBox& barrierRect, Texture* pBarrierTexture)
 	:
-	Interactable(collisionRect,true),
+	Interactable(collisionRect, true),
 	m_pRockTexture(pRockTexture),
-	m_pBarrierTexture(pBarierTexture),
+	m_pBarrierTexture(pBarrierTexture),
 	m_BarrierRect(barrierRect),
-	m_buttonRect(buttonRect)
+	m_ButtonRect(buttonRect),
+	m_RockMinX(m_CollisionBoxes[0].GetPos().x),
+	m_RockMaxX(m_ButtonRect.left + m_ButtonRect.width)
 {
-	m_RockMinX = m_CollisionBoxes[0].GetPos().x;
-	m_RockMaxX = m_buttonRect.left + m_buttonRect.width;
+
 }
 
 void RockInteract::Update(float deltaTime, Player* player)
@@ -27,7 +28,7 @@ void RockInteract::Update(float deltaTime, Player* player)
 		m_PlayerPushRect.left += 1;
 	}
 	//check whether the barrier should be opened 
-	m_DeactivateBarrier = (utils::IsOverlapping(m_PlayerPushRect, m_buttonRect) || utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), m_buttonRect));
+	m_DeactivateBarrier = (utils::IsOverlapping(m_PlayerPushRect, m_ButtonRect) || utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), m_ButtonRect));
 	if (m_DeactivateBarrier && m_CollisionBoxes.size() == 2)
 	{
 		m_CollisionBoxes.pop_back();

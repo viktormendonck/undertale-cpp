@@ -23,8 +23,8 @@ Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManage
       m_pParticleSystem{pParticleSystem},
       m_pResourceManager{pResourceManager}
 {
-    m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimentions) / 2, m_box_bottom_offset,m_FightSquareDimentions, m_FightSquareDimentions));
-    m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_box_bottom_offset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimentions);
+    m_FightBoundary = CollisionBox(Rectf((screen.width - m_FightSquareDimensions) / 2, m_BoxBottomOffset,m_FightSquareDimensions, m_FightSquareDimensions));
+    m_TextBox = Rectf	(	(screen.width - (screen.width - m_TextBoxSideOffset * 2)) / 2, m_BoxBottomOffset, screen.width-m_TextBoxSideOffset*2,m_FightSquareDimensions);
 
     //enemyAttack vars
     Vector2f pos{ m_FightBoundary.GetRect().GetMiddle().x,m_FightBoundary.GetRect().GetMiddle().y };
@@ -41,10 +41,10 @@ Fight::Fight(FightPlayer* pChara, Rectf screen, ResourceManager* pResourceManage
 
     //make collisions for the enemyAttack
     const float collisionBoxWidth{ 5 };
-    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetBottom().point1.x, m_FightBoundary.GetBottom().point1.y - collisionBoxWidth, m_FightSquareDimentions, collisionBoxWidth)));
-    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetTop().point1, m_FightSquareDimentions, collisionBoxWidth)));
-    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetLeft().point1.x-collisionBoxWidth,m_FightBoundary.GetLeft().point1.y-collisionBoxWidth, collisionBoxWidth,m_FightSquareDimentions+(collisionBoxWidth*2))));
-    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetRight().point1.x,m_FightBoundary.GetRight().point1.y-collisionBoxWidth, collisionBoxWidth,m_FightSquareDimentions+(collisionBoxWidth*2))));
+    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetBottom().point1.x, m_FightBoundary.GetBottom().point1.y - collisionBoxWidth, m_FightSquareDimensions, collisionBoxWidth)));
+    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetTop().point1, m_FightSquareDimensions, collisionBoxWidth)));
+    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetLeft().point1.x-collisionBoxWidth,m_FightBoundary.GetLeft().point1.y-collisionBoxWidth, collisionBoxWidth,m_FightSquareDimensions+(collisionBoxWidth*2))));
+    m_Colliders.push_back(CollisionBox(Rectf(m_FightBoundary.GetRight().point1.x,m_FightBoundary.GetRight().point1.y-collisionBoxWidth, collisionBoxWidth,m_FightSquareDimensions+(collisionBoxWidth*2))));
 
 
     switch (enemy)
@@ -469,10 +469,6 @@ void Fight::UpdateUI(float deltaTime)
 }
 
 // Button Manager
-void Fight::ButtonDownManager(const SDL_KeyboardEvent& e)
-{
-
-}
 
 void Fight::ButtonUpManager(const SDL_KeyboardEvent& e)
 {
@@ -779,7 +775,7 @@ bool Fight::IsFightOver()
 {
     return m_FightEnded && (m_UpdateTimeAfterDeath <= 0);
 }
-CollisionBox Fight::GetFightBoundaryBox()
+CollisionBox Fight::GetFightBoundaryBox() const
 {
     return m_FightBoundary;
 }

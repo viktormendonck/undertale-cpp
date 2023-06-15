@@ -75,12 +75,12 @@ void Enemy::Damage(int damage)
 	m_Hp -= damage;
 }
 
-bool Enemy::IsDead()
+bool Enemy::IsDead() const
 {
 	return m_Hp <= 0;
 }
 
-bool Enemy::AreBulletsActive()
+bool Enemy::AreBulletsActive() const
 {
 	bool result{};
 	for (Bullet* bullet : m_Bullets)
@@ -99,23 +99,23 @@ void Enemy::DeleteBullets()
 	m_Bullets.clear();
 }
 
-EnemyType Enemy::GetEnemyType()
+EnemyType Enemy::GetEnemyType() const
 {
 	return m_EnemyType;
 }
 
 
-Texture* Enemy::GetDeathTexture()
+Texture* Enemy::GetDeathTexture() const 
 {
 	return m_pEnemyDeathTexture;
 }
 
-Vector2f Enemy::GetPos()
+Vector2f Enemy::GetPos() const
 {
 	return m_Pos;
 }
 
-bool Enemy::GetMercyAble()
+bool Enemy::GetMercyAble() const
 {
 	return m_IsMercyable;
 }
@@ -125,11 +125,11 @@ void Enemy::ReduceConversationAmount()
 	m_ConversationAmount--;
 }
 
-int Enemy::GetMaxHealth()
+int Enemy::GetMaxHealth() const
 {
 	return m_MaxHp;
 }
-int Enemy::GetHealth()
+int Enemy::GetHealth() const
 {
 	return m_Hp;
 }

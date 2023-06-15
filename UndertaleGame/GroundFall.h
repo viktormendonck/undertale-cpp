@@ -12,6 +12,6 @@ public:
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
 protected:
 	void OnInteract();
-	std::string m_destinationRoom{};
+	const std::string m_destinationRoom{};
 };
 

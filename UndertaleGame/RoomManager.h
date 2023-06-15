@@ -15,7 +15,8 @@ public:
 	RoomManager& operator=(const RoomManager& other) = delete;
 	RoomManager(RoomManager&& other) = delete;
 	RoomManager& operator=(RoomManager&& other) = delete;
-
+	std::map<std::string, Room*>& GetRooms();
+private:
 	std::map<std::string, Room*> m_pRooms;
 };
 

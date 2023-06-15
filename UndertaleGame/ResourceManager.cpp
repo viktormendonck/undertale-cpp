@@ -279,15 +279,17 @@ ResourceManager::ResourceManager(std::string playerName)
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture2);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture3);
 	m_InteractableTextTextures.push_back(saveInteractionTexture);
+
+	m_InteractableTextTextures.push_back(itemYesInteractionTexture);
+	m_InteractableTextTextures.push_back(itemNoInteractionTexture);
+	m_InteractableTextTextures.push_back(itemInteractionTexture1);
+
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture4);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture5);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture6);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture7);
 	m_InteractableTextTextures.push_back(scriptureInteractionTexture8);
 
-	m_InteractableTextTextures.push_back(itemYesInteractionTexture);
-	m_InteractableTextTextures.push_back(itemNoInteractionTexture);
-	m_InteractableTextTextures.push_back(itemInteractionTexture1);
 
 }
 

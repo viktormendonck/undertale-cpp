@@ -29,32 +29,32 @@ Room::~Room()
 	}
 }
 
-Texture* Room::GetTexture()
+Texture* Room::GetTexture() const
 {
 	return m_pTexture;
 }
 
-std::vector<Door> Room::GetDoors()
+std::vector<Door> Room::GetDoors() const
 {
 	return m_Doors;
 }
 
-std::vector<CollisionBox> Room::GetWalls()
+std::vector<CollisionBox> Room::GetWalls() const
 {
 	return m_Walls;
 }
 
-std::vector<Interactable*> Room::GetInteractables()
+std::vector<Interactable*> Room::GetInteractables() const
 {
 	return m_Interactables;
 }
 
-std::string Room::GetName()
+const std::string& Room::GetName() const
 {
 	return m_RoomName;
 }
 
-bool Room::GetSpawnable()
+bool Room::GetSpawnable() const
 {
 	return m_CanSpawnEnemies;
 }
@@ -77,6 +77,5 @@ void Room::Draw() const
 		utils::SetColor(Color4f(1, 0, 0, 1));
 		utils::FillRect(m_Walls[i].GetRect());
 	}
-
 #endif
 }

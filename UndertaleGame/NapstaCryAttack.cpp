@@ -6,31 +6,31 @@
 NapstaCryAttack::NapstaCryAttack(AnimatedSprite* pBulletTex, int damage, float timer, const CollisionBox& fightRectCollider)
 	:
 	Bullet(Vector2f(350, 75), damage, pBulletTex, Rectf(0, 0, 12, 13),fightRectCollider),
-	m_CountDownTimer(timer)
+	m_CountDownUntilSpawn(timer)
 {
-	m_velocity.x = utils::RandFloatInRange(0, 50, 1);
+	m_Velocity.x = utils::RandFloatInRange(0, 50, 1);
 	if (utils::RandBool())
 	{
 		m_Pos = m_SpawnLocations[0];
-		m_velocity.x = -m_velocity.x;
+		m_Velocity.x = -m_Velocity.x;
 	}
 	else 
 	{
 		m_Pos = m_SpawnLocations[1];
-		m_velocity.x -= 20;
+		m_Velocity.x -= 20;
 	}
 }
 
 void NapstaCryAttack::Update(float deltaTime)
 {
-	if (m_CountDownTimer <=0)
+	if (m_CountDownUntilSpawn <=0)
 	{
-		m_velocity += Gravity * deltaTime;
-		m_Pos += m_velocity * deltaTime;
+		m_Velocity += m_Gravity * deltaTime;
+		m_Pos += m_Velocity * deltaTime;
 	}
 	else
 	{
-		m_CountDownTimer -= deltaTime;
+		m_CountDownUntilSpawn -= deltaTime;
 	}
 	if (utils::IsOverlapping(Rectf(m_Pos.ToPoint2f(), m_pBulletTexture->GetWidth(), m_pBulletTexture->GetHeight()),m_BulletCollider.GetRect()))
 	{
@@ -43,7 +43,7 @@ void NapstaCryAttack::Update(float deltaTime)
 
 void NapstaCryAttack::Draw() const
 {
-	if (m_CountDownTimer <= 0)
+	if (m_CountDownUntilSpawn <= 0)
 	{
 		m_pBulletTexture->Draw(m_Pos);
 	}

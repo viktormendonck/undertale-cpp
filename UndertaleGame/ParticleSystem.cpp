@@ -17,7 +17,7 @@ ParticleSystem::~ParticleSystem()
 	}
 }
 
-void ParticleSystem::Draw()
+void ParticleSystem::Draw() const
 {
 	for (const Particle* pParticle : m_pParticleList)
 	{

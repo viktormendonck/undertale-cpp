@@ -9,8 +9,6 @@ public:
 	void Update(float deltaTime) override;
 	void Draw() const override;
 private:
-
-	float m_AttackcountDownLength{5};
-
+	float m_AttackCountDownLength{3};
 };
 

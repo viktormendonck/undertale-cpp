@@ -27,8 +27,8 @@ void FroggitJumpAttack::Update(float deltaTime)
 
 	case (AttackState::jumping):
 		m_pBulletTexture->SetAnimation("jumping");
-		m_velocity += Gravity * deltaTime;
-		m_Pos += m_velocity * deltaTime;
+		m_Velocity += m_Gravity * deltaTime;
+		m_Pos += m_Velocity * deltaTime;
 		m_CurrentTimeToLive -= deltaTime;
 		if (m_CurrentTimeToLive < 0)
 		{

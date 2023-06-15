@@ -124,7 +124,7 @@ int FightPlayer::GetMaxHealth() const
 	return m_MaxHp;
 }
 
-bool FightPlayer::IsDead()
+bool FightPlayer::IsDead() const 
 {
 	return m_Hp <= 0;
 }

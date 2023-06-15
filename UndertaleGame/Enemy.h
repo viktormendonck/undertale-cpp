@@ -39,33 +39,33 @@ public:
 	void Converse();
 
 	void Damage(int damage);
-	bool IsDead();
-	bool AreBulletsActive();
+	bool IsDead() const;
+	bool AreBulletsActive() const;
 	void DeleteBullets();
-	EnemyType GetEnemyType();
+	EnemyType GetEnemyType() const;
 
-	Texture* GetDeathTexture();
-	Vector2f GetPos();
-	bool GetMercyAble();
+	Texture* GetDeathTexture() const;
+	Vector2f GetPos() const;
+	bool GetMercyAble() const;
 	void ReduceConversationAmount();
-	int GetMaxHealth();
-	int GetHealth();
+	int GetMaxHealth() const;
+	int GetHealth() const;
 
 protected:
 	int m_Hp;
-	int m_MaxHp;
+	const int m_MaxHp;
 	int m_ConversationAmount; // amount of times you have to do correct conversation inputs with this enemy to make giving them mercy possible
 	AnimatedSprite* m_pTexture;
 	Texture* m_pEnemyDeathTexture;
 	Vector2f m_Pos{};
 
 	const bool m_IsFlying;
-	float m_FlightOffset{118};
-	Point2f m_PossibleSpawnLocations[6]{ Point2f(19,244),Point2f(119,244) ,Point2f(222,244) ,Point2f(321,244) ,Point2f(424,244),Point2f(527,244)};
+	const float m_FlightOffset{118};
+	const Point2f m_PossibleSpawnLocations[6]{ Point2f(19,244),Point2f(119,244) ,Point2f(222,244) ,Point2f(321,244) ,Point2f(424,244),Point2f(527,244)};
 	FightPlayer& m_Player;
 	std::vector<Bullet*> m_Bullets;
-	CollisionBox m_FightRectCollider;
-	EnemyType m_EnemyType{};
+	const CollisionBox m_FightRectCollider;
+	const EnemyType m_EnemyType{};
 	bool m_IsMercyable{};
 	
 };

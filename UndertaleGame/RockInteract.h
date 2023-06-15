@@ -5,7 +5,7 @@
 class RockInteract final : public Interactable
 {
 public:
-	RockInteract(const Rectf& collisionRect, Texture* pRockTexture,const Rectf& buttonRect,const CollisionBox& barrierRect,Texture* pBarierTexture);
+	RockInteract(const Rectf& collisionRect, Texture* pRockTexture,const Rectf& buttonRect,const CollisionBox& barrierRect,Texture* pBarrierTexture);
 
 	void Update(float deltaTime, Player* player);
 	void Draw(const Vector2f& camera) const;
@@ -15,18 +15,18 @@ private:
 	void OnInteract();
 	void PushCollisionBox(CollisionBox collision);
 
-	Texture* m_pRockTexture{};
-	Texture* m_pBarrierTexture{};
+	const Texture* m_pRockTexture{};
+	const Texture* m_pBarrierTexture{};
 
 	bool m_DeactivateBarrier{};
 
 	CollisionBox m_BarrierRect{};
-	Rectf m_buttonRect{};
+	const Rectf m_ButtonRect{};
 
 	Rectf m_PlayerPushRect{};
-	float m_RockMinX{};
-	float m_RockMaxX{};
-	float m_RockPushSpeed{50};
+	const float m_RockMinX{};
+	const float m_RockMaxX{};
+	const float m_RockPushSpeed{50};
 
 
 

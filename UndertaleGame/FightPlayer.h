@@ -29,7 +29,7 @@ public:
 	float GetDamage() const;
 	int GetHealth() const;
 	int GetMaxHealth() const;
-	bool IsDead();
+	bool IsDead() const;
 	Inventory* GetInv() const;
 	void UpdateMovement(float deltaTime);
 
@@ -39,18 +39,18 @@ public:
 
 private:
 	FightPlayerState m_State{ FightPlayerState::base };
-	Texture* m_pHeartTexture;
+	const Texture* m_pHeartTexture;
 	AnimatedSprite* m_pHeartAnims;
 	Inventory* m_pInventory;
 	int m_Hp;
-	int m_MaxHp;
+	const int m_MaxHp;
 	float m_Speed;
 	bool m_IsGravityMode{false};
 	Vector2f m_Pos{};
 	Vector2f m_Velocity{};
 
 	float m_Damage{ 10 };
-	float m_Gravity{ 120 };
+	const float m_Gravity{ 120 };
 	float  m_JumpStrength{};
 
 	Linef m_LineCast{};

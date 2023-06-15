@@ -16,11 +16,11 @@ public:
 	Item();
 	explicit Item(ItemType itemType, Texture* pNameTex, bool equipable, std::string name, int itemValue);
 
-	ItemType GetItemType();
-	bool IsEquipable();
-	std::string GetName();
-	int GetValue();
-	Texture* GetItemTexture();
+	ItemType GetItemType() const;
+	bool IsEquipable() const;
+	std::string GetName() const;
+	int GetValue() const;
+	Texture* GetItemTexture() const;
 	
 
 private:

@@ -52,7 +52,7 @@ int& SoundManager::GetAudioVolumeRef()
 	return m_AudioVolume;
 }
 
-std::string SoundManager::GetCurrentSong()
+const std::string& SoundManager::GetCurrentSong()const
 {
 	return m_CurrentSong;
 }

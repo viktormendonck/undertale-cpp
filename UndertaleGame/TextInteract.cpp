@@ -11,9 +11,9 @@ TextInteract::TextInteract(const Rectf& collisionRect, Texture* pBaseTextTexture
 	Interactable(collisionRect,true),
 	m_pTextTextures(pTextTextures),
 	m_pBaseTextBackGroundTexture(pBaseTextTexture),
-	m_CurrentTextPage(-1)
+	m_CurrentTextPage(-1),
+	m_AmountOfTextPages (static_cast<int>(m_pTextTextures.size()))
 {
-	m_AmountOfTextPages = m_pTextTextures.size();
 }
 
 void TextInteract::Update(float deltaTime, Player* player)

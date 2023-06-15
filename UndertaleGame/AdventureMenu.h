@@ -30,7 +30,7 @@ private:
 	int m_CurrentItemPage{};
 	int m_CurrentSelectedOption{};
 
-	Vector2f m_TextLocations[4]{ Vector2f{50,120},Vector2f{330,120},Vector2f{50,50},Vector2f{330,50} };
+	const Vector2f m_TextLocations[4]{ Vector2f{50,120},Vector2f{330,120},Vector2f{50,50},Vector2f{330,50} };
 
 };
 

@@ -9,8 +9,8 @@ public:
 
 	FroggitFlyAttack(AnimatedSprite* pBulletTex, int damage,const Vector2f& startPos, FightPlayer* pPlayer, int bulletIteration, const CollisionBox& fightRectCollider);
 
-	virtual void Update(float deltaTime) override;
-	virtual	void Draw() const override;
+	void Update(float deltaTime) override;
+	void Draw() const override;
 
 private:
 	enum class AttackState
@@ -22,11 +22,11 @@ private:
 	Vector2f m_TargetLocation{};
 	int m_MaxAttackDelay{1};
 	float m_CurrentAttackDelay{};
-	float m_Speed{ 100 };
-	int m_CyclesTillDeath{ 2 };
+	const float m_Speed{100};
+	const int m_CyclesTillDeath{2};
 	int m_CurrentCycle{};
 
-	float m_BulletFlyTime{2};
+	const float m_BulletFlyTime{2};
 	float m_CurrentBulletFlyTime{ m_BulletFlyTime };
 };
 

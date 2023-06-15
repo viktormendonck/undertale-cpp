@@ -16,7 +16,7 @@ Bullet::Bullet(const Vector2f& pos, int damage, AnimatedSprite* pBulletTex, cons
 
 }
 
-bool Bullet::IsActive()
+bool Bullet::IsActive() const
 {
 	return m_IsActive;
 }
@@ -26,12 +26,12 @@ void Bullet::SetActivity(bool active)
 	m_IsActive = active;
 }
 
-Rectf Bullet::GetRect()
+Rectf Bullet::GetRect() const
 {
 	return Rectf(m_Pos.ToPoint2f(), m_BulletCollider.GetRect().width, m_BulletCollider.GetRect().height);
 }
 
-int Bullet::GetDamage()
+int Bullet::GetDamage() const
 {
 	return m_Damage;
 }

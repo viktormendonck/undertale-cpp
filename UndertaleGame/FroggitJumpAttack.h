@@ -8,8 +8,8 @@ public:
 
 	FroggitJumpAttack(AnimatedSprite* pBulletTex, int damage, const CollisionBox& fightRectCollider);
 
-	virtual void Update(float deltaTime) override;
-	virtual	void Draw() const override;
+	void Update(float deltaTime) override;
+	void Draw() const override;
 
 private:
 	enum class AttackState
@@ -17,8 +17,8 @@ private:
 		charging, jumping
 	};
 	AttackState m_AttackState{ AttackState::charging };
-	Vector2f m_velocity{-125,200};
-	Vector2f Gravity{0,-260};
+	Vector2f m_Velocity{-125,200};
+	const Vector2f m_Gravity{0,-260};
 	float m_CountDownTimer{};
 	const float m_TimeToLive{.85f};
 	float m_CurrentTimeToLive{m_TimeToLive};

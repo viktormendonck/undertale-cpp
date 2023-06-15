@@ -1,8 +1,6 @@
 #pragma once
 #include "Texture.h"
 #include "Vector2f.h"
-#include "Texture.h"
-#include <vector>
 #include <map>
 
 struct AnimationData
@@ -29,10 +27,10 @@ public:
 	void Update(float deltaTime);
 
 	void SetAnimation(const std::string& animationName);
-	std::string GetCurrentAnimation();
-	float GetWidth();
-	float GetHeight();
-	Rectf GetRect();
+	const std::string& GetCurrentAnimation() const;
+	float GetWidth() const;
+	float GetHeight() const;
+	Rectf GetRect() const;
 	void ResetAnim();
 
 
@@ -41,8 +39,8 @@ private:
 	Texture* m_pTexture;
 	std::map<std::string, AnimationData> m_AnimationData;
 
-	int m_width;
-	int m_height;
+	const int m_Width;
+	const int m_Height;
 	std::string m_CurrentAnimation{};
 	int m_CurrentFrame{};
 	const float m_TimeBetweenFrames{};

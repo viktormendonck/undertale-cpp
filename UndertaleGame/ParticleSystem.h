@@ -17,11 +17,9 @@ public:
 	ParticleSystem(ParticleSystem&& other) = delete; // Move constructor
 	ParticleSystem& operator=(ParticleSystem&& other) = delete; // Move assignment operator
 
-	void Draw();
+	void Draw() const;
 	void Update(float deltaTime);
 	void StartDissolve(const Vector2f& spritePos, Texture* pTexture);
-	
-	
 
 private:
 	struct Particle
@@ -42,6 +40,5 @@ private:
 	const int m_DissolveParticlesPerSecond{ };
 	const float m_DissolveParticleLifetime{ };
 	bool m_DissolveStarted{ false };
-
 };
 

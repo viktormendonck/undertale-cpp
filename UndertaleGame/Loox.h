@@ -10,6 +10,6 @@ public:
 	void DrawEnemy() override;
 	void SpawnBullet(ResourceManager* pResourceManager) override;
 private:
-	float m_DelayBetweenBullets{1};
+	const float m_DelayBetweenBullets{1};
 };
 

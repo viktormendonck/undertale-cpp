@@ -151,7 +151,6 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 		m_pAdventure->ButtonDownManager(e);
 		break;
 	case GameState::fight:
-		m_pFight->ButtonDownManager(e);
 		break;
 	case GameState::infoScreen:
 

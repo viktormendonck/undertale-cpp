@@ -15,8 +15,7 @@ public:
 private:
 	void OnInteract();
 
-	Texture* m_pTexture{};
-	bool m_IsActivated{};
+	const Texture* m_pBossTexture{};
 	bool m_IsColliding{};
 	bool m_HasTransmitted{};
 };

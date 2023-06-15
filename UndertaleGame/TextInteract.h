@@ -15,10 +15,10 @@ public:
 
 private:
 	void OnInteract();
-	std::vector<Texture*> m_pTextTextures{};
-	Texture* m_pBaseTextBackGroundTexture{};
+	const std::vector<Texture*> m_pTextTextures{};
+	const Texture* m_pBaseTextBackGroundTexture{};
 	int m_CurrentTextPage{};
-	int m_AmountOfTextPages{};
+	const int m_AmountOfTextPages{};
 	bool m_IsColliding{};
 };
 

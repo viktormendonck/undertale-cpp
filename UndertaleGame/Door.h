@@ -8,10 +8,10 @@ public:
 
 	std::string GetDestination();
 	bool IsColliding(const Rectf& player) const;
-	Vector2f GetExitLocation();
+	Vector2f GetExitLocation() const;
 private:
-	CollisionBox m_DoorCollider{};
-	std::string m_Destination{};
-	Vector2f m_ExitLocation{};
+	const CollisionBox m_DoorCollider{};
+	const std::string m_Destination{};
+	const Vector2f m_ExitLocation{};
 };
 

@@ -29,8 +29,7 @@ public:
 	void Update(float deltaTime);
 	bool IsFightOver();
 
-	CollisionBox GetFightBoundaryBox();
-	void ButtonDownManager(const SDL_KeyboardEvent& e);
+	CollisionBox GetFightBoundaryBox() const ;
 	void ButtonUpManager(const SDL_KeyboardEvent& e);
 
 private:
@@ -53,8 +52,8 @@ private:
 	FightPlayer* m_pPlayer;
 
 	Enemy* m_pEnemy;
-	Texture* m_pBackgroundTexture;
-	std::vector<Texture*> m_pButtonTextures;
+	const Texture* m_pBackgroundTexture;
+	const std::vector<Texture*> m_pButtonTextures;
 
 	ParticleSystem* m_pParticleSystem;
 	ResourceManager* m_pResourceManager;
@@ -71,10 +70,10 @@ private:
 
 	CollisionBox m_FightBoundary{};
 	Rectf m_TextBox{};
-	float m_FightSquareDimentions{ 150 };
-	float m_TextBoxSideOffset{ 10 };
-	float m_BoxLineWidth{ 2 };
-	float m_box_bottom_offset{ 75 };
+	const float m_FightSquareDimensions{ 150 };
+	const float m_TextBoxSideOffset{ 10 };
+	const float m_BoxLineWidth{ 2 };
+	const float m_BoxBottomOffset{ 75 };
 
 
 	Vector2f m_MiddleLocation{};
@@ -83,7 +82,7 @@ private:
 	FightState m_PreviousFightState{ m_FightState };
 
 
-	float m_BoxTransitionSpeed{ 1 };
+	const float m_BoxTransitionSpeed{ 1 };
 	float m_BoxTransitionIncrementor{};
 	Rectf m_CurrentTransitionRect{};
 
@@ -94,8 +93,8 @@ private:
 	const float m_PlatformTimer{ 5 };
 	float m_CurrentPlatformTimer{ 0 };
 
-	Vector2f m_ButtonLocations[4]{ Vector2f{16,5},Vector2f{16 + 110 + 56,5},Vector2f{16 + 110 * 2 + 56 + 57,5},Vector2f{16 + 110 * 3 + 56 * 2 + 57,5} };
-	int  m_ButtonsAmount{ 4 };
+	const Vector2f m_ButtonLocations[4]{ Vector2f{16,5},Vector2f{16 + 110 + 56,5},Vector2f{16 + 110 * 2 + 56 + 57,5},Vector2f{16 + 110 * 3 + 56 * 2 + 57,5} };
+	const int m_ButtonsAmount{ 4 };
 	UiState m_UiState{ UiState::idle };
 	UiState m_MenuSelectedState{ UiState::idle };
 
@@ -108,14 +107,14 @@ private:
 	float m_DistanceFromWall{};
 	bool m_BarStopped{};
 	int m_BarDirectionMulti{ 1 };
-	float m_MaxBarStoppedCooldown{ 1.3f };
+	const float m_MaxBarStoppedCooldown{ 1.3f };
 	float m_CurrentBarStoppedCooldown{ m_MaxBarStoppedCooldown };
-	float m_BarSpeed{ 250 };
-	float m_MaxPlayerDamageMulti{ 2.5f };
+	const float m_BarSpeed{ 250 };
+	const float m_MaxPlayerDamageMulti{ 2.5f };
 	bool m_FightEnded{};
 	float m_UpdateTimeAfterDeath{ 3 };
 
-	Vector2f m_UIInformationLocations[2]{ Vector2f{16,47},Vector2f{116,47} };
+	const Vector2f m_UIInformationLocations[2]{ Vector2f{16,47},Vector2f{116,47} };
 	const int m_AmountOfUITextTextures{ 2 };
 	int m_PreviousHealth{};
 
@@ -124,9 +123,9 @@ private:
 	const float m_MaxReadingTime{ 5 };
 	float m_CurrentReadingTime{ m_MaxReadingTime };
 	const int m_AmountOfTextLocations{ 4 };
-	Vector2f m_TextLocations[4]{ Vector2f{50,180},Vector2f{330,180},Vector2f{50,110},Vector2f{330,110} };
+	const Vector2f m_TextLocations[4]{ Vector2f{50,180},Vector2f{330,180},Vector2f{50,110},Vector2f{330,110} };
 	Vector2f m_ResponsePos{};
-	Vector2f m_ResponsePosOrigin{ 50,200 };
+	const Vector2f m_ResponsePosOrigin{ 50,200 };
 	int m_CurrentSelectedOption{};
 	bool m_HasActed{};
 

@@ -18,15 +18,15 @@ public:
 
 	void DeleteItem(int itemNumber) ;
 	void InputItem(const std::string& itemType);
-	ItemType GetItemType(int itemNumber);
-	int GetItemValue(int itemNumber);
-	std::string GetItemName(int itemNumber);
-	int GetInvSize();
-	Texture* GetItemText(int itemNumber);
-	int GetCurrentItemAmount();
+	ItemType GetItemType(int itemNumber) const;
+	int GetItemValue(int itemNumber) const;
+	std::string GetItemName(int itemNumber) const;
+	int GetInvSize() const;
+	Texture* GetItemText(int itemNumber) const;
+	int GetCurrentItemAmount() const;
 private:
 	std::vector<Item> m_PlayerInventory;
-	int m_MaxInvSize;
+	const int m_MaxInvSize;
 	ItemManager* m_pItemManager;
 };
 

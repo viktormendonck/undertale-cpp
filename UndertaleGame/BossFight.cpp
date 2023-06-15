@@ -7,7 +7,7 @@
 BossFight::BossFight(const CollisionBox& collision, bool isSolid, Texture* texture)
 	:
 	Interactable(collision,isSolid),
-	m_pTexture(texture)
+	m_pBossTexture(texture)
 {
 }
 
@@ -31,7 +31,7 @@ void BossFight::Draw(const Vector2f& camera) const
 {
 	if (!m_IsActivated)
 	{
-		m_pTexture->Draw(m_CollisionBoxes[0].GetPos().ToPoint2f());
+		m_pBossTexture->Draw(m_CollisionBoxes[0].GetPos().ToPoint2f());
 	}
 }
 

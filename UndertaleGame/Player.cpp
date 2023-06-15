@@ -15,8 +15,7 @@ Player::Player(AnimatedSprite* playerSprite,Inventory* pInv, float speed)
 	 m_PlayerCollisionRect{ GetRect().left,GetRect().bottom,GetRect().width,GetRect().height / 3 },
 	 m_InteractCollisionRect{ 0,0,GetRect().width,GetRect().height / 2 }
 {
-	m_RunStopDelay = 0.2f;
-	m_CurrentRunStopDelay = m_RunStopDelay;
+	
 }
 
 
@@ -52,9 +51,9 @@ void Player::Update(float deltaTime, std::vector<CollisionBox> colliders)
 		{
 			m_FallSpeed += m_FallGravity * deltaTime;
 			m_Velocity = Vector2f();
-			m_TimeIncrementer += deltaTime * m_SpinSpeed;
+			m_SpinTimeIncrementer += deltaTime * m_SpinSpeed;
 			int saveSpinDirection{m_CurrentSpinDirection};
-			m_CurrentSpinDirection = static_cast<int>(m_TimeIncrementer) % 4;
+			m_CurrentSpinDirection = static_cast<int>(m_SpinTimeIncrementer) % 4;
 			if (saveSpinDirection != m_CurrentSpinDirection)
 			{
 				m_pSprite->SetAnimation(m_SpinAnimation[m_CurrentSpinDirection]);
@@ -121,17 +120,17 @@ void Player::SetPlayerPos(const Vector2f& pos)
 	m_Pos = pos;
 }
 
-Rectf Player::GetPlayerCollisionRect()
+Rectf Player::GetPlayerCollisionRect() const
 {
 	return m_PlayerCollisionRect;
 }
 
-Rectf Player::GetInteractCollisionRect()
+Rectf Player::GetInteractCollisionRect() const
 {
 	return m_InteractCollisionRect;
 }
 
-Rectf Player::GetFullPlayerRect()
+Rectf Player::GetFullPlayerRect() const
 {
 	return Rectf(m_Pos.x, m_Pos.y, m_pSprite->GetWidth(), m_pSprite->GetHeight());
 }
@@ -141,7 +140,7 @@ void Player::SetState(PlayerState playerState)
 	m_PlayerState = playerState;
 }
 
-Player::PlayerState Player::GetState()
+Player::PlayerState Player::GetState() const
 {
 	return m_PlayerState;
 }
@@ -153,43 +152,43 @@ void Player::StartFalling(const std::string& destination)
 	m_FallDestination = destination;
 }
 
-void Player::SetChangedRoom(bool e)
+void Player::SetChangedRoom(bool newVal)
 {
-	m_ChangedRoom = e;
+	m_ChangedRoom = newVal;
 }
 
-bool Player::HasChangedRoom()
+bool Player::HasChangedRoom() const
 {
 	return m_ChangedRoom;
 }
 
-bool Player::IsFalling()
+bool Player::IsFalling() const
 {
 	return m_PlayerState == PlayerState::falling;
 }
 
-std::string Player::GetFallDestination()
+const std::string& Player::GetFallDestination() const 
 {
 	return m_FallDestination;
 }
 
-Vector2f Player::GetFallStartLocation()
+Vector2f Player::GetFallStartLocation() const
 {
 	return m_FallStartLocation;
 }
 
-Vector2f Player::GetVelocity()
+Vector2f Player::GetVelocity() const
 {
 	return m_Velocity;
 }
 
 
-void Player::SetInteractedWithBoss(bool b)
+void Player::SetInteractedWithBoss(bool newVal)
 {
-	m_HasInteractedWithBoss = b;
+	m_HasInteractedWithBoss = newVal;
 }
 
-bool Player::GetInteractedWithBoss()
+bool Player::GetInteractedWithBoss() const
 {
 	return m_HasInteractedWithBoss;
 }
@@ -258,7 +257,7 @@ Inventory* Player::GetInventory()
 	return m_pInventory;
 }
 
-Rectf Player::GetRect()
+Rectf Player::GetRect() const
 {
 	return Rectf(m_Pos.ToPoint2f(), m_pSprite->GetWidth(), m_pSprite->GetHeight());
 }

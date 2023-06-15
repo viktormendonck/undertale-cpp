@@ -5,8 +5,8 @@
 AnimatedSprite::AnimatedSprite(Texture* pTexture, std::map<std::string, AnimationData> animationData, int width, int height, std::string startAnim, float timeBetweenFrames)
 	: m_pTexture{ pTexture },
 	m_AnimationData{ animationData },
-	m_width{ width },
-	m_height{ height },
+	m_Width{ width },
+	m_Height{ height },
 	m_CurrentAnimation{ startAnim },
 	m_TimeBetweenFrames{timeBetweenFrames}
 {
@@ -24,9 +24,9 @@ void AnimatedSprite::Draw(const Vector2f& pos)
 {
 	Rectf srcRect
 	{
-		static_cast<float>(m_CurrentFrame * m_width),
-		static_cast<float>(m_AnimationData[m_CurrentAnimation].rowIndex * m_height),
-		static_cast<float>(m_width),static_cast<float>(m_height)
+		static_cast<float>(m_CurrentFrame * m_Width),
+		static_cast<float>(m_AnimationData[m_CurrentAnimation].rowIndex * m_Height),
+		static_cast<float>(m_Width),static_cast<float>(m_Height)
 	};
 
 	m_pTexture->Draw(pos.ToPoint2f(), srcRect);
@@ -59,24 +59,24 @@ void AnimatedSprite::SetAnimation(const std::string& animationName)
 	m_TimeUntilNextFrame = m_TimeBetweenFrames;
 }
 
-std::string AnimatedSprite::GetCurrentAnimation()
+const std::string& AnimatedSprite::GetCurrentAnimation() const
 {
 	return m_CurrentAnimation;
 }
 
-float AnimatedSprite::GetWidth()
+float AnimatedSprite::GetWidth() const
 {
-	return m_width;
+	return static_cast<float>(m_Width);
 }
 
-float AnimatedSprite::GetHeight()
+float AnimatedSprite::GetHeight() const
 {
-	return m_height;
+	return static_cast<float>(m_Height);
 }
 
-Rectf AnimatedSprite::GetRect()
+Rectf AnimatedSprite::GetRect() const
 {
-	return Rectf(0, 0, m_width, m_height);
+	return Rectf(0, 0, static_cast<float>(m_Width), static_cast<float>(m_Height));
 }
 
 void AnimatedSprite::ResetAnim()

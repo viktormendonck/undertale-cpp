@@ -9,8 +9,8 @@ NapstaNotUpToIt::NapstaNotUpToIt(AnimatedSprite* pBulletTex, const CollisionBox&
 
 void NapstaNotUpToIt::Update(float deltaTime)
 {
-	m_AttackcountDownLength -= deltaTime;
-	if (m_AttackcountDownLength <=0)
+	m_AttackCountDownLength -= deltaTime;
+	if (m_AttackCountDownLength <=0)
 	{
 		m_IsActive = false;
 	}

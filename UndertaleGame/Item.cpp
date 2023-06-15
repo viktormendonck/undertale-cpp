@@ -21,27 +21,27 @@ Item::Item(ItemType itemType,Texture* pNameTex, bool equipable, std::string name
 }
 
 
-ItemType Item::GetItemType()
+ItemType Item::GetItemType() const
 {
 	return m_ItemType;
 }
 
-bool Item::IsEquipable()
+bool Item::IsEquipable() const
 {
 	return m_IsEquipable;
 }
 
-std::string Item::GetName()
+std::string Item::GetName() const
 {
 	return m_Name;
 }
 
-int Item::GetValue()
+int Item::GetValue() const
 {
 	return m_Value;
 }
 
-Texture* Item::GetItemTexture()
+Texture* Item::GetItemTexture() const
 {
 	return m_pNameTex;
 }

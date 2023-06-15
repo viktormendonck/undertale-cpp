@@ -20,7 +20,7 @@ bool Door::IsColliding(const Rectf& player) const
 	return utils::IsOverlapping(player, m_DoorCollider.GetRect());
 }
 
-Vector2f Door::GetExitLocation()
+Vector2f Door::GetExitLocation() const
 {
 	return m_ExitLocation;
 }

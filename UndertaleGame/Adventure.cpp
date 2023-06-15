@@ -17,9 +17,9 @@ Adventure::Adventure(Player* pPlayer, FightPlayer* pFightPlayer,ResourceManager*
 	:
 	m_pMenu(new AdventureMenu(pFightPlayer,pResourceManager)),
 	m_pPlayer(pPlayer),
-	m_pParalax(paralax),
+	m_pParallax(paralax),
 	m_pRoomManager(pRoomManager),
-	m_pCurrentRoom(m_pRoomManager->m_pRooms["Room1"]),
+	m_pCurrentRoom(m_pRoomManager->GetRooms()["Room1"]),
 	m_ViewPort(viewPort) 
 {
 	m_pPlayer->SetPlayerPos(Vector2f(96,726));
@@ -36,7 +36,7 @@ void Adventure::Draw() const
 	glPushMatrix();
 	glTranslatef(-m_CameraPos.x, -m_CameraPos.y, 0);
 	glTranslatef(m_CameraPos.x/4, m_CameraPos.y/2, 0);
-	m_pParalax->Draw();
+	m_pParallax->Draw();
 	glTranslatef(-m_CameraPos.x/4, -m_CameraPos.y/2, 0);
 	m_pCurrentRoom->Draw();
 	glPopMatrix();
@@ -48,7 +48,7 @@ void Adventure::Draw() const
 	glTranslatef(-m_CameraPos.x, -m_CameraPos.y, 0);
 	m_pPlayer->Draw();
 	glPopMatrix();
-	utils::SetColor(Color4f(0, 0, 0, m_ScreenTrancparancy));
+	utils::SetColor(Color4f(0, 0, 0, m_ScreenTransparency));
 	utils::FillRect(m_ViewPort);
 
 	if (m_InMenu)
@@ -121,7 +121,7 @@ void Adventure::Update(float deltaTime)
 		{
 			m_pCurrentRoom->AddHole(m_pPlayer->GetFallStartLocation());
 			m_SavedRoom = m_pPlayer->GetFallDestination();
-			m_SavedSpawnLocation = Vector2f(m_pPlayer->GetPlayerPos().x, m_pRoomManager->m_pRooms[m_SavedRoom]->GetTexture()->GetHeight());
+			m_SavedSpawnLocation = Vector2f(m_pPlayer->GetPlayerPos().x, m_pRoomManager->GetRooms()[m_SavedRoom]->GetTexture()->GetHeight());
 			m_IsTransitioning = true;
 		}
 	}
@@ -134,16 +134,16 @@ void Adventure::Update(float deltaTime)
 		}
 		if (m_CurrentScreenFadingTime <= 1 && m_pCurrentRoom->GetName() != m_SavedRoom )
 		{
-			m_pCurrentRoom = m_pRoomManager->m_pRooms[m_SavedRoom];
+			m_pCurrentRoom = m_pRoomManager->GetRooms()[m_SavedRoom];
 			m_pPlayer->SetPlayerPos(m_SavedSpawnLocation);
 			m_pPlayer->SetChangedRoom(true);
 		} else if (m_CurrentScreenFadingTime <=1)
 		{
-			m_ScreenTrancparancy = abs(abs(m_CurrentScreenFadingTime - m_MaxScreenFadingTime/2)-m_MaxScreenFadingTime / 2);
+			m_ScreenTransparency = abs(abs(m_CurrentScreenFadingTime - m_MaxScreenFadingTime/2)-m_MaxScreenFadingTime / 2);
 		}
 		else
 		{
-			m_ScreenTrancparancy = abs(m_CurrentScreenFadingTime -m_MaxScreenFadingTime);
+			m_ScreenTransparency = abs(m_CurrentScreenFadingTime -m_MaxScreenFadingTime);
 		}
 		m_CurrentScreenFadingTime -= deltaTime;
 	}
@@ -175,17 +175,17 @@ void Adventure::ButtonUpManager(const SDL_KeyboardEvent& e)
 	}
 }
 
-bool Adventure::GetAdventureEnd()
+bool Adventure::GetAdventureEnd() const
 {
 	return m_AdventureEnd;
 }
 
-void Adventure::SetAdventureEnd(bool b)
+void Adventure::SetAdventureEnd(bool newVal)
 {
-	m_AdventureEnd = b;
+	m_AdventureEnd = newVal;
 }
 
-bool Adventure::IsBossFight()
+bool Adventure::IsBossFight() const
 {
 	return m_IsBossFight;
 }

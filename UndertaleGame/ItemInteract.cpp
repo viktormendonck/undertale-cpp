@@ -1,17 +1,19 @@
 #include "pch.h"
 #include "ItemInteract.h"
 
+#include <iostream>
+
 #include "Player.h"
 #include "SoundManager.h"
 #include "Texture.h"
 #include "utils.h"
 
 
-ItemInteract::ItemInteract(const Rectf& collisionRect, Texture* pBaseTextTexture, std::vector<Texture*> pItemInteractTextures, Texture* pSelectedIconTexture, const std::string& item, int amountOfItems)
+ItemInteract::ItemInteract(const Rectf& collisionRect, Texture* pBaseTextTexture, const std::vector<Texture*>& pItemInteractTextures, Texture* pSelectedIconTexture, const std::string& item, int amountOfItems)
 	:
 	Interactable(collisionRect,true),
-	m_pBaseTextBackGroundTexture(pBaseTextTexture),
 	m_TextTextures(pItemInteractTextures),
+	m_pBaseTextBackGroundTexture(pBaseTextTexture),
 	m_pSelectedIconTexture(pSelectedIconTexture),
 	m_ItemName(item),
 	m_AmountOfItems(amountOfItems)
@@ -26,7 +28,6 @@ void ItemInteract::Update(float deltaTime, Player* player)
 		m_InitializeInventoryFlag = true;
 		m_pPlayerInventory = player->GetInventory();
 	}
-	
 	m_IsColliding = utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), player->GetInteractCollisionRect());
 }
 
@@ -38,7 +39,7 @@ void ItemInteract::Draw(const Vector2f& camera) const
 		{
 			m_TextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());
 		}
-		Vector2f selectedPosition = m_TextLocations[m_CurrentSelectedOption + 1] + Vector2f{-20,15};
+		const Vector2f selectedPosition = m_TextLocations[m_CurrentSelectedOption + 1] + Vector2f{-20,15};
 		m_pSelectedIconTexture->Draw(selectedPosition.ToPoint2f());
 	}
 }
