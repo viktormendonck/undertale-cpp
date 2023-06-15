@@ -16,12 +16,14 @@ void BossFight::Update(float deltaTime, Player* player)
 	if(!m_IsActivated)
 	{
 		m_IsColliding = utils::IsOverlapping(m_CollisionBoxes[0].GetRect(), player->GetInteractCollisionRect());
-	} else if (!m_HasTransmitted)
+	} else
 	{
 		if (player->GetInteractedWithBoss())
 		{
 			player->SetInteractedWithBoss(false);
 			m_IsSolid = false;
+			m_IsActivated = false;
+			m_FightHappened = true;
 		}
 		player->SetInteractedWithBoss(true);
 	}
@@ -29,7 +31,7 @@ void BossFight::Update(float deltaTime, Player* player)
 
 void BossFight::Draw(const Vector2f& camera) const
 {
-	if (!m_IsActivated)
+	if (!m_FightHappened)
 	{
 		m_pBossTexture->Draw(m_CollisionBoxes[0].GetPos().ToPoint2f());
 	}

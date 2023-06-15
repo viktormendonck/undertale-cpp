@@ -171,6 +171,9 @@ void Adventure::ButtonUpManager(const SDL_KeyboardEvent& e)
 		if ((e.keysym.sym == SDLK_RCTRL || e.keysym.sym == SDLK_c)&& m_pPlayer->GetState() == Player::PlayerState::wandering)
 		{
 			m_InMenu = true;
+		}else if ((e.keysym.sym == SDLK_LCTRL)) //todo remove
+		{
+			m_AdventureEnd = true;
 		}
 	}
 }

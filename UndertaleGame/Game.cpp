@@ -157,6 +157,7 @@ void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 		break;
 
 	}
+
 }
 
 void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)

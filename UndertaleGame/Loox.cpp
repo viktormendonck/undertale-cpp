@@ -28,9 +28,9 @@ void Loox::SpawnBullet(ResourceManager* pResourceManager)
 			int randLocation{ utils::RandInRange(0,locationArrayEnd) };
 			float angle{ (atan2f(m_FightRectCollider.GetRect().GetMiddle().y - spawnLocations[randLocation].y, m_FightRectCollider.GetRect().GetMiddle().x - spawnLocations[randLocation].x) + (static_cast<float>(utils::RandInRange(-15,15)* utils::g_Pi / 180)))};
 			Vector2f angleVector{cosf(angle),sinf(angle)};
-			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 5, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "big", angleVector, 0.0f + i * m_DelayBetweenBullets));
-			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 3, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "med", angleVector, 0.2f + i * m_DelayBetweenBullets));
-			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 2, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "small", angleVector, 0.4f + i * m_DelayBetweenBullets));
+			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 1, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "big", angleVector, 0.0f + i * m_DelayBetweenBullets));
+			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 1, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "med", angleVector, 0.2f + i * m_DelayBetweenBullets));
+			m_Bullets.push_back(new LooxSinAttack(spawnLocations[randLocation], 1, pResourceManager->m_BulletAnimatedSprites[2],m_FightRectCollider, "small", angleVector, 0.4f + i * m_DelayBetweenBullets));
 		}
 	}
 	else

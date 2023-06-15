@@ -134,13 +134,18 @@ void AdventureMenu::OnButtonUp(const SDL_KeyboardEvent& e)
                 break;
             case (SDLK_RETURN):
             case(SDLK_z):
-                if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth()) {
-                    const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
-                    m_pPlayer->Damage(-(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration)));
-                    if (m_pPlayer->GetHealth() > m_pPlayer->GetMaxHealth())
-                    {
-                        m_pPlayer->Damage(m_pPlayer->GetMaxHealth() - m_pPlayer->GetHealth());
-                    }
+                const int selectedItemItteration {
+                m_CurrentItemPage* m_AmountOfTextLocations + m_CurrentSelectedOption
+            };
+                if (m_pPlayer->GetHealth() + m_pPlayer->GetInv()->GetItemValue(selectedItemItteration) <= m_pPlayer->GetMaxHealth())
+                {
+                    m_pPlayer->Damage(-m_pPlayer->GetInv()->GetItemValue(selectedItemItteration));
+                    m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
+                    SoundManager::GetInstance().PlaySoundEffect("heal");
+                }
+                else if (m_pPlayer->GetHealth() != m_pPlayer->GetMaxHealth())
+                {
+                    m_pPlayer->Damage(m_pPlayer->GetHealth() - m_pPlayer->GetMaxHealth());
                     m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
                     SoundManager::GetInstance().PlaySoundEffect("heal");
                 }

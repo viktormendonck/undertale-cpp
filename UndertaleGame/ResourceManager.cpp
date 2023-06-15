@@ -67,8 +67,8 @@ ResourceManager::ResourceManager(std::string playerName)
 	Texture* napstaActTexture2 = new Texture{ "* Threat","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* napstaActTexture3 = new Texture{ "* Cheer","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* napstaCheckResponseTexture0 = new Texture{ "text/napsta/checkResponse.png" };
-	Texture* napstaResponseTexture1 = new Texture{ "Napstablook tries to blush but can't.(he's a ghost)","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
-	Texture* napstaResponseTexture2 = new Texture{ "Napstablook pretends to be scared, but he isn't","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaResponseTexture1 = new Texture{ "Napstablook tries to blush but can't","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
+	Texture* napstaResponseTexture2 = new Texture{ "Napstablook pretends to be scared","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 	Texture* napstaResponseTexture3 = new Texture{ "YAY :D","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };
 
 	Texture* mercyTextTexture = new Texture{ "* Mercy","UI/determinationFont.ttf",30,Color4f{1,1,1,1} };

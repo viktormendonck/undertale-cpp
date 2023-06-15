@@ -167,11 +167,11 @@ RoomManager::RoomManager(ResourceManager* pResourceManager)
 		new TextInteract(Rectf(950,400,41,48),pResourceManager->m_InteractableTextTextures[0],interactTextTextures4)
 	};
 	std::vector<Texture*> interactTextTextures5{
-		pResourceManager->m_InteractableTextTextures[13],
 		pResourceManager->m_InteractableTextTextures[14],
 		pResourceManager->m_InteractableTextTextures[15],
 		pResourceManager->m_InteractableTextTextures[16],
-		pResourceManager->m_InteractableTextTextures[17]
+		pResourceManager->m_InteractableTextTextures[17],
+		pResourceManager->m_InteractableTextTextures[18]
 	};
 	std::vector<Interactable*> room5Interacts{
 		new BossFight{Rectf{279,141,76,84},true,pResourceManager->m_RoomCorrectionTiles[3]},

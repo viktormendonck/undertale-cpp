@@ -61,6 +61,7 @@ void LooxBounceAttack::Draw() const
 {
 	if (m_Delay <= 0)
 	{
+		m_pBulletTexture->SetAnimation("small");
 		m_pBulletTexture->Draw(m_Pos);
 	}
 }

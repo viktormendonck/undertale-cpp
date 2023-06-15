@@ -230,7 +230,6 @@ void Fight::DrawActMenuOptions() const
             m_pResourceManager->m_NapstaTextTextures[i]->Draw(m_TextLocations[i].ToPoint2f());
         }
     }
-    else
     //draw the heart in front of the selected tex
     m_pResourceManager->m_MiscTextures[0]->Draw((m_TextLocations[m_CurrentSelectedOption] - Vector2f{ 25,-5 }).ToPoint2f());
 }
@@ -689,7 +688,7 @@ void Fight::ButtonUpMenuSelectedManager(const SDL_KeyboardEvent& e)
         	const int selectedItemItteration{ m_CurrentItemPage * m_AmountOfTextLocations + m_CurrentSelectedOption };
             if (m_pPlayer->GetHealth()+ m_pPlayer->GetInv()->GetItemValue(selectedItemItteration) <=   m_pPlayer->GetMaxHealth()) 
             {
-                m_pPlayer->Damage(m_pPlayer->GetInv()->GetItemValue(selectedItemItteration));
+                m_pPlayer->Damage(-m_pPlayer->GetInv()->GetItemValue(selectedItemItteration));
                 m_pPlayer->GetInv()->DeleteItem(selectedItemItteration);
                 SoundManager::GetInstance().PlaySoundEffect("heal");
                 StartFightSegment();
